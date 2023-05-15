@@ -70,13 +70,13 @@ Add the location of simplelink-prop_rf-examples/simplelink-lowpower-f2-sdk and s
  
 The above steps will add the SDK to the build path.  Successful addition of the SDKs will be displayed under "Discovered Products:".  Note the highlighted section under "Discovered products:".
 
-<img src="docs/add_products.png"  width="600" height="400">
+<img src="images/add_products.png"  width="600" height="400">
 
 
 The location of FreeRTOS must be configured in CCS.  This is done by Preferences->Code Composer Studio->Build->Environment.  Then select Add... Add the variable name `FREERTOS_INSTALL_DIR` and set it to the absolute path of FreeRTOS on the build system.
 
 
-<img src="docs/FreeRTOS.png"  width="600" height="400">
+<img src="images/FreeRTOS.png"  width="600" height="400">
 
 
 
@@ -86,7 +86,7 @@ The location of FreeRTOS must be configured in CCS.  This is done by Preferences
 Press Browse, then Open.  Available examples will show up in the dialog box.  Select the example and press Finish.  After selecting Finish, the example chosen will import into your workspace.
 
 
-<img src="docs/select_ccsproject.png"  width="300" height="400">
+<img src="images/select_ccsproject.png"  width="300" height="400">
 
 
 
@@ -115,6 +115,6 @@ export `PATH`=/Users/username/ti/gcc_arm_none_eabi_9_2_1/arm-none-eabi/bin:$PATH
 
 ## SDK_Association
 
-[F2](docs/simplelink_cc13xx_cc26xx_sdk.md)
+[F2](images/simplelink_cc13xx_cc26xx_sdk.md)
 
-[F3](docs/simplelink_lowpower_f3_sdk.md)
+[F3](images/simplelink_lowpower_f3_sdk.md)
