@@ -29,11 +29,18 @@ Alternatively you can initialize/update _all_ submodules when cloning a repo
 with `git clone --recurse-submodules {repo-ref}`.  See Git documentation for
 details.
 
-Once initialized and updated, you can refer to each SDK's README.md for details
-on how to download its dependencies and build its libraries.
+Once initialized and updated, you can refer to each SDK's README.md and Release
+Notes for details on how to download its dependencies, and build its libraries.
 
-* [SimpleLink Low Power F2 SDK README](./cc13xx_cc26xx_sdk/README.md)
-* [SimpleLink Low Power F3 SDK README](./simplelink-lowpower-f3-sdk/README.md)
+* [SimpleLink Low Power F2 SDK
+  README](https://github.com/TexasInstruments/cc13xx_cc26xx_sdk/blob/main/README.md)
+* [SimpleLink Low Power F3 SDK
+  README](https://github.com/TexasInstruments/simplelink-lowpower-f3-sdk/blob/main/README.md)
+
+> Note, the links above are to online copies of the latest SDK READMEs.  They
+> are useful for online readers, but be sure to consult the SDK submodule's
+> _actual_ README.md after cloning, checking out your branch/tag, and updating
+> your submodule, as details may change from release to release.
 
 ## Setup Instructions
 
@@ -46,8 +53,8 @@ file at the top, then run `make`.
 
 Note that _sometimes_ the dependencies can vary from SDK to SDK.  For example,
 if you've been using the F2 SDK and SysConfig version X, and want to start using
-the F3 SDK, it may require a newer SysConfig version.  So be sure to refer to
-each SDK's README.md and Release Notes.
+the F3 SDK, it may require a newer SysConfig version.  So, again, be sure to
+refer to each SDK's README.md and Release Notes.
 
 Often newer versions of dependencies are compatible, so you can use
 newer-and-compatible versions than the SDK was validated against.  But each SDK
