@@ -1,0 +1,14 @@
+# RTOS Based examples 
+# examples/rtos|nortos/device/stack/examplename/rtosname/compiler/
+# NORTOS Based examples
+# examples/rtos/device/stack/examplename/compiler/
+
+examples/**/*.obj
+examples/**/*.map
+examples/**/*.out
+examples/**/*.xs
+examples/**/*.opt
+examples/**/*.hex
+examples/**/*.genlibs
+examples/**/ti_*_config*.[ch]
+examples/**/FreeRTOSConfig.h
