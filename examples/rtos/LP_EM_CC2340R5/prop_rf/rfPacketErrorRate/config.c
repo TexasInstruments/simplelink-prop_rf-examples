@@ -109,21 +109,21 @@ FrequencyTableEntry*  config_frequencyTable_Lut[] =
 {
     config_frequencyTable_ble,    // RCL_Generic_BLE_1M
     config_frequencyTable_2_4,    // RCL_Generic_250K_MSK
-    config_frequencyTable_2_4     // RCL_Generic_500K_MSK
+    config_frequencyTable_2_4     // RCL_Generic_250_MSK_FEC
 };
 
 uint32_t config_dataRateTable_Lut[] =
 {
     1000000,  // RCL_Generic_BLE_1M
     250000,   // RCL_Generic_250K_MSK
-    500000    // RCL_Generic_500K_MSK
+    500000    // RCL_Generic_250_MSK_FEC
 };
 
 const char* const config_rfSetupLabels[] =
 {
-    "BLE Mode ",
-    "MSK 250K ",
-    "MSK 500K"
+    "BLE Mode     ",
+    "MSK 250K     ",
+    "MSK 250K FEC "
 };
 
 const char* const config_testmodeLabels[] =

@@ -44,7 +44,7 @@
 #include <ti/drivers/rcl/RCL_Scheduler.h>
 #include <ti/drivers/rcl/commands/generic.h>
 #include <setup/rcl_settings_msk_250_kbps.h>
-#include <setup/rcl_settings_msk_500_kbps.h>
+#include <setup/rcl_settings_msk_250_kbps_fec.h>
 #include <setup/rcl_settings_ble_generic.h>
 
 
@@ -73,6 +73,9 @@
 
 /* Number of packets to initialize for multi buffer */
 #define NUM_OF_PACKETS          (1U)
+
+#define NFRACBITS               9   // 32 - ceil(log2(4000000)) - 1
+#define LOG2_100MILLION         27  // ceil(log2(10^8)=26.575424759098897) = 27
 
 /***** Variable Declarations *****/
 /* RCL Commands */
@@ -107,6 +110,17 @@ static rx_metrics rxMetrics = {
     .throughput      = 0
 };
 
+uint32_t nFracBits        = 0;
+uint32_t nBitsDeltaTimeUs = 0;
+uint32_t  startTime = 0, endTime = 0;
+uint32_t  currTimerVal = 0, rxTimeoutVal = 0;
+uint32_t deltaTimeUs = 0;
+uint32_t deltaTimePacket = 0;
+uint32_t deltaTimePacketUs = 0;
+uint32_t pktIntervalEstUs  = 0;
+uint32_t nBits = 0;
+uint32_t throughputI = 0, throughputQ = 0;
+
 /* Buffer used to store RCL packet */
 uint32_t buffer[NUM_DATA_ENTRIES][BUFF_STRUCT_LENGTH/4];
 
@@ -127,6 +141,66 @@ void rxCallback(RCL_Command *cmd, LRF_Events lrfEvents, RCL_Events rclEvents)
         /* Increment number of packets received */
         nRxPkts++;
 
+         if(bFirstPacket)
+        {
+            startTime = rxCmd.stats->lastTimestamp;
+            /* Lock out this read after the first packet */
+            bFirstPacket = false;
+        }
+        else
+        {
+            endTime = rxCmd.stats->lastTimestamp;
+            /* Calculate the delta between two consecutive packets */
+            deltaTimePacket   = endTime - startTime;
+            deltaTimePacketUs = deltaTimePacket/(RCL_SCHEDULER_SYSTIM_US(1));
+
+            /* Set current packet time stamp as the start time for the next
+            * delta calculation
+            */
+            startTime    = endTime;
+            deltaTimeUs += deltaTimePacketUs;
+#if defined(__TI_COMPILER_VERSION__)
+            nFracBits   = _norm(deltaTimeUs);
+#elif defined(__IAR_SYSTEMS_ICC__)
+            nFracBits   = __CLZ(deltaTimeUs);
+#elif defined(__GNUC__)
+            nFracBits   = __builtin_clz(deltaTimeUs);
+#else
+#error This compiler is not supported.
+#endif
+            nBitsDeltaTimeUs = 32UL - nFracBits;
+
+            if(nBitsDeltaTimeUs >= LOG2_100MILLION)
+            {
+                // deltaTimeUs is two orders of magnitude larger that 10^6
+                // Throughput_I = (N_bits * 2^nFracBits)/(delT_us/10^6))
+                //              = Throughput_I / 2^nFracBits
+                // Shift N_bits up to occupy the MSbs and then divide by
+                // (delT_us/10^6) which is at least 6 bits wide
+                //   log2(1e8)-log2(1e6) = 6.643856189774724
+                throughputI = (nBits << nFracBits)/ (deltaTimeUs / 1000000UL);
+                throughputQ = throughputI & ((1 << nFracBits) - 1);
+                throughputI = throughputI >> nFracBits;
+            }
+            else
+            {
+                // deltaTimeUs is smaller or comparable to 10^8
+                // Throughput_I = (N_bits * 2^NFRAC)/(delT_us/10^6)
+                //              = (N_bits)* (round(10^6*2^NFRAC)/delT_us)
+                //              = (N_bits)* ((10^6*2^NFRAC + delT_us/2)/delT_us)
+                //              = Throughput_I / 2^nFracBits
+                throughputI = nBits * (((1000000UL << NFRACBITS) + (deltaTimeUs >> 1))/deltaTimeUs);
+                throughputQ = throughputI & ((1 << NFRACBITS) - 1);
+                throughputI = throughputI >> NFRACBITS;
+            }
+            rxMetrics.throughput = throughputI;
+        }
+
+        /* Read out received packet */
+        RCL_Buffer_DataEntry *rxPkt = RCL_MultiBuffer_RxEntry_get(&(rxCmd.rxBuffers), NULL);
+
+        nBits += (rxPkt->length << 3);
+
         /* Clear multi buffer after receive finishes for next receive */
         RCL_MultiBuffer_clear(multiBuffer);
     }
@@ -139,6 +213,12 @@ static void rx_resetVariables(void)
     gPktRcvd = 0U;
     gRxCmdDone = 0U;
     packetReceived = false;
+    bFirstPacket = true;
+
+    nBits = 0;
+    startTime = endTime = 0;
+    deltaTimeUs = deltaTimePacket = deltaTimePacketUs = 0;
+    throughputI = throughputQ = 0;
 }
 
 /* Runs the receiving part of the test application and returns a result */
@@ -165,7 +245,7 @@ TestResult rx_runRxTest(const ApplicationConfig* config)
     }
     else
     {
-        rclHandle = RCL_open(&rxRclClient, &LRF_configMsk500Kbps);
+        rclHandle = RCL_open(&rxRclClient, &LRF_configMsk250KbpsFec);
     }
 
 
@@ -215,13 +295,14 @@ TestResult rx_runRxTest(const ApplicationConfig* config)
         /* Pend on command completion */
         RCL_Command_pend(&rxCmd);
 
+        rxMetrics.packetsExpected = config->packetCount;
         if(packetReceived || bPacketsLost)
         {
             rxMetrics.packetsReceived = nRxPkts;
             rxMetrics.packetsMissed   = config->packetCount - nRxPkts;
-            rxMetrics.packetsExpected = config->packetCount;
             rxMetrics.rssi            = rxCmd.stats->lastRssi;
             rxMetrics.crcOK           = rxCmd.stats->nRxOk;
+            rxMetrics.throughput = throughputI;
             menu_updateRxScreen(&rxMetrics);
         }
 
@@ -235,9 +316,9 @@ TestResult rx_runRxTest(const ApplicationConfig* config)
             {
                 rxMetrics.packetsReceived = nRxPkts;
                 rxMetrics.packetsMissed   = rxCmd.stats->nRxNok;
-                rxMetrics.packetsExpected = config->packetCount;
                 rxMetrics.rssi            = rxCmd.stats->lastRssi;
                 rxMetrics.crcOK           = rxCmd.stats->nRxOk;
+                rxMetrics.throughput      = throughputI;
                 menu_updateRxScreen(&rxMetrics);
 
                 testResult = TestResult_Finished;

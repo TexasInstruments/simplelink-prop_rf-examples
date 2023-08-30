@@ -44,15 +44,15 @@
 
 #if defined(USE_250KBPS_MSK)
 #include <setup/rcl_settings_msk_250_kbps.h>
-#elif defined(USE_500KBPS_MSK)
-#include <setup/rcl_settings_msk_500_kbps.h>
+#elif defined(USE_250KBPS_MSK_FEC)
+#include <setup/rcl_settings_msk_250_kbps_fec.h>
 #else
 #include <setup/rcl_settings_ble_generic.h>
 #endif
 
 /***** Defines *****/
 /* RF Frequency (Hz) to program */
-#if defined(USE_250KBPS_MSK) || defined(USE_500KBPS_MSK)
+#if defined(USE_250KBPS_MSK) || defined(USE_250KBPS_MSK_FEC)
 #define FREQUENCY               (2433000000U)
 #else
 #define FREQUENCY               (2440000000U)
@@ -85,8 +85,8 @@ void *mainThread(void *arg0)
     RCL_init();
 #if defined(USE_250KBPS_MSK)
     RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_configMsk250Kbps);
-#elif defined(USE_500KBPS_MSK)
-    RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_configMsk500Kbps);
+#elif defined(USE_250KBPS_MSK_FEC)
+    RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_configMsk250KbpsFec);
 #else
     RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_configBle);
 #endif
@@ -96,7 +96,7 @@ void *mainThread(void *arg0)
 
     /* Set RF frequency */
     txCmd.rfFrequency = FREQUENCY;
-#if !(defined(USE_250KBPS_MSK) || defined(USE_500KBPS_MSK))
+#if !(defined(USE_250KBPS_MSK) || defined(USE_250KBPS_MSK_FEC))
     txCmd.common.phyFeatures = RCL_PHY_FEATURE_SUB_PHY_1_MBPS_BLE;
 #endif
 

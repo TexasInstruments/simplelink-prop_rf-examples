@@ -43,7 +43,7 @@
 #include <ti/drivers/rcl/commands/generic.h>
 
 #include <setup/rcl_settings_msk_250_kbps.h>
-#include <setup/rcl_settings_msk_500_kbps.h>
+#include <setup/rcl_settings_msk_250_kbps_fec.h>
 #include <setup/rcl_settings_ble_generic.h>
 
 
@@ -64,7 +64,7 @@
 #define NUM_PAD_BYTES           (3U)  // Number of pad bytes
 
 /* RF Frequency (Hz) to program */
-#if defined(USE_250KBPS_MSK) || defined(USE_500KBPS_MSK)
+#if defined(USE_250KBPS_MSK) || defined(USE_250KBPS_MSK_FEC)
 #define FREQUENCY               (2433000000U)
 #else
 #define FREQUENCY               (2440000000U)
@@ -150,6 +150,12 @@ if any of these parameter changes
 */
 uint32_t packetInterval;
 
+static tx_metrics txMetrics = {
+    .transmitPowerDbm = 0,
+    .dataRateBps      = 0,
+    .packetIntervalMs = 0
+};
+
 /***** Callback Functions *****/
 void txCallback(RCL_Command *cmd, LRF_Events lrfEvents, RCL_Events rclEvents)
 {
@@ -195,7 +201,7 @@ TestResult tx_runTxTest(const ApplicationConfig* config)
     }
     else
     {
-        rclHandle = RCL_open(&txRclClient, &LRF_configMsk500Kbps);
+        rclHandle = RCL_open(&txRclClient, &LRF_configMsk250KbpsFec);
     }
 
 
@@ -212,9 +218,18 @@ TestResult tx_runTxTest(const ApplicationConfig* config)
     /* Callback triggers on last command done */
     txCmd.common.runtime.callback = txCallback;
     txCmd.common.runtime.rclCallbackMask.value = RCL_EventLastCmdDone.value;
+    txCmd.txPower = LRF_TxPower_Use_Max;
 
     /* Set RCL TX buffer packet to be packet buffer */
     RCL_Buffer_TxBuffer *txPacket = (RCL_Buffer_TxBuffer *)&packet;
+
+    /* Determine the data rate in bits per seconds */
+    txMetrics.dataRateBps = config_dataRateTable_Lut[config->rfSetup];
+    if(txMetrics.dataRateBps > 0)
+    {
+        // Dummy logic to not optimize out config_dataRateTable_Lut
+        txMetrics.dataRateBps = txMetrics.dataRateBps;
+    }
 
     uint16_t i;
     for (i = 0U; i < config->packetCount; i++)
@@ -247,7 +262,7 @@ TestResult tx_runTxTest(const ApplicationConfig* config)
             /* Create packet with random payload */
             uint8_t *txData;
 #if (!defined(FIXED_LENGTH_SETUP))
-            if(config->rfSetup == RCL_Generic_250K_MSK)
+            if((config->rfSetup == RCL_Generic_250K_MSK) || (config->rfSetup == RCL_Generic_250_MSK_FEC))
             {
                 hdrLen = 1;
                 txData = RCL_TxBuffer_init(txPacket, NUM_PAD_BYTES, hdrLen, pktLen);
@@ -262,8 +277,8 @@ TestResult tx_runTxTest(const ApplicationConfig* config)
             }
             else
             {
-				/* 500KBPS MSK will always use hdrLen = 0, only fixed length configuration is supported */ 
-                txData = RCL_TxBuffer_init(txPacket, NUM_PAD_BYTES, hdrLen, pktLen);
+				// If you added a new PHY. make sure the header setup is correct
+                while(1);
             }
 #else
             txData = RCL_TxBuffer_init(txPacket, NUM_PAD_BYTES, hdrLen, pktLen);

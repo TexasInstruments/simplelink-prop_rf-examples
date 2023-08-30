@@ -24,7 +24,6 @@
             -I${PROJECT_ROOT}
             -I${PROJECT_ROOT}/${ConfigName}
             -DVARIABLE_LENGTH_SETUP
-            -DDeviceFamily_CC23X0R5
             -I${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/source
             -I${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/kernel/nortos
             -I${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/kernel/nortos/posix
@@ -40,8 +39,6 @@
             -L${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/kernel/nortos
             -L${PROJECT_BUILD_DIR}/syscfg
             -lti_utils_build_linker.cmd.genlibs
-            -lti/drivers/rcl/lib/ticlang/m0p/rcl_cc23x0r5.a
-            -lti/devices/cc23x0r5/driverlib/lib/ticlang/driverlib.a
             -Wl,--rom_model
             -Wl,--warn_sections
             -L${CG_TOOL_ROOT}/lib
@@ -68,9 +65,9 @@
         </file>
         <file path="../setup/rcl_settings_msk_250_kbps.h" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="setup">
         </file>
-        <file path="../setup/rcl_settings_msk_500_kbps.c" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="setup">
+        <file path="../setup/rcl_settings_msk_250_kbps_fec.c" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="setup">
         </file>
-        <file path="../setup/rcl_settings_msk_500_kbps.h" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="setup">
+        <file path="../setup/rcl_settings_msk_250_kbps_fec.h" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="setup">
         </file>
         <file path="../rfPacketTx.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>

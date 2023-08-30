@@ -1,11 +1,13 @@
 // SETTINGS FOR PHY BASED ON RADIO CONTROL LAYER (SOURCE FILE)
 //
+// Usage                       Protocol stack / Application
+//
 //
 // CODE EXPORT INFORMATION
 // This file is generated
 //
-// Tool name                   SmartRF Studio
-// Tool version                0.6.0.193 INTERNAL
+// Tool name                   SmartRF Studio 8
+// Tool version                0.6.0.263 INTERNAL
 //
 //
 // WORKSPACE INFORMATION
@@ -14,7 +16,7 @@
 // Device                      CC2340R5
 //     Package                 QFN40 5x5 RKP
 //     Revision(s)             B (2.0)
-// SDK                         SimpleLink CC23x0 SDK 7.11.00.36
+// SDK                         SimpleLink CC23x0 SDK 7.20.00.00
 // Board                       LP-EM-CC2340R5
 // PHY                         2.4 GHz - Proprietary - 250 kbps, MSK
 // PHY abbreviation            msk_250_kbps
@@ -24,12 +26,12 @@
 //
 // Run-time properties:
 //     Frequency               2440.00000 MHz
-//     TX output power         5.0 dBm 
+//     TX output power         5.0 dBm
 // Start of packet:
-//     Synchronization word    0x930B51DE 
+//     Synchronization word    0x930B51DE
 // Packet data:
-//     Whitening               Disabled 
-//     Payload length          Variable, 8-bit length field  
+//     Whitening               Disabled
+//     Payload length          Variable, 8-bit length field
 
 #include "rcl_settings_msk_250_kbps.h"
 #include DeviceFamily_constructPath(rf_patches/lrf_pbe_binary_generic.h)
@@ -46,8 +48,8 @@ static const uint32_t fixedLenSetup[] =
 };
 #endif
 
-// Configuration for COMBINED
-static const uint32_t LRF_combinedRegConfig[] =
+// Configuration: Common
+static const uint32_t LRF_commonRegConfig[] =
 {
     0x00000058,                                // Segment length = 88
     0x0000A002,                                //     Data structure 32-bit region (start byte position = 0, count = 3)
@@ -66,7 +68,7 @@ static const uint32_t LRF_combinedRegConfig[] =
     0x14682000,                                //     HW 32-bit region (start address = 0x1468, count = 1)
     0x00020004,                                //         LRFDPBE.TXFWBTHRS                   LRFDPBE.RXFRBTHRS
     0x10DC1001,                                //     HW 16-bit region (start address = 0x10DC, count = 2)
-    0x000C0002,                                //         LRFDPBE.TIMPRE                      LRFDPBE.TIMCTL
+    0x000B0002,                                //         LRFDPBE.TIMPRE                      LRFDPBE.TIMCTL
     0x00003005,                                //     HW sparse region (address/value pairs, count = 6)
     0x20C00003,                                //         LRFDMDM.ADCDIGCONF
     0x20C800F1,                                //         LRFDMDM.MODSYMMAP0
@@ -116,7 +118,7 @@ static const uint32_t LRF_combinedRegConfig[] =
     0x20206005,                                //     RAM 32-bit region (start address = 0x2020, count = 6)
     0x00B40000,                                //         PBE_GENERIC_RAM.SYNTHCALTIMEOUT     PBE_GENERIC_RAM.PHY
     0x00100788,                                //         PBE_GENERIC_RAM.NUMCRCBITS          PBE_GENERIC_RAM.PKTCFG
-    0x00024BB0,                                //         PBE_GENERIC_RAM.EXTRABYTES          PBE_GENERIC_RAM.FIFOCFG
+    0x000003B0,                                //         PBE_GENERIC_RAM.EXTRABYTES          PBE_GENERIC_RAM.FIFOCFG
     0x00000000,                                //         < GAP >                             PBE_GENERIC_RAM.WHITEINIT
     0xFFFF0000,                                //         PBE_GENERIC_RAM.CRCINITH            PBE_GENERIC_RAM.CRCINITL
     0x00000100,                                //         PBE_GENERIC_RAM.LENOFFSET           PBE_GENERIC_RAM.LENCFG
@@ -128,7 +130,7 @@ static const uint32_t LRF_combinedRegConfig[] =
     0x132C0074,                                //         RFE_COMMON_RAM.K3BL                 RFE_COMMON_RAM.K2AL
     0x916F07AB,                                //         RFE_COMMON_RAM.K5                   RFE_COMMON_RAM.K3AL
     0x68206005,                                //     RAM 32-bit region (start address = 0x6820, count = 6)
-    0x00080000,                                //         RFE_COMMON_RAM.RTRIMMIN             RFE_COMMON_RAM.RTRIMOFF
+    0x00000000,                                //         RFE_COMMON_RAM.RTRIMMIN             RFE_COMMON_RAM.RTRIMOFF
     0x48080008,                                //         RFE_COMMON_RAM.DIVF                 RFE_COMMON_RAM.DIVI
     0x00000000,                                //         RFE_COMMON_RAM.DIVLDOF              RFE_COMMON_RAM.DIVLDOI
     0x00470014,                                //         RFE_COMMON_RAM.LDOSETTLE            RFE_COMMON_RAM.DIVLDOIOFF
@@ -149,7 +151,7 @@ static const LRF_RegConfigList LRF_regConfigList = {
     .numEntries = 1,
 #endif
     .entries = {
-        (LRF_ConfigWord*) LRF_combinedRegConfig,
+        (LRF_ConfigWord*) LRF_commonRegConfig,
 #ifdef FIXED_LENGTH_SETUP
         (LRF_ConfigWord *)&fixedLenSetup
 #endif
@@ -164,7 +166,7 @@ const LRF_SwConfig LRF_swConfigMsk250Kbps = {
     .modFrequencyDeviation = 0x0000F424,
     .txShape               = (LRF_TxShape*) 0,
     .bwIndex               = 0x00,
-    .bwIndexDither         = 0x00 
+    .bwIndexDither         = 0x00
 };
 
 // LRF_TxPowerTable data structure
@@ -184,7 +186,7 @@ const LRF_TxPowerTable LRF_txPowerTableMsk250Kbps = {
         { .power = { .fraction = 0, .dBm = 5 }, .tempCoeff = 55, .value = { .reserved = 0, .ib = 27, .gain = 6, .mode = 1, .noIfampRfLdoBypass = 0 } },
         { .power = { .fraction = 0, .dBm = 6 }, .tempCoeff = 75, .value = { .reserved = 0, .ib = 38, .gain = 6, .mode = 1, .noIfampRfLdoBypass = 0 } },
         { .power = { .fraction = 0, .dBm = 7 }, .tempCoeff = 80, .value = { .reserved = 0, .ib = 25, .gain = 7, .mode = 1, .noIfampRfLdoBypass = 0 } },
-        { .power = { .fraction = 0, .dBm = 8 }, .tempCoeff = 180, .value = { .reserved = 0, .ib = 63, .gain = 7, .mode = 1, .noIfampRfLdoBypass = 0 } } 
+        { .power = { .fraction = 0, .dBm = 8 }, .tempCoeff = 180, .value = { .reserved = 0, .ib = 63, .gain = 7, .mode = 1, .noIfampRfLdoBypass = 0 } }
     }
 };
 
@@ -193,5 +195,5 @@ const LRF_Config LRF_configMsk250Kbps = {
     .pbeImage              = (const LRF_TOPsmImage*) LRF_PBE_binary_generic,
     .mceImage              = (const LRF_TOPsmImage*) LRF_MCE_binary_genfsk,
     .rfeImage              = (const LRF_TOPsmImage*) LRF_RFE_binary_genfsk,
-    .regConfigList         = &LRF_regConfigList 
+    .regConfigList         = &LRF_regConfigList
 };

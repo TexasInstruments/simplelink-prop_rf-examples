@@ -45,8 +45,8 @@
 
 #if defined(USE_250KBPS_MSK)
 #include <setup/rcl_settings_msk_250_kbps.h>
-#elif defined(USE_500KBPS_MSK)
-#include <setup/rcl_settings_msk_500_kbps.h>
+#elif defined(USE_250KBPS_MSK_FEC)
+#include <setup/rcl_settings_msk_250_kbps_fec.h>
 #else
 #include <setup/rcl_settings_ble_generic.h>
 #endif
@@ -58,10 +58,10 @@
 #define NUM_PAD_BYTES           (3U)  // Number of pad bytes
 
 /* Header length */
-#if defined(USE_500KBPS_MSK) || defined(FIXED_LENGTH_SETUP) // 500KBPS is always set up for fixed length packets
+#if defined(FIXED_LENGTH_SETUP) // 500KBPS is always set up for fixed length packets
 #define HDR_LEN                 (0U)
 #else
-#if defined(USE_250KBPS_MSK) // 250KBPS with variable length enabled
+#if (defined(USE_250KBPS_MSK) || defined(USE_250KBPS_MSK_FEC)) // 250KBPS with variable length enabled
 #define HDR_LEN                 (1U)
 #else // 1 Mbps with variable length enabled
 #define HDR_LEN                 (2U)
@@ -73,7 +73,7 @@
 /* Indicates if FS is off */
 #define FS_OFF                  (1U)  // 0: On, 1: Off
 
-#if defined(USE_250KBPS_MSK) || defined(USE_500KBPS_MSK)
+#if (defined(USE_250KBPS_MSK) || defined(USE_250KBPS_MSK_FEC))
 #define FREQUENCY               (2433000000U)
 #else
 #define FREQUENCY               (2440000000U)
@@ -115,8 +115,8 @@ void *mainThread(void *arg0)
 
 #if defined(USE_250KBPS_MSK)
     RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_configMsk250Kbps);
-#elif defined(USE_500KBPS_MSK)
-    RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_configMsk500Kbps);
+#elif defined(USE_250KBPS_MSK_FEC)
+    RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_configMsk250KbpsFec);
 #else
     RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_configBle);
 #endif
@@ -126,7 +126,7 @@ void *mainThread(void *arg0)
 
     /* Set RF frequency */
     txCmd.rfFrequency = FREQUENCY;
-#if !(defined(USE_250KBPS_MSK) || defined(USE_500KBPS_MSK))
+#if !(defined(USE_250KBPS_MSK) || defined(USE_250KBPS_MSK_FEC))
     txCmd.common.phyFeatures = RCL_PHY_FEATURE_SUB_PHY_1_MBPS_BLE;
 #endif
 
@@ -152,8 +152,8 @@ void *mainThread(void *arg0)
         /* Create packet with random payload */
         uint8_t *txData;
         txData = RCL_TxBuffer_init(txPacket, NUM_PAD_BYTES, HDR_LEN, MAX_LENGTH);
-#if !(defined(USE_500KBPS_MSK) || defined(FIXED_LENGTH_SETUP))
-#if defined(USE_250KBPS_MSK)
+#if !(defined(FIXED_LENGTH_SETUP))
+#if (defined(USE_250KBPS_MSK) || defined(USE_250KBPS_MSK_FEC))
         txData[0] = MAX_LENGTH;
 #else
         txData[0] = 0;

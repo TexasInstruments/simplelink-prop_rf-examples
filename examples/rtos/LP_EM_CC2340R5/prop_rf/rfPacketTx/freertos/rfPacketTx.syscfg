@@ -35,6 +35,9 @@
  *  rfPacketTx.syscfg
  */
 
+/* ======== RCL ======== */
+const RCL      = scripting.addModule("/ti/drivers/RCL");
+
 /* ======== LED Green ======== */
 var GPIO = scripting.addModule("/ti/drivers/GPIO");  // Add a GPIO module for use by LEDs
 var LED_G = GPIO.addInstance();                      // Add an a GPIO module instance for LED_G
