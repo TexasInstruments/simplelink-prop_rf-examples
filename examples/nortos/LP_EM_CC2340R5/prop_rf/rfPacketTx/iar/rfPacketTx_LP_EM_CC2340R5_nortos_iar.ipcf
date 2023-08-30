@@ -22,7 +22,6 @@
 
     <defines>
         <define>VARIABLE_LENGTH_SETUP</define>
-        <define>DeviceFamily_CC23X0R5</define>
     </defines>
 
     <extraOptions>
@@ -46,8 +45,6 @@
             <arg>-L$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/source</arg>
             <arg>-L$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/kernel/nortos</arg>
             <arg>-f$PROJ_DIR$/ti_utils_build_linker.cmd.genlibs</arg>
-            <arg>$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/source/ti/devices/cc23x0r5/driverlib/lib/iar/driverlib.a</arg>
-            <arg>$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/source/ti/drivers/rcl/lib/iar/m0p/rcl_cc23x0r5.a</arg>
             <arg>--silent</arg>
         </args>
     </linkerExtraOptions>
@@ -89,8 +86,8 @@
             <path copyTo="$PROJ_DIR$/setup/rcl_settings_ble_generic.h">$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketTx/setup/rcl_settings_ble_generic.h</path>
             <path copyTo="$PROJ_DIR$/setup/rcl_settings_msk_250_kbps.c">$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketTx/setup/rcl_settings_msk_250_kbps.c</path>
             <path copyTo="$PROJ_DIR$/setup/rcl_settings_msk_250_kbps.h">$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketTx/setup/rcl_settings_msk_250_kbps.h</path>
-            <path copyTo="$PROJ_DIR$/setup/rcl_settings_msk_500_kbps.c">$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketTx/setup/rcl_settings_msk_500_kbps.c</path>
-            <path copyTo="$PROJ_DIR$/setup/rcl_settings_msk_500_kbps.h">$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketTx/setup/rcl_settings_msk_500_kbps.h</path>
+            <path copyTo="$PROJ_DIR$/setup/rcl_settings_msk_250_kbps_fec.c">$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketTx/setup/rcl_settings_msk_250_kbps_fec.c</path>
+            <path copyTo="$PROJ_DIR$/setup/rcl_settings_msk_250_kbps_fec.h">$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketTx/setup/rcl_settings_msk_250_kbps_fec.h</path>
         </group>
     </files>
 </iarProjectConnection>

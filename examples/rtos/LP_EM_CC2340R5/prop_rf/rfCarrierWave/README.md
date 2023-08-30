@@ -46,4 +46,4 @@ Build -> Arm Compiler -> Predefined Symbols. After nagivating to Predefined Symb
 use the appropriate symbol as described below to define the PHY used.
 	- By default, Generic BLE 1M PHY is used.
 	- To use 250KBPS MSK, define predefine symbol **USE_250KBPS_MSK**.
-	- To use 500KBPS MSK, define predefine symbol **USE_500KBPS_MSK**.
+	- To use 500KBPS MSK, define predefine symbol **USE_250KBPS_MSK_FEC**.

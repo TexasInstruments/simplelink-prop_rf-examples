@@ -48,7 +48,7 @@ typedef enum
 {
     RCL_Generic_BLE_1M,
     RCL_Generic_250K_MSK,
-    RCL_Generic_500_MSK,
+    RCL_Generic_250_MSK_FEC,
     NrOfRfSetups
 } RfSetup;
 

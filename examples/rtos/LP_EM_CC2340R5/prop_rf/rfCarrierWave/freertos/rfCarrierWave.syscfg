@@ -35,6 +35,9 @@
  *  rfCarrierWave.syscfg
  */
 
+/* ======== RCL ======== */
+const RCL      = scripting.addModule("/ti/drivers/RCL");
+
 /* ======== GPIO ======== */
 var GPIO = scripting.addModule("/ti/drivers/GPIO");
 var gpio = GPIO.addInstance();

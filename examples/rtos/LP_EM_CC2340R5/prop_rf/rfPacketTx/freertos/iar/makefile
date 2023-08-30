@@ -10,14 +10,15 @@ SYSCFG_FILES := $(shell $(SYSCFG_CMD_STUB) --listGeneratedFiles --listReferenced
 
 SYSCFG_C_FILES = $(filter %.c,$(SYSCFG_FILES))
 SYSCFG_H_FILES = $(filter %.h,$(SYSCFG_FILES))
+SYSCFG_OPT_FILES = $(filter %.opt,$(SYSCFG_FILES))
 
-OBJECTS = rfPacketTx.obj setup_rcl_settings_ble_generic.obj setup_rcl_settings_msk_250_kbps.obj setup_rcl_settings_msk_500_kbps.obj freertos_main_freertos.obj $(patsubst %.c,%.obj,$(notdir $(SYSCFG_C_FILES)))
+OBJECTS = rfPacketTx.obj setup_rcl_settings_ble_generic.obj setup_rcl_settings_msk_250_kbps.obj setup_rcl_settings_msk_250_kbps_fec.obj freertos_main_freertos.obj $(patsubst %.c,%.obj,$(notdir $(SYSCFG_C_FILES)))
 NAME = rfPacketTx
 
-CFLAGS = -I../.. \
+CFLAGS += -I../.. \
     -I. \
+    $(addprefix -f,$(SYSCFG_OPT_FILES)) \
     -DVARIABLE_LENGTH_SETUP \
-    -DDeviceFamily_CC23X0R5 \
     "-I$(COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source" \
     "-I$(COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/kernel/freertos" \
     "-I$(COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source/ti/posix/iar" \
@@ -32,17 +33,16 @@ CFLAGS = -I../.. \
     --cpu=Cortex-M0+ \
     --vla
 
-LFLAGS = "-L$(COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source" \
+LFLAGS += "-L$(COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source" \
     "-L$(COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/kernel" \
     --threaded_lib \
     -fti_utils_build_linker.cmd.genlibs \
-    "$(COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source/ti/devices/cc23x0r5/driverlib/lib/iar/driverlib.a" \
-    "$(COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source/ti/drivers/rcl/lib/iar/m0p/rcl_cc23x0r5.a" \
     --config ../../freertos/iar/cc23x0r5_freertos.icf \
     --map "$(NAME).map" \
     --silent \
     --semihosting=iar_breakpoint \
     --cpu=Cortex-M0+
+
 all: $(NAME).out
 
 .INTERMEDIATE: syscfg
@@ -56,7 +56,7 @@ syscfg: ../../freertos/rfPacketTx.syscfg
 define C_RULE
 $(basename $(notdir $(1))).obj: $(1) $(SYSCFG_H_FILES)
 	@ echo Building $$@
-	@ $(CC) $(CFLAGS) $$< -o $$@
+	@ $(CC) $(CFLAGS) "$$<" -o $$@
 endef
 
 $(foreach c_file,$(SYSCFG_C_FILES),$(eval $(call C_RULE,$(c_file))))
@@ -73,7 +73,7 @@ setup_rcl_settings_msk_250_kbps.obj: ../../setup/rcl_settings_msk_250_kbps.c $(S
 	@ echo Building $@
 	@ $(CC) $(CFLAGS) $< -o $@
 
-setup_rcl_settings_msk_500_kbps.obj: ../../setup/rcl_settings_msk_500_kbps.c $(SYSCFG_H_FILES)
+setup_rcl_settings_msk_250_kbps_fec.obj: ../../setup/rcl_settings_msk_250_kbps_fec.c $(SYSCFG_H_FILES)
 	@ echo Building $@
 	@ $(CC) $(CFLAGS) $< -o $@
 

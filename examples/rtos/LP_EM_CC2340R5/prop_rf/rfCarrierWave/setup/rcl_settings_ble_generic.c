@@ -1,13 +1,13 @@
 // SETTINGS FOR PHY BASED ON RADIO CONTROL LAYER (SOURCE FILE)
 //
-// Usage                  Generic / RF test
+// Usage                  Generic
 //
 //
 // CODE EXPORT INFORMATION
 // This file is generated
 //
-// Tool name              SmartRF Studio
-// Tool version           0.6.0.193 INTERNAL
+// Tool name              SmartRF Studio 8
+// Tool version           0.6.0.263 INTERNAL
 //
 //
 // WORKSPACE INFORMATION
@@ -16,7 +16,7 @@
 // Device                 CC2340R5
 //     Package            QFN40 5x5 RKP
 //     Revision(s)        B (2.0)
-// SDK                    SimpleLink CC23x0 SDK 7.11.00.36
+// SDK                    SimpleLink CC23x0 SDK 7.20.00.00
 // Board                  LP-EM-CC2340R5
 // PHY                    2.4 GHz - Bluetooth 5, LE - 1 Mbps / 2 Mbps / Coded
 // PHY abbreviation       ble
@@ -25,9 +25,9 @@
 // PHY PROPERTIES
 //
 // Run-time properties:
-//     Sub-PHY            1 Mbps 
-//     Channel            17 (2440 MHz) 
-//     TX output power    5.0 dBm 
+//     Sub-PHY            1 Mbps
+//     Channel            17 (2440 MHz)
+//     TX output power    5.0 dBm
 
 #include "rcl_settings_ble_generic.h"
 #include DeviceFamily_constructPath(rf_patches/lrf_pbe_binary_generic.h)
@@ -45,8 +45,8 @@ static const uint32_t fixedLenSetup[] =
 };
 #endif
 
-// Configuration for SUB-PHY = 1 Mbps, 2 Mbps, Coded
-static const uint32_t LRF_subPhy1Mbps2MbpsCodedRegConfig[] =
+// Configuration: Common
+static const uint32_t LRF_commonRegConfig[] =
 {
     0x0000003F,                          // Segment length = 63
     0x0004A001,                          //     Data structure 32-bit region (start byte position = 4, count = 2)
@@ -93,8 +93,8 @@ static const uint32_t LRF_subPhy1Mbps2MbpsCodedRegConfig[] =
     0x00001804,                          //         -                                   LRFDRFE.MOD0
     0x2022500A,                          //     RAM 16-bit region (start address = 0x2022, count = 11)
     0x009000B4,                          //         PBE_GENERIC_RAM.PKTCFG              PBE_GENERIC_RAM.SYNTHCALTIMEOUT
-    0x4BB00018,                          //         PBE_GENERIC_RAM.FIFOCFG             PBE_GENERIC_RAM.NUMCRCBITS
-    0x00510002,                          //         PBE_GENERIC_RAM.WHITEINIT           PBE_GENERIC_RAM.EXTRABYTES
+    0x03B00018,                          //         PBE_GENERIC_RAM.FIFOCFG             PBE_GENERIC_RAM.NUMCRCBITS
+    0x00510000,                          //         PBE_GENERIC_RAM.WHITEINIT           PBE_GENERIC_RAM.EXTRABYTES
     0x55000000,                          //         PBE_GENERIC_RAM.CRCINITL            < GAP >
     0x01085555,                          //         PBE_GENERIC_RAM.LENCFG              PBE_GENERIC_RAM.CRCINITH
     0x00000000,                          //         -                                   PBE_GENERIC_RAM.LENOFFSET
@@ -106,7 +106,7 @@ static const uint32_t LRF_subPhy1Mbps2MbpsCodedRegConfig[] =
     0x132C0074,                          //         RFE_COMMON_RAM.K3BL                 RFE_COMMON_RAM.K2AL
     0x916F07AB,                          //         RFE_COMMON_RAM.K5                   RFE_COMMON_RAM.K3AL
     0x68206005,                          //     RAM 32-bit region (start address = 0x6820, count = 6)
-    0x00080000,                          //         RFE_COMMON_RAM.RTRIMMIN             RFE_COMMON_RAM.RTRIMOFF
+    0x00000000,                          //         RFE_COMMON_RAM.RTRIMMIN             RFE_COMMON_RAM.RTRIMOFF
     0x48080008,                          //         RFE_COMMON_RAM.DIVF                 RFE_COMMON_RAM.DIVI
     0x00000000,                          //         RFE_COMMON_RAM.DIVLDOF              RFE_COMMON_RAM.DIVLDOI
     0x00470014,                          //         RFE_COMMON_RAM.LDOSETTLE            RFE_COMMON_RAM.DIVLDOIOFF
@@ -114,7 +114,7 @@ static const uint32_t LRF_subPhy1Mbps2MbpsCodedRegConfig[] =
     0x0000FE00                           //         RFE_COMMON_RAM.IFAMPRFLDODEFAULT    RFE_COMMON_RAM.IFAMPRFLDOTX
 };
 
-// Configuration for SUB-PHY = 1 Mbps, 2 Mbps
+// Configuration: Sub-PHY = 1 Mbps, 2 Mbps
 static const uint32_t LRF_subPhy1Mbps2MbpsRegConfig[] =
 {
     0x00024010,                          // Segment length = 16
@@ -136,7 +136,7 @@ static const uint32_t LRF_subPhy1Mbps2MbpsRegConfig[] =
     0x00000045                           //         RFE_COMMON_RAM.AGCINFO              RFE_COMMON_RAM.SPARE1SHADOW
 };
 
-// Configuration for SUB-PHY = 1 Mbps, Coded
+// Configuration: Sub-PHY = 1 Mbps, Coded
 static const uint32_t LRF_subPhy1MbpsCodedRegConfig[] =
 {
     0x00014005,                          // Segment length = 5
@@ -147,7 +147,7 @@ static const uint32_t LRF_subPhy1MbpsCodedRegConfig[] =
     0x21240A18                           //         LRFDMDM.SPARE0
 };
 
-// Configuration for SUB-PHY = 2 Mbps, Coded
+// Configuration: Sub-PHY = 2 Mbps, Coded
 static const uint32_t LRF_subPhy2MbpsCodedRegConfig[] =
 {
     0x00030002,                          // Segment length = 2
@@ -155,7 +155,7 @@ static const uint32_t LRF_subPhy2MbpsCodedRegConfig[] =
     0x683E004C                           //         RFE_COMMON_RAM.PHYRSSIOFFSET
 };
 
-// Configuration for SUB-PHY = 1 Mbps
+// Configuration: Sub-PHY = 1 Mbps
 static const uint32_t LRF_subPhy1MbpsRegConfig[] =
 {
     0x0003400A,                          // Segment length = 10
@@ -171,7 +171,7 @@ static const uint32_t LRF_subPhy1MbpsRegConfig[] =
     0x75F80050                           //         RFE_COMMON_RAM.SPARE0SHADOW         RFE_COMMON_RAM.PHYRSSIOFFSET
 };
 
-// Configuration for SUB-PHY = 2 Mbps
+// Configuration: Sub-PHY = 2 Mbps
 static const uint32_t LRF_subPhy2MbpsRegConfig[] =
 {
     0x0001000D,                          // Segment length = 13
@@ -190,7 +190,7 @@ static const uint32_t LRF_subPhy2MbpsRegConfig[] =
     0x684055FA                           //         RFE_COMMON_RAM.SPARE0SHADOW
 };
 
-// Configuration for SUB-PHY = Coded
+// Configuration: Sub-PHY = Coded
 static const uint32_t LRF_subPhyCodedRegConfig[] =
 {
     0x00020017,                          // Segment length = 23
@@ -219,7 +219,7 @@ static const uint32_t LRF_subPhyCodedRegConfig[] =
     0x0001001C                           //         RFE_COMMON_RAM.AGCINFO              RFE_COMMON_RAM.SPARE1SHADOW
 };
 
-// Configuration for CODED TX RATE = S8 (8 symbols per bit = 125 kbps)
+// Configuration: Coded TX rate = S8 (8 symbols per bit = 125 kbps)
 static const uint32_t LRF_codedTxRateS8RegConfig[] =
 {
     0x00044002,                          // Segment length = 2
@@ -227,7 +227,7 @@ static const uint32_t LRF_codedTxRateS8RegConfig[] =
     0x21280000                           //         LRFDMDM.SPARE1
 };
 
-// Configuration for CODED TX RATE = S2 (2 symbols per bit = 500 kbps)
+// Configuration: Coded TX rate = S2 (2 symbols per bit = 500 kbps)
 static const uint32_t LRF_codedTxRateS2RegConfig[] =
 {
     0x00040002,                          // Segment length = 2
@@ -244,7 +244,7 @@ static const LRF_RegConfigList LRF_regConfigList = {
         .numEntries = 9,
 #endif
     .entries = {
-        (LRF_ConfigWord*) LRF_subPhy1Mbps2MbpsCodedRegConfig,
+        (LRF_ConfigWord*) LRF_commonRegConfig,
         (LRF_ConfigWord*) LRF_subPhy1Mbps2MbpsRegConfig,
         (LRF_ConfigWord*) LRF_subPhy1MbpsCodedRegConfig,
         (LRF_ConfigWord*) LRF_subPhy2MbpsCodedRegConfig,
@@ -252,7 +252,7 @@ static const LRF_RegConfigList LRF_regConfigList = {
         (LRF_ConfigWord*) LRF_subPhy2MbpsRegConfig,
         (LRF_ConfigWord*) LRF_subPhyCodedRegConfig,
         (LRF_ConfigWord*) LRF_codedTxRateS8RegConfig,
-        (LRF_ConfigWord*) LRF_codedTxRateS2RegConfig ,
+        (LRF_ConfigWord*) LRF_codedTxRateS2RegConfig,
 #ifdef FIXED_LENGTH_SETUP
         (LRF_ConfigWord *)&fixedLenSetup,
 #endif
@@ -263,14 +263,14 @@ static const LRF_RegConfigList LRF_regConfigList = {
 const LRF_TxShape LRF_shapeBaseGfsk067Ble = {
     .scale                 = 0x0FDE2,
     .numCoeff              = 0x0011,
-    .coeff                 = { 0x01, 0x02, 0x05, 0x0A, 0x14, 0x22, 0x37, 0x52, 0x71, 0x91, 0xB0, 0xCB, 0xE0, 0xEE, 0xF8, 0xFD, 0xFF } 
+    .coeff                 = { 0x01, 0x02, 0x05, 0x0A, 0x14, 0x22, 0x37, 0x52, 0x71, 0x91, 0xB0, 0xCB, 0xE0, 0xEE, 0xF8, 0xFD, 0xFF }
 };
 
 // LRF_TxShape data structure
 const LRF_TxShape LRF_shapeBaseGfsk05Ble = {
     .scale                 = 0x0F183,
     .numCoeff              = 0x0014,
-    .coeff                 = { 0x01, 0x02, 0x03, 0x06, 0x0A, 0x11, 0x1A, 0x27, 0x37, 0x4B, 0x62, 0x7B, 0x94, 0xAD, 0xC4, 0xD8, 0xE7, 0xF3, 0xFB, 0xFF } 
+    .coeff                 = { 0x01, 0x02, 0x03, 0x06, 0x0A, 0x11, 0x1A, 0x27, 0x37, 0x4B, 0x62, 0x7B, 0x94, 0xAD, 0xC4, 0xD8, 0xE7, 0xF3, 0xFB, 0xFF }
 };
 
 // LRF_SwConfig data structure
@@ -281,7 +281,7 @@ const LRF_SwConfig LRF_swConfig1MbpsBle = {
     .modFrequencyDeviation = 0x0003D090,
     .txShape               = &LRF_shapeBaseGfsk067Ble,
     .bwIndex               = 0x00,
-    .bwIndexDither         = 0x01 
+    .bwIndexDither         = 0x01
 };
 
 // LRF_SwConfig data structure
@@ -292,7 +292,7 @@ const LRF_SwConfig LRF_swConfig2MbpsBle = {
     .modFrequencyDeviation = 0x0007A120,
     .txShape               = &LRF_shapeBaseGfsk05Ble,
     .bwIndex               = 0x01,
-    .bwIndexDither         = 0x01 
+    .bwIndexDither         = 0x01
 };
 
 // LRF_TxPowerTable data structure
@@ -312,7 +312,7 @@ const LRF_TxPowerTable LRF_txPowerTableBle = {
         { .power = { .fraction = 0, .dBm = 5 }, .tempCoeff = 55, .value = { .reserved = 0, .ib = 27, .gain = 6, .mode = 1, .noIfampRfLdoBypass = 0 } },
         { .power = { .fraction = 0, .dBm = 6 }, .tempCoeff = 75, .value = { .reserved = 0, .ib = 38, .gain = 6, .mode = 1, .noIfampRfLdoBypass = 0 } },
         { .power = { .fraction = 0, .dBm = 7 }, .tempCoeff = 80, .value = { .reserved = 0, .ib = 25, .gain = 7, .mode = 1, .noIfampRfLdoBypass = 0 } },
-        { .power = { .fraction = 0, .dBm = 8 }, .tempCoeff = 180, .value = { .reserved = 0, .ib = 63, .gain = 7, .mode = 1, .noIfampRfLdoBypass = 0 } } 
+        { .power = { .fraction = 0, .dBm = 8 }, .tempCoeff = 180, .value = { .reserved = 0, .ib = 63, .gain = 7, .mode = 1, .noIfampRfLdoBypass = 0 } }
     }
 };
 
@@ -321,5 +321,5 @@ const LRF_Config LRF_configBle = {
     .pbeImage              = (const LRF_TOPsmImage*) LRF_PBE_binary_generic,
     .mceImage              = (const LRF_TOPsmImage*) LRF_MCE_binary_ble5,
     .rfeImage              = (const LRF_TOPsmImage*) LRF_RFE_binary_ble5,
-    .regConfigList         = &LRF_regConfigList 
+    .regConfigList         = &LRF_regConfigList
 };

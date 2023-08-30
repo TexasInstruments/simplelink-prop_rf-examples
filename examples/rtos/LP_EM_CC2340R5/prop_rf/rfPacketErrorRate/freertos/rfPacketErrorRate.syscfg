@@ -35,6 +35,8 @@
  *  rfPacketErrorRate.syscfg
  */
 
+/* ======== RCL ======== */
+const RCL      = scripting.addModule("/ti/drivers/RCL");
 
 /* ======== UART Display ======== */
 var Display = scripting.addModule("/ti/display/Display");
