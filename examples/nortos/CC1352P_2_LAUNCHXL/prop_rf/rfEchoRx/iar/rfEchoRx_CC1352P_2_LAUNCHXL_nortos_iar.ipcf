@@ -78,14 +78,14 @@
 
     <files>
         <path reference="$PROJ_DIR$/Board.html">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/boards/CC1352P_2_LAUNCHXL/Board.html</path>
-        <path copyTo="$PROJ_DIR$/cc13x2_cc26x2_nortos.icf">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC1352P_2_LAUNCHXL/prop_rf/rfEchoRx/iar/cc13x2_cc26x2_nortos.icf</path>
-        <path copyTo="$PROJ_DIR$/main_nortos.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC1352P_2_LAUNCHXL/prop_rf/rfEchoRx/main_nortos.c</path>
-        <path copyTo="$PROJ_DIR$/README.md">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC1352P_2_LAUNCHXL/prop_rf/rfEchoRx/README.md</path>
-        <path copyTo="$PROJ_DIR$/rfEcho_ErrorTxRx.png">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC1352P_2_LAUNCHXL/prop_rf/rfEchoRx/rfEcho_ErrorTxRx.png</path>
-        <path copyTo="$PROJ_DIR$/rfEcho_PerfectEcho.png">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC1352P_2_LAUNCHXL/prop_rf/rfEchoRx/rfEcho_PerfectEcho.png</path>
-        <path copyTo="$PROJ_DIR$/rfEchoRx.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC1352P_2_LAUNCHXL/prop_rf/rfEchoRx/rfEchoRx.c</path>
-        <path copyTo="$PROJ_DIR$/rfEchoRx.syscfg">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC1352P_2_LAUNCHXL/prop_rf/rfEchoRx/rfEchoRx.syscfg</path>
-        <path copyTo="$PROJ_DIR$/RFQueue.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC1352P_2_LAUNCHXL/prop_rf/rfEchoRx/RFQueue.c</path>
-        <path copyTo="$PROJ_DIR$/RFQueue.h">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC1352P_2_LAUNCHXL/prop_rf/rfEchoRx/RFQueue.h</path>
+        <path copyTo="$PROJ_DIR$/cc13x2_cc26x2_nortos.icf">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC1352P_2_LAUNCHXL/prop_rf/rfEchoRx/iar/cc13x2_cc26x2_nortos.icf</path>
+        <path copyTo="$PROJ_DIR$/main_nortos.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC1352P_2_LAUNCHXL/prop_rf/rfEchoRx/main_nortos.c</path>
+        <path copyTo="$PROJ_DIR$/README.md">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC1352P_2_LAUNCHXL/prop_rf/rfEchoRx/README.md</path>
+        <path copyTo="$PROJ_DIR$/rfEcho_ErrorTxRx.png">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC1352P_2_LAUNCHXL/prop_rf/rfEchoRx/rfEcho_ErrorTxRx.png</path>
+        <path copyTo="$PROJ_DIR$/rfEcho_PerfectEcho.png">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC1352P_2_LAUNCHXL/prop_rf/rfEchoRx/rfEcho_PerfectEcho.png</path>
+        <path copyTo="$PROJ_DIR$/rfEchoRx.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC1352P_2_LAUNCHXL/prop_rf/rfEchoRx/rfEchoRx.c</path>
+        <path copyTo="$PROJ_DIR$/rfEchoRx.syscfg">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC1352P_2_LAUNCHXL/prop_rf/rfEchoRx/rfEchoRx.syscfg</path>
+        <path copyTo="$PROJ_DIR$/RFQueue.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC1352P_2_LAUNCHXL/prop_rf/rfEchoRx/RFQueue.c</path>
+        <path copyTo="$PROJ_DIR$/RFQueue.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC1352P_2_LAUNCHXL/prop_rf/rfEchoRx/RFQueue.h</path>
     </files>
 </iarProjectConnection>

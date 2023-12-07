@@ -24,7 +24,7 @@
             -I${PROJECT_ROOT}
             -I${PROJECT_ROOT}/${ConfigName}
             -Os
-            -DDeviceFamily_CC13X4 -Dxdc_target__isaCompatible_v8M
+            -DDeviceFamily_CC13X4
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/kernel/freertos
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/ti/posix/ticlang
@@ -50,7 +50,6 @@
         "
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --product ${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/.metadata/product.json
             --compiler ticlang
         "
         description="A receiver example on how to use the RF driver">

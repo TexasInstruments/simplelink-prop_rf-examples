@@ -51,7 +51,6 @@
         "
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --product ${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/.metadata/product.json
             --compiler ticlang
         "
         description="An echo example (packet re-transmitter) using the RF driver">

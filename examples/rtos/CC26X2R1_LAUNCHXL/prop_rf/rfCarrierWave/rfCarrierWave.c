@@ -51,9 +51,28 @@
 static RF_Object rfObject;
 static RF_Handle rfHandle;
 
-
+/* Use case: Decision variable if SW TCXO is enabled */
+static volatile bool bRunRfCmd = true;
 
 /***** Function definitions *****/
+
+static void rfCmdCallback(RF_Handle h, RF_CmdHandle ch, RF_EventMask e)
+{
+    /* Get related command */
+    RF_Op* pOp = RF_getCmdOp(h, ch);
+
+    /* Check if event invoked for command RF_cmdTxTest */
+    if ( pOp && ( pOp->commandNo == CMD_TX_TEST )) {
+        /* Use case: command aborted due to SW TCXO compensation */
+        if (( e & RF_EventCmdAborted ) && ( e & RF_EventCmdPreempted )) {
+            /* Expected event combination. Do nothing. */
+        }
+        else {
+            /* Unexpected event. Exit while loop. */
+            bRunRfCmd = false;
+        }
+    }
+}
 
 void *mainThread(void *arg0)
 {
@@ -74,11 +93,13 @@ void *mainThread(void *arg0)
     rfHandle = RF_open(&rfObject, &RF_prop, (RF_RadioSetup*)&RF_cmdPropRadioDivSetup, &rfParams);
 #endif// DeviceFamily_CC26X0R2
 
-    /* Send CMD_FS and wait until it has completed */
-    RF_runCmd(rfHandle, (RF_Op*)&RF_cmdFs, RF_PriorityNormal, NULL, 0);
+    while ( bRunRfCmd ) {
+        /* Send CMD_FS and wait until it has completed */
+        RF_runCmd(rfHandle, (RF_Op*)&RF_cmdFs, RF_PriorityNormal, NULL, 0);
 
-    /* Send CMD_TX_TEST which sends forever */
-    RF_runCmd(rfHandle, (RF_Op*)&RF_cmdTxTest, RF_PriorityNormal, NULL, 0);
+        /* Send CMD_TX_TEST which sends forever */
+        RF_runCmd(rfHandle, (RF_Op*)&RF_cmdTxTest, RF_PriorityNormal, &rfCmdCallback, ( RF_EventCmdAborted | RF_EventCmdPreempted ));
+    }
 
     /* Should never come here */
     while (1);

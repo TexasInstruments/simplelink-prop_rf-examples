@@ -209,10 +209,14 @@ void *mainThread(void *arg0)
          * -- If the RF core times out while waiting for the echo it does not
          * raise the RF_EventRxEntryDone event
          */
-        RF_EventMask terminationReason =
-                RF_runCmd(rfHandle, (RF_Op*)&RF_cmdPropTx, RF_PriorityNormal,
-                          echoCallback, (RF_EventCmdDone | RF_EventRxEntryDone |
-                          RF_EventLastCmdDone));
+        RF_EventMask terminationReason = RF_EventCmdAborted | RF_EventCmdPreempted;
+        while(( terminationReason & RF_EventCmdAborted ) && ( terminationReason & RF_EventCmdPreempted ))
+        {
+            // Re-run if command was aborted due to SW TCXO compensation
+            terminationReason = RF_runCmd(rfHandle, (RF_Op*)&RF_cmdPropTx, RF_PriorityNormal,
+                                          echoCallback, (RF_EventCmdDone | RF_EventRxEntryDone |
+                                          RF_EventLastCmdDone));
+        }
 
         switch(terminationReason)
         {

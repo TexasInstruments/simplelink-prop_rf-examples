@@ -260,7 +260,7 @@ void menu_runTask()
     if (retc == -1) {
         while (1);
     }
-    
+
     Display_clear(lcdDisplay);
 
     vt100_clear(uartDisplay);

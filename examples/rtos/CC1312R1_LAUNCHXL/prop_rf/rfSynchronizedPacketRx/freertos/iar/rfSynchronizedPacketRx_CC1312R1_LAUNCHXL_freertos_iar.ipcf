@@ -81,15 +81,15 @@
 
     <files>
         <path reference="$PROJ_DIR$/Board.html">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/boards/CC1312R1_LAUNCHXL/Board.html</path>
-        <path copyTo="$PROJ_DIR$/cc13x2_cc26x2_freertos.icf">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/freertos/iar/cc13x2_cc26x2_freertos.icf</path>
-        <path copyTo="$PROJ_DIR$/main_freertos.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/freertos/main_freertos.c</path>
-        <path copyTo="$PROJ_DIR$/overview.rov.json">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/overview.rov.json</path>
-        <path copyTo="$PROJ_DIR$/README.md">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/README.md</path>
-        <path copyTo="$PROJ_DIR$/rfSynchronizedPacket.h">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/rfSynchronizedPacket.h</path>
-        <path copyTo="$PROJ_DIR$/rfSynchronizedPacketRx.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/rfSynchronizedPacketRx.c</path>
-        <path copyTo="$PROJ_DIR$/rfSynchronizedPacketRx.syscfg">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/freertos/rfSynchronizedPacketRx.syscfg</path>
-        <path copyTo="$PROJ_DIR$/state-machine.png">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/state-machine.png</path>
-        <path copyTo="$PROJ_DIR$/StateMachine.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/StateMachine.c</path>
-        <path copyTo="$PROJ_DIR$/StateMachine.h">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/StateMachine.h</path>
+        <path copyTo="$PROJ_DIR$/cc13x2_cc26x2_freertos.icf">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/freertos/iar/cc13x2_cc26x2_freertos.icf</path>
+        <path copyTo="$PROJ_DIR$/main_freertos.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/freertos/main_freertos.c</path>
+        <path copyTo="$PROJ_DIR$/overview.rov.json">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/overview.rov.json</path>
+        <path copyTo="$PROJ_DIR$/README.md">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/README.md</path>
+        <path copyTo="$PROJ_DIR$/rfSynchronizedPacket.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/rfSynchronizedPacket.h</path>
+        <path copyTo="$PROJ_DIR$/rfSynchronizedPacketRx.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/rfSynchronizedPacketRx.c</path>
+        <path copyTo="$PROJ_DIR$/rfSynchronizedPacketRx.syscfg">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/freertos/rfSynchronizedPacketRx.syscfg</path>
+        <path copyTo="$PROJ_DIR$/state-machine.png">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/state-machine.png</path>
+        <path copyTo="$PROJ_DIR$/StateMachine.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/StateMachine.c</path>
+        <path copyTo="$PROJ_DIR$/StateMachine.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1312R1_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/StateMachine.h</path>
     </files>
 </iarProjectConnection>

@@ -1,0 +1,3 @@
+CFLAGS += -DMCUBOOT
+
+

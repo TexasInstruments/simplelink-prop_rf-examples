@@ -78,12 +78,12 @@
 
     <files>
         <path reference="$PROJ_DIR$/Board.html">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/boards/LP_EM_CC1312PSIP/Board.html</path>
-        <path copyTo="$PROJ_DIR$/cc13x2_cc26x2_nortos.icf">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioRx/iar/cc13x2_cc26x2_nortos.icf</path>
-        <path copyTo="$PROJ_DIR$/main_nortos.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioRx/main_nortos.c</path>
-        <path copyTo="$PROJ_DIR$/README.md">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioRx/README.md</path>
-        <path copyTo="$PROJ_DIR$/RFQueue.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioRx/RFQueue.c</path>
-        <path copyTo="$PROJ_DIR$/RFQueue.h">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioRx/RFQueue.h</path>
-        <path copyTo="$PROJ_DIR$/rfWakeOnRadioRx.syscfg">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioRx/rfWakeOnRadioRx.syscfg</path>
-        <path copyTo="$PROJ_DIR$/rfWakeOnRadioRx_nortos.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioRx/rfWakeOnRadioRx_nortos.c</path>
+        <path copyTo="$PROJ_DIR$/cc13x2_cc26x2_nortos.icf">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioRx/iar/cc13x2_cc26x2_nortos.icf</path>
+        <path copyTo="$PROJ_DIR$/main_nortos.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioRx/main_nortos.c</path>
+        <path copyTo="$PROJ_DIR$/README.md">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioRx/README.md</path>
+        <path copyTo="$PROJ_DIR$/RFQueue.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioRx/RFQueue.c</path>
+        <path copyTo="$PROJ_DIR$/RFQueue.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioRx/RFQueue.h</path>
+        <path copyTo="$PROJ_DIR$/rfWakeOnRadioRx.syscfg">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioRx/rfWakeOnRadioRx.syscfg</path>
+        <path copyTo="$PROJ_DIR$/rfWakeOnRadioRx_nortos.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioRx/rfWakeOnRadioRx_nortos.c</path>
     </files>
 </iarProjectConnection>

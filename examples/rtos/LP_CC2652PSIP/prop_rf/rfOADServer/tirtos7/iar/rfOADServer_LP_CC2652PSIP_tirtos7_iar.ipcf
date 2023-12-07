@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IAR Project Connection File -->
+
+<iarProjectConnection version="1.2" name="RF OAD Server" oneShot="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="IarProjectConnection_1.2.xsd">
+
+    <device>
+        <name>CC2652R1F</name>
+    </device>
+
+    <asmIncludePath>
+        <path>$PROJ_DIR$</path>
+    </asmIncludePath>
+
+    <includePath>
+        <path>$PROJ_DIR$</path>
+        <path>$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/common/cc26xx/flash_interface</path>
+        <path>$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source</path>
+        <path>$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/kernel/tirtos7/packages</path>
+        <path>$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/posix/iar</path>
+    </includePath>
+
+    <defines>
+        <define>FEATURE_OAD_SERVER_ONLY</define>
+        <define>CC13X2</define>
+        <define>SECURITY</define>
+        <define>DeviceFamily_CC26X2</define>
+    </defines>
+
+    <extraOptions>
+        <args>
+            <arg>--debug</arg>
+            <arg>--silent</arg>
+            <arg>-e</arg>
+            <arg>--aeabi</arg>
+            <arg>--thumb</arg>
+            <arg>--diag_suppress=Pa050</arg>
+        </args>
+    </extraOptions>
+
+    <linkerFile>
+        <override>true</override>
+        <path>$PROJ_DIR$/cc13x2_cc26x2_tirtos7.icf</path>
+    </linkerFile>
+
+    <linkerExtraOptions>
+        <args>
+            <arg>--config_def=FEATURE_OAD_SERVER_ONLY=1</arg>
+            <arg>-L$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source</arg>
+            <arg>-L$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/kernel/tirtos7/packages</arg>
+            <arg>-f$PROJ_DIR$/ti_utils_build_linker.cmd.genlibs</arg>
+            <arg>$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/devices/cc13x2_cc26x2/driverlib/bin/iar/driverlib.lib</arg>
+            <arg>--silent</arg>
+        </args>
+    </linkerExtraOptions>
+
+    <customBuildTools>
+        <customBuildTool atRoot="true" name="SysConfig"> <!-- Custom build tool for entire project-->
+            <fileExtensions>.syscfg</fileExtensions>
+            <command>$SYSCONFIG_ROOT$/sysconfig_cli.bat -o $PROJ_DIR$ -s "$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/.metadata/product.json" --compiler iar $FILE_PATH$</command>
+            <output>
+                <path>SysConfig_Generated_Files.ipcf</path>
+            </output>
+            <hasPrio>true</hasPrio> <!-- true: run this tool before all other tools-->
+        </customBuildTool>
+    </customBuildTools>
+
+    <heaps>
+        <heap> <!-- If omitted, id="0" -->
+            <size>0</size>
+        </heap>
+        <heap id="1">
+            <size>0</size>
+        </heap>
+    </heaps>
+    <stacks>
+        <stack> <!-- If omitted, id="0" -->
+            <size>512</size>
+        </stack>
+    </stacks>
+
+
+    <files>
+        <path reference="$PROJ_DIR$/Board.html">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/boards/LP_CC2652PSIP/Board.html</path>
+        <path copyTo="$PROJ_DIR$/cc13x2_cc26x2_tirtos7.icf">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/tirtos7/iar/cc13x2_cc26x2_tirtos7.icf</path>
+        <path copyTo="$PROJ_DIR$/main_tirtos.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/tirtos7/main_tirtos.c</path>
+        <path copyTo="$PROJ_DIR$/overview.rov.json">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/overview.rov.json</path>
+        <path copyTo="$PROJ_DIR$/README.md">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/README.md</path>
+        <path copyTo="$PROJ_DIR$/rfOADServer.syscfg">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/tirtos7/rfOADServer.syscfg</path>
+        <path copyTo="$PROJ_DIR$/rfServer.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/rfServer.c</path>
+        <path copyTo="$PROJ_DIR$/rfServer.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/rfServer.h</path>
+        <group name="common/cc26xx/crc" build="true">
+            <path copyTo="$PROJ_DIR$/common/cc26xx/crc/crc32.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/common/cc26xx/crc/crc32.c</path>
+            <path copyTo="$PROJ_DIR$/common/cc26xx/crc/crc32.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/common/cc26xx/crc/crc32.h</path>
+        </group>
+        <group name="common/cc26xx/flash_interface/" build="true">
+            <path copyTo="$PROJ_DIR$/common/cc26xx/flash_interface//flash_interface.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/common/cc26xx/flash_interface/flash_interface.h</path>
+        </group>
+        <group name="common/cc26xx/flash_interface/external" build="true">
+            <path copyTo="$PROJ_DIR$/common/cc26xx/flash_interface/external/flash_interface_ext_rtos_NVS.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/common/cc26xx/flash_interface/external/flash_interface_ext_rtos_NVS.c</path>
+        </group>
+        <group name="common/cc26xx/oad" build="true">
+            <path copyTo="$PROJ_DIR$/common/cc26xx/oad/ext_flash_layout.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/common/cc26xx/oad/ext_flash_layout.h</path>
+            <path copyTo="$PROJ_DIR$/common/cc26xx/oad/oad_image_header.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/common/cc26xx/oad/oad_image_header.h</path>
+        </group>
+        <group name="oad/native_oad" build="true">
+            <path copyTo="$PROJ_DIR$/oad/native_oad/oad_config.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/oad/native_oad/oad_config.h</path>
+            <path copyTo="$PROJ_DIR$/oad/native_oad/oad_image_header_app.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/oad/native_oad/oad_image_header_app.h</path>
+            <path copyTo="$PROJ_DIR$/oad/native_oad/oad_protocol.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/oad/native_oad/oad_protocol.c</path>
+            <path copyTo="$PROJ_DIR$/oad/native_oad/oad_protocol.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/oad/native_oad/oad_protocol.h</path>
+            <path copyTo="$PROJ_DIR$/oad/native_oad/oad_server.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/oad/native_oad/oad_server.c</path>
+            <path copyTo="$PROJ_DIR$/oad/native_oad/oad_server.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/oad/native_oad/oad_server.h</path>
+            <path copyTo="$PROJ_DIR$/oad/native_oad/oad_storage.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/oad/native_oad/oad_storage.c</path>
+            <path copyTo="$PROJ_DIR$/oad/native_oad/oad_storage.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/oad/native_oad/oad_storage.h</path>
+        </group>
+        <group name="radio" build="true">
+            <path copyTo="$PROJ_DIR$/radio/radio.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/radio/radio.c</path>
+            <path copyTo="$PROJ_DIR$/radio/radio.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/radio/radio.h</path>
+            <path copyTo="$PROJ_DIR$/radio/RFQueue.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/radio/RFQueue.c</path>
+            <path copyTo="$PROJ_DIR$/radio/RFQueue.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652PSIP/prop_rf/rfOADServer/radio/RFQueue.h</path>
+        </group>
+    </files>
+</iarProjectConnection>

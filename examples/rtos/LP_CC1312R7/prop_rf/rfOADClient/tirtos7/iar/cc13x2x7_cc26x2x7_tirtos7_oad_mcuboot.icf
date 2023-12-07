@@ -1,0 +1,117 @@
+/*
+ * Copyright (c) 2020-2023, Texas Instruments Incorporated
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * *  Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * *  Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * *  Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/*-Memory Regions-*/
+define symbol MCUBOOT_MAX_SLOT_SIZE         = 0x00056000;
+define symbol PRIMARY_SLOT_BASE             = 0x00000000;
+define symbol SECONDARY_SLOT_BASE           = 0x00056000;
+
+define symbol MCUBOOT_IMG_HDR_BASE          = PRIMARY_SLOT_BASE;
+define symbol MCUBOOT_IMG_HDR_SZ            = 0x00000020;
+define symbol ENTRY_SECTION_BASE            = (MCUBOOT_IMG_HDR_BASE + MCUBOOT_IMG_HDR_SZ);
+define symbol ENTRY_SECTION_SZ              = 0x00000100;
+define symbol OAD_IMG_HDR_BASE              = (ENTRY_SECTION_BASE + ENTRY_SECTION_SZ);
+define symbol OAD_IMG_HDR_SZ                = 0x000000A8;
+define symbol MCUBOOT_TRAIL_SZ              = 0x00001000;
+
+define symbol FLASH_BASE                    = (OAD_IMG_HDR_BASE + OAD_IMG_HDR_SZ);
+define symbol FLASH_SIZE                    = MCUBOOT_MAX_SLOT_SIZE - FLASH_BASE - MCUBOOT_TRAIL_SZ;
+
+define symbol RAM_BASE                      = 0x20000000;
+define symbol RAM_SIZE                      = 0x00024000;
+define symbol GPRAM_BASE                    = 0x11000000;
+define symbol GPRAM_SIZE                    = 0x00002000;
+
+define exported symbol _PRIMARY_SLOT_BASE            = PRIMARY_SLOT_BASE;
+define exported symbol _ENTRY_SECTION_SZ             = ENTRY_SECTION_SZ;
+define exported symbol _OAD_IMG_HDR_BASE             = OAD_IMG_HDR_BASE;
+
+/* Define a memory region that covers the entire 4 GB addressable space */
+define memory mem with size = 4G;
+
+define region FLASH_IMG_HDR_region          = mem:[from OAD_IMG_HDR_BASE size OAD_IMG_HDR_SZ];
+define region ENTRY_region                  = mem:[from ENTRY_SECTION_BASE size ENTRY_SECTION_SZ];
+
+define region FLASH_region                  = mem:[from FLASH_BASE size FLASH_SIZE];
+define region RAM_region                    = mem:[from RAM_BASE size RAM_SIZE];
+define region GPRAM_region                  = mem:[from GPRAM_BASE size GPRAM_SIZE];
+
+/* Place the OAD image header at start of FLASH_IMG_HDR_region of flash */
+place at start of FLASH_IMG_HDR_region      { readonly section .img_hdr };
+keep                                        { readonly section .img_hdr };
+
+/* Place the interrupt vectors at the start ENTRY_region of flash */
+place at start of ENTRY_region              { readonly section .resetVecs };
+keep                                        { readonly section .resetVecs };
+
+define block ROCODE                         { readonly };
+define block ROSTK                          { block ROCODE };
+place in FLASH_region                       { block ROSTK };
+
+/*
+ * Define CSTACK block to contain .stack section. This enables the IAR IDE
+ * to properly show the stack content during debug. Place stack at end of
+ * retention RAM, do not initialize (initializing the stack will destroy the
+ * return address from the initialization code, causing the processor to branch
+ * to zero and fault)
+ */
+define block RWDATA with alignment          = 8 { };
+define symbol STACKSIZE                     = 0x600;
+define block CSTACK with alignment          = 8, size = STACKSIZE { section .stack };
+place at end of RAM_region {
+    block RWDATA,
+    block CSTACK
+};
+do not initialize                           { section .stack, section .noinit};
+
+/* Export stack top symbol. Used by startup file */
+define exported symbol STACK_TOP            = RAM_BASE + RAM_SIZE - 1;
+
+/* HeapMem Primary Heap configuration */
+define symbol HEAPSIZE                      = 0x4000;
+define block primary_heap with alignment    = 8, size = HEAPSIZE { };
+
+/* Place heap just before CSTACK */
+place at end of RAM_region                  { block primary_heap };
+
+/* Define buffer start and end symbols for HeapMem Primary Heap */
+define exported symbol __primary_heap_end__ = end(RAM_region) - STACKSIZE;
+define exported symbol __primary_heap_start__ = __primary_heap_end__ - HEAPSIZE;
+
+/* Ensure RW data is not placed in stack or heap blocks */
+define region RWRAM_region                  = mem:[from RAM_BASE   to __primary_heap_start__];
+place in RWRAM_region                       { readwrite, section .ramVecs };
+initialize by copy                          { readwrite };
+do not initialize                           { section .ramVecs };
+
+define symbol __TI_STACK_SIZE               = STACKSIZE;
+define symbol __TI_STACK_BASE               = end(RAM_region);

@@ -171,7 +171,13 @@ void SetupState_function()
     /* Set the frequency. Now the RF driver powers the RF core up and runs the setup command from above.
      * The FS command is executed and also cached for later use when the RF driver does an automatic
      * power up. */
-    RF_EventMask result = RF_runCmd(rfHandle, (RF_Op*)&RF_cmdFs, RF_PriorityNormal, NULL, 0);
+    RF_EventMask result = RF_EventCmdAborted | RF_EventCmdPreempted;
+    // Re-run if command was aborted due to SW TCXO compensation
+    while(( result & RF_EventCmdAborted ) && ( result & RF_EventCmdPreempted ))
+    {
+        result = RF_runCmd(rfHandle, (RF_Op*)&RF_cmdFs, RF_PriorityNormal, NULL, 0);
+    }
+
     if ((result != RF_EventLastCmdDone) || ((volatile RF_Op*)&RF_cmdFs)->status != DONE_OK)
     {
         while(1);
@@ -212,7 +218,13 @@ void PeriodicBeaconState_function()
      * to start. This is fully transparent to the application. It appears as the RF core was
      * never powered down.
      * This concept is explained in the proprietary RF user's guide. */
-    RF_EventMask result = RF_runCmd(rfHandle, (RF_Op*)&RF_cmdPropTx, RF_PriorityNormal, NULL, 0);
+    RF_EventMask result = RF_EventCmdAborted | RF_EventCmdPreempted;
+    // Re-run if command was aborted due to SW TCXO compensation
+    while(( result & RF_EventCmdAborted ) && ( result & RF_EventCmdPreempted ))
+    {
+        result = RF_runCmd(rfHandle, (RF_Op*)&RF_cmdPropTx, RF_PriorityNormal, NULL, 0);
+    }
+
     if ((result != RF_EventLastCmdDone) || ((volatile RF_Op*)&RF_cmdPropTx)->status != PROP_DONE_OK)
     {
         while(1);
@@ -259,7 +271,13 @@ void SpontaneousBeaconState_function()
          * to start. This is fully transparent to the application. It appears as the RF core was
          * never powered down.
          * This concept is explained in the proprietary RF user's guide. */
-        RF_EventMask result = RF_runCmd(rfHandle, (RF_Op*)&RF_cmdPropTx, RF_PriorityNormal, NULL, 0);
+        RF_EventMask result = RF_EventCmdAborted | RF_EventCmdPreempted;
+        // Re-run if command was aborted due to SW TCXO compensation
+        while(( result & RF_EventCmdAborted ) && ( result & RF_EventCmdPreempted ))
+        {
+            result = RF_runCmd(rfHandle, (RF_Op*)&RF_cmdPropTx, RF_PriorityNormal, NULL, 0);
+        }
+
         if ((result != RF_EventLastCmdDone) || ((volatile RF_Op*)&RF_cmdPropTx)->status != PROP_DONE_OK)
         {
             while(1);

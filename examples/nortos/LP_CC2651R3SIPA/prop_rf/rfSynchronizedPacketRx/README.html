@@ -242,12 +242,13 @@ That means, the power consumption is high. As soon as it receives a beacon
 packet from the transmitter and the packet is valid, it uses the RX time stamp
 as an anchor time:</p>
 
-<div class="codehilite"><pre><span></span><code>    <span class="cm">/* rxTime contains a calculated time stamp when the first preamble byte</span>
+<div class="codehilite"><div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="cm">/* rxTime contains a calculated time stamp when the first preamble byte</span>
 <span class="cm">     * was sent on air. As a time base for the next wake ups, we calculate</span>
 <span class="cm">     * the time when this RX command would have been started for a synchronized</span>
 <span class="cm">     * wake up. */</span>
-    <span class="n">RF_cmdPropRx</span><span class="p">.</span><span class="n">startTime</span> <span class="o">=</span> <span class="n">rxTime</span> <span class="o">-</span> <span class="n">RX_START_TO_SETTLE_TICKS</span> <span class="o">-</span> <span class="n">RX_START_MARGIN</span><span class="p">;</span>
+<span class="w">    </span><span class="n">RF_cmdPropRx</span><span class="p">.</span><span class="n">startTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rxTime</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">RX_START_TO_SETTLE_TICKS</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">RX_START_MARGIN</span><span class="p">;</span>
 </code></pre></div>
+</div>
 
 <p>The RX time stamp is the time when the first preamble bit was on air. The RF
 core calculates this time based on the internal "sync word found" signal and
@@ -260,14 +261,15 @@ compensate possible crystal drifts.</p>
 <p>Finally, the application goes into the <code>SyncedRx</code> state where it calculates the
 time for the next RX start based on the latest received packet:</p>
 
-<div class="codehilite"><pre><span></span><code>    <span class="cm">/* Start RX command to receive a single packet. Use an absolute start trigger</span>
+<div class="codehilite"><div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="cm">/* Start RX command to receive a single packet. Use an absolute start trigger</span>
 <span class="cm">     * and a predicted start time. The end time is calculated to be as tight as possible.</span>
 <span class="cm">     * The compensation margin for RAT drift in both directions needs to be taken into account.  */</span>
-    <span class="n">RF_cmdPropRx</span><span class="p">.</span><span class="n">startTrigger</span><span class="p">.</span><span class="n">triggerType</span> <span class="o">=</span> <span class="n">TRIG_ABSTIME</span><span class="p">;</span>
-    <span class="n">RF_cmdPropRx</span><span class="p">.</span><span class="n">startTime</span> <span class="o">+=</span> <span class="n">beacon</span><span class="p">.</span><span class="n">beaconInterval</span><span class="p">;</span>
-    <span class="n">RF_cmdPropRx</span><span class="p">.</span><span class="n">endTrigger</span><span class="p">.</span><span class="n">triggerType</span> <span class="o">=</span> <span class="n">TRIG_REL_START</span><span class="p">;</span>
-    <span class="n">RF_cmdPropRx</span><span class="p">.</span><span class="n">endTime</span> <span class="o">=</span> <span class="n">RX_START_TO_SETTLE_TICKS</span> <span class="o">+</span> <span class="n">RX_TIMEOUT_TICKS</span> <span class="o">+</span> <span class="n">RX_TIMEOUT_MARGIN</span> <span class="o">+</span> <span class="n">RX_START_MARGIN</span><span class="p">;</span>
+<span class="w">    </span><span class="n">RF_cmdPropRx</span><span class="p">.</span><span class="n">startTrigger</span><span class="p">.</span><span class="n">triggerType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TRIG_ABSTIME</span><span class="p">;</span>
+<span class="w">    </span><span class="n">RF_cmdPropRx</span><span class="p">.</span><span class="n">startTime</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">beacon</span><span class="p">.</span><span class="n">beaconInterval</span><span class="p">;</span>
+<span class="w">    </span><span class="n">RF_cmdPropRx</span><span class="p">.</span><span class="n">endTrigger</span><span class="p">.</span><span class="n">triggerType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TRIG_REL_START</span><span class="p">;</span>
+<span class="w">    </span><span class="n">RF_cmdPropRx</span><span class="p">.</span><span class="n">endTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RX_START_TO_SETTLE_TICKS</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">RX_TIMEOUT_TICKS</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">RX_TIMEOUT_MARGIN</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">RX_START_MARGIN</span><span class="p">;</span>
 </code></pre></div>
+</div>
 
 <p>The RF driver takes care that the RF core is powered up and running before the
 start trigger is due. For the end trigger, we use a time relative to the

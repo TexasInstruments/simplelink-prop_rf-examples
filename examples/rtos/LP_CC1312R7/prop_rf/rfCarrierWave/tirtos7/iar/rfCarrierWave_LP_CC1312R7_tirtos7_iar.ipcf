@@ -78,11 +78,11 @@
 
     <files>
         <path reference="$PROJ_DIR$/Board.html">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/boards/LP_CC1312R7/Board.html</path>
-        <path copyTo="$PROJ_DIR$/cc13x2x7_cc26x2x7_tirtos7.icf">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC1312R7/prop_rf/rfCarrierWave/tirtos7/iar/cc13x2x7_cc26x2x7_tirtos7.icf</path>
-        <path copyTo="$PROJ_DIR$/main_tirtos.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC1312R7/prop_rf/rfCarrierWave/tirtos7/main_tirtos.c</path>
-        <path copyTo="$PROJ_DIR$/overview.rov.json">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC1312R7/prop_rf/rfCarrierWave/overview.rov.json</path>
-        <path copyTo="$PROJ_DIR$/README.md">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC1312R7/prop_rf/rfCarrierWave/README.md</path>
-        <path copyTo="$PROJ_DIR$/rfCarrierWave.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC1312R7/prop_rf/rfCarrierWave/rfCarrierWave.c</path>
-        <path copyTo="$PROJ_DIR$/rfCarrierWave.syscfg">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC1312R7/prop_rf/rfCarrierWave/tirtos7/rfCarrierWave.syscfg</path>
+        <path copyTo="$PROJ_DIR$/cc13x2x7_cc26x2x7_tirtos7.icf">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC1312R7/prop_rf/rfCarrierWave/tirtos7/iar/cc13x2x7_cc26x2x7_tirtos7.icf</path>
+        <path copyTo="$PROJ_DIR$/main_tirtos.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC1312R7/prop_rf/rfCarrierWave/tirtos7/main_tirtos.c</path>
+        <path copyTo="$PROJ_DIR$/overview.rov.json">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC1312R7/prop_rf/rfCarrierWave/overview.rov.json</path>
+        <path copyTo="$PROJ_DIR$/README.md">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC1312R7/prop_rf/rfCarrierWave/README.md</path>
+        <path copyTo="$PROJ_DIR$/rfCarrierWave.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC1312R7/prop_rf/rfCarrierWave/rfCarrierWave.c</path>
+        <path copyTo="$PROJ_DIR$/rfCarrierWave.syscfg">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC1312R7/prop_rf/rfCarrierWave/tirtos7/rfCarrierWave.syscfg</path>
     </files>
 </iarProjectConnection>

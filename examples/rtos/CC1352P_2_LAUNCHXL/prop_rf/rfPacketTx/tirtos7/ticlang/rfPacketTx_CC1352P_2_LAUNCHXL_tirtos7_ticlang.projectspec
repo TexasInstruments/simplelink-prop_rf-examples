@@ -50,7 +50,6 @@
         "
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --product ${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/.metadata/product.json
             --compiler ticlang
         "
         description="A transmitter example on how to use the RF driver">

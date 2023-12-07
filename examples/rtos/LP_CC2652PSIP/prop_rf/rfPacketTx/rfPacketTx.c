@@ -106,8 +106,13 @@ void *mainThread(void *arg0)
         }
 
         /* Send packet */
-        RF_EventMask terminationReason = RF_runCmd(rfHandle, (RF_Op*)&RF_cmdPropTx,
-                                                   RF_PriorityNormal, NULL, 0);
+        RF_EventMask terminationReason = RF_EventCmdAborted | RF_EventCmdPreempted;
+        while(( terminationReason & RF_EventCmdAborted ) && ( terminationReason & RF_EventCmdPreempted ))
+        {
+            // Re-run if command was aborted due to SW TCXO compensation
+            terminationReason = RF_runCmd(rfHandle, (RF_Op*)&RF_cmdPropTx,
+                                          RF_PriorityNormal, NULL, 0);
+        }
 
         switch(terminationReason)
         {

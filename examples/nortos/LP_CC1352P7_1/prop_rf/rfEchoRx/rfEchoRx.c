@@ -189,10 +189,15 @@ void *mainThread(void *arg0)
          * - If the RF core successfully echos the received packet the RF core
          * should raise the RF_EventLastCmdDone event
          */
-        RF_EventMask terminationReason =
-                RF_runCmd(rfHandle, (RF_Op*)&RF_cmdPropRx, RF_PriorityNormal,
-                          echoCallback, (RF_EventRxEntryDone |
-                          RF_EventLastCmdDone));
+        RF_EventMask terminationReason = RF_EventCmdAborted | RF_EventCmdPreempted;
+        while(( terminationReason & RF_EventCmdAborted ) && ( terminationReason & RF_EventCmdPreempted ))
+        {
+            /* Enter RX mode and stay forever in RX */
+            // Re-run if command was aborted due to SW TCXO compensation
+            terminationReason = RF_runCmd(rfHandle, (RF_Op*)&RF_cmdPropRx, RF_PriorityNormal,
+                                          echoCallback, (RF_EventRxEntryDone |
+                                          RF_EventLastCmdDone));
+        }
 
         switch(terminationReason)
         {

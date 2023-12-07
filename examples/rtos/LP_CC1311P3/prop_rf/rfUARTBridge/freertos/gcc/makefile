@@ -11,12 +11,14 @@ SYSCFG_FILES := $(shell $(SYSCFG_CMD_STUB) --listGeneratedFiles --listReferenced
 
 SYSCFG_C_FILES = $(filter %.c,$(SYSCFG_FILES))
 SYSCFG_H_FILES = $(filter %.h,$(SYSCFG_FILES))
+SYSCFG_OPT_FILES = $(filter %.opt,$(SYSCFG_FILES))
 
 OBJECTS = RFQueue.obj freertos_main_freertos.obj rfUARTBridge.obj $(patsubst %.c,%.obj,$(notdir $(SYSCFG_C_FILES)))
 NAME = rfUARTBridge
 
-CFLAGS = -I../.. \
+CFLAGS += -I../.. \
     -I. \
+    $(addprefix @,$(SYSCFG_OPT_FILES)) \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source" \
     -DDeviceFamily_CC13X1 \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/kernel/freertos" \
@@ -36,7 +38,7 @@ CFLAGS = -I../.. \
     "-I$(GCC_ARMCOMPILER)/arm-none-eabi/include/newlib-nano" \
     "-I$(GCC_ARMCOMPILER)/arm-none-eabi/include"
 
-LFLAGS = -Wl,-T,../../freertos/gcc/cc13x1_cc26x1_freertos.lds \
+LFLAGS += -Wl,-T,../../freertos/gcc/cc13x1_cc26x1_freertos.lds \
     "-Wl,-Map,$(NAME).map" \
     "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source" \
     ti_utils_build_linker.cmd.genlibs \
@@ -52,6 +54,7 @@ LFLAGS = -Wl,-T,../../freertos/gcc/cc13x1_cc26x1_freertos.lds \
     -lm \
     -lnosys \
     --specs=nano.specs
+
 all: $(NAME).hex
 
 .INTERMEDIATE: syscfg
@@ -65,7 +68,7 @@ syscfg: ../../freertos/rfUARTBridge.syscfg
 define C_RULE
 $(basename $(notdir $(1))).obj: $(1) $(SYSCFG_H_FILES)
 	@ echo Building $$@
-	@ $(CC) $(CFLAGS) $$< -c -o $$@
+	@ $(CC) $(CFLAGS) "$$<" -c -o $$@
 endef
 
 $(foreach c_file,$(SYSCFG_C_FILES),$(eval $(call C_RULE,$(c_file))))
