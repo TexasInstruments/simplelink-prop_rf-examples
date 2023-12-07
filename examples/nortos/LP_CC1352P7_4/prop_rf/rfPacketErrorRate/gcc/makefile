@@ -11,12 +11,14 @@ SYSCFG_FILES := $(shell $(SYSCFG_CMD_STUB) --listGeneratedFiles --listReferenced
 
 SYSCFG_C_FILES = $(filter %.c,$(SYSCFG_FILES))
 SYSCFG_H_FILES = $(filter %.h,$(SYSCFG_FILES))
+SYSCFG_OPT_FILES = $(filter %.opt,$(SYSCFG_FILES))
 
 OBJECTS = config.obj rx.obj tx.obj RFQueue.obj menu_nortos.obj rfPacketErrorRate_nortos.obj main_nortos.obj $(patsubst %.c,%.obj,$(notdir $(SYSCFG_C_FILES)))
 NAME = rfPacketErrorRate
 
-CFLAGS = -I.. \
+CFLAGS += -I.. \
     -I. \
+    $(addprefix @,$(SYSCFG_OPT_FILES)) \
     -DBOARD_DISPLAY_USE_LCD=1 \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source" \
     -DDeviceFamily_CC13X2X7 \
@@ -36,7 +38,7 @@ CFLAGS = -I.. \
     "-I$(GCC_ARMCOMPILER)/arm-none-eabi/include/newlib-nano" \
     "-I$(GCC_ARMCOMPILER)/arm-none-eabi/include"
 
-LFLAGS = -Wl,-T,../nortos/gcc/cc13x2x7_cc26x2x7_nortos.lds \
+LFLAGS += -Wl,-T,../nortos/gcc/cc13x2x7_cc26x2x7_nortos.lds \
     "-Wl,-Map,$(NAME).map" \
     "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source" \
     -eresetISR \
@@ -56,6 +58,7 @@ LFLAGS = -Wl,-T,../nortos/gcc/cc13x2x7_cc26x2x7_nortos.lds \
     -lm \
     -lnosys \
     --specs=nano.specs
+
 all: $(NAME).hex
 
 .INTERMEDIATE: syscfg
@@ -69,7 +72,7 @@ syscfg: ../rfPacketErrorRate.syscfg
 define C_RULE
 $(basename $(notdir $(1))).obj: $(1) $(SYSCFG_H_FILES)
 	@ echo Building $$@
-	@ $(CC) $(CFLAGS) $$< -c -o $$@
+	@ $(CC) $(CFLAGS) "$$<" -c -o $$@
 endef
 
 $(foreach c_file,$(SYSCFG_C_FILES),$(eval $(call C_RULE,$(c_file))))

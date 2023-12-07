@@ -1,15 +1,11 @@
-SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR ?= $(abspath ../../..)
-include $(SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/imports.mak
+COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR ?= $(abspath ../../..)
+include $(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/imports.mak
 
 # Find all subdirectories
-NORTOS-GCC-SUBDIRS = $(wildcard */*/gcc/.)
 NORTOS-IAR-SUBDIRS = $(wildcard */*/iar/.)
 NORTOS-TICLANG-SUBDIRS = $(wildcard */*/ticlang/.)
 
 NORTOS-SUBDIRS =
-ifneq ($(GCC_ARMCOMPILER),)
-	NORTOS-SUBDIRS += $(NORTOS-GCC-SUBDIRS)
-endif
 ifneq ($(IAR_ARMCOMPILER),)
 	NORTOS-SUBDIRS += $(NORTOS-IAR-SUBDIRS)
 endif

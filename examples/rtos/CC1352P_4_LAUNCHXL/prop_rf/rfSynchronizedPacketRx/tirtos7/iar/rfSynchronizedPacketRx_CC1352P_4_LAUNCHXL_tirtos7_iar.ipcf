@@ -78,15 +78,15 @@
 
     <files>
         <path reference="$PROJ_DIR$/Board.html">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/boards/CC1352P_4_LAUNCHXL/Board.html</path>
-        <path copyTo="$PROJ_DIR$/cc13x2_cc26x2_tirtos7.icf">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/tirtos7/iar/cc13x2_cc26x2_tirtos7.icf</path>
-        <path copyTo="$PROJ_DIR$/main_tirtos.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/tirtos7/main_tirtos.c</path>
-        <path copyTo="$PROJ_DIR$/overview.rov.json">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/overview.rov.json</path>
-        <path copyTo="$PROJ_DIR$/README.md">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/README.md</path>
-        <path copyTo="$PROJ_DIR$/rfSynchronizedPacket.h">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/rfSynchronizedPacket.h</path>
-        <path copyTo="$PROJ_DIR$/rfSynchronizedPacketRx.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/rfSynchronizedPacketRx.c</path>
-        <path copyTo="$PROJ_DIR$/rfSynchronizedPacketRx.syscfg">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/tirtos7/rfSynchronizedPacketRx.syscfg</path>
-        <path copyTo="$PROJ_DIR$/state-machine.png">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/state-machine.png</path>
-        <path copyTo="$PROJ_DIR$/StateMachine.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/StateMachine.c</path>
-        <path copyTo="$PROJ_DIR$/StateMachine.h">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/StateMachine.h</path>
+        <path copyTo="$PROJ_DIR$/cc13x2_cc26x2_tirtos7.icf">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/tirtos7/iar/cc13x2_cc26x2_tirtos7.icf</path>
+        <path copyTo="$PROJ_DIR$/main_tirtos.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/tirtos7/main_tirtos.c</path>
+        <path copyTo="$PROJ_DIR$/overview.rov.json">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/overview.rov.json</path>
+        <path copyTo="$PROJ_DIR$/README.md">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/README.md</path>
+        <path copyTo="$PROJ_DIR$/rfSynchronizedPacket.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/rfSynchronizedPacket.h</path>
+        <path copyTo="$PROJ_DIR$/rfSynchronizedPacketRx.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/rfSynchronizedPacketRx.c</path>
+        <path copyTo="$PROJ_DIR$/rfSynchronizedPacketRx.syscfg">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/tirtos7/rfSynchronizedPacketRx.syscfg</path>
+        <path copyTo="$PROJ_DIR$/state-machine.png">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/state-machine.png</path>
+        <path copyTo="$PROJ_DIR$/StateMachine.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/StateMachine.c</path>
+        <path copyTo="$PROJ_DIR$/StateMachine.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC1352P_4_LAUNCHXL/prop_rf/rfSynchronizedPacketRx/StateMachine.h</path>
     </files>
 </iarProjectConnection>

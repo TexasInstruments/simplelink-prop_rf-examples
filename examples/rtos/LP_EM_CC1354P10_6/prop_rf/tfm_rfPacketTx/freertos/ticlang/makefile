@@ -11,12 +11,14 @@ SYSCFG_FILES := $(shell $(SYSCFG_CMD_STUB) --listGeneratedFiles --listReferenced
 
 SYSCFG_C_FILES = $(filter %.c,$(SYSCFG_FILES))
 SYSCFG_H_FILES = $(filter %.h,$(SYSCFG_FILES))
+SYSCFG_OPT_FILES = $(filter %.opt,$(SYSCFG_FILES))
 
 OBJECTS = rfPacketTx.obj freertos_main_freertos.obj $(patsubst %.c,%.obj,$(notdir $(SYSCFG_C_FILES)))
 NAME = tfm_rfPacketTx
 
-CFLAGS = -I../.. \
+CFLAGS += -I../.. \
     -I. \
+    $(addprefix @,$(SYSCFG_OPT_FILES)) \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source/third_party/tfm/interface/include" \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/tfm_s/build/cc26x4/production_full/interface/include" \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source/third_party/mbedcrypto/include" \
@@ -24,7 +26,7 @@ CFLAGS = -I../.. \
     -DMBEDTLS_CONFIG_FILE="<configs/config-tidrivers.h>" \
     -DTFM_ENABLED=1 \
     -Os \
-    -DDeviceFamily_CC13X4 -Dxdc_target__isaCompatible_v8M \
+    -DDeviceFamily_CC13X4 \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source" \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/kernel/freertos" \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source/ti/posix/ticlang" \
@@ -35,7 +37,7 @@ CFLAGS = -I../.. \
     -mfloat-abi=hard \
     -mfpu=fpv5-sp-d16
 
-LFLAGS = "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/tfm_s" \
+LFLAGS += "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/tfm_s" \
     "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source" \
     ti_utils_build_linker.cmd.genlibs \
     -lti/devices/cc13x4_cc26x4/driverlib/bin/ticlang/driverlib.lib \
@@ -45,6 +47,7 @@ LFLAGS = "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/tfm_s" \
     -Wl,--warn_sections \
     "-L$(TICLANG_ARMCOMPILER)/lib" \
     -llibc.a
+
 all: $(NAME).hex
 
 .INTERMEDIATE: syscfg
@@ -58,7 +61,7 @@ syscfg: ../../freertos/rfPacketTx.syscfg
 define C_RULE
 $(basename $(notdir $(1))).obj: $(1) $(SYSCFG_H_FILES)
 	@ echo Building $$@
-	@ $(CC) $(CFLAGS) -c $$< -o $$@
+	@ $(CC) $(CFLAGS) -c "$$<" -o $$@
 endef
 
 $(foreach c_file,$(SYSCFG_C_FILES),$(eval $(call C_RULE,$(c_file))))

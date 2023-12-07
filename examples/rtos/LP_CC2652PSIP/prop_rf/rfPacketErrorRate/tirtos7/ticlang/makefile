@@ -11,12 +11,14 @@ SYSCFG_FILES := $(shell $(SYSCFG_CMD_STUB) --listGeneratedFiles --listReferenced
 
 SYSCFG_C_FILES = $(filter %.c,$(SYSCFG_FILES))
 SYSCFG_H_FILES = $(filter %.h,$(SYSCFG_FILES))
+SYSCFG_OPT_FILES = $(filter %.opt,$(SYSCFG_FILES))
 
 OBJECTS = config.obj rx.obj tx.obj RFQueue.obj menu.obj rfPacketErrorRate.obj tirtos7_main_tirtos.obj $(patsubst %.c,%.obj,$(notdir $(SYSCFG_C_FILES)))
 NAME = rfPacketErrorRate
 
-CFLAGS = -I../.. \
+CFLAGS += -I../.. \
     -I. \
+    $(addprefix @,$(SYSCFG_OPT_FILES)) \
     -DBOARD_DISPLAY_USE_LCD=1 \
     -DDeviceFamily_CC26X2 \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source" \
@@ -29,7 +31,7 @@ CFLAGS = -I../.. \
     -mfloat-abi=hard \
     -mfpu=fpv4-sp-d16
 
-LFLAGS = "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source" \
+LFLAGS += "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source" \
     "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/kernel/tirtos7/packages" \
     ti_utils_build_linker.cmd.genlibs \
     -lti/devices/cc13x2_cc26x2/driverlib/bin/ticlang/driverlib.lib \
@@ -39,6 +41,7 @@ LFLAGS = "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source" \
     -Wl,--warn_sections \
     "-L$(TICLANG_ARMCOMPILER)/lib" \
     -llibc.a
+
 all: $(NAME).hex
 
 .INTERMEDIATE: syscfg
@@ -52,7 +55,7 @@ syscfg: ../../tirtos7/rfPacketErrorRate.syscfg
 define C_RULE
 $(basename $(notdir $(1))).obj: $(1) $(SYSCFG_H_FILES)
 	@ echo Building $$@
-	@ $(CC) $(CFLAGS) -c $$< -o $$@
+	@ $(CC) $(CFLAGS) -c "$$<" -o $$@
 endef
 
 $(foreach c_file,$(SYSCFG_C_FILES),$(eval $(call C_RULE,$(c_file))))

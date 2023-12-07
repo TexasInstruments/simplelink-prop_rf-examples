@@ -11,13 +11,15 @@ SYSCFG_FILES := $(shell $(SYSCFG_CMD_STUB) --listGeneratedFiles --listReferenced
 
 SYSCFG_C_FILES = $(filter %.c,$(SYSCFG_FILES))
 SYSCFG_H_FILES = $(filter %.h,$(SYSCFG_FILES))
+SYSCFG_OPT_FILES = $(filter %.opt,$(SYSCFG_FILES))
 
 OBJECTS = RFQueue.obj rfEchoTx.obj main_nortos.obj $(patsubst %.c,%.obj,$(notdir $(SYSCFG_C_FILES)))
 NAME = rfEchoTx
 
-CFLAGS = -I.. \
+CFLAGS += -I.. \
     -I. \
-    -DDeviceFamily_CC13X4 -Dxdc_target__isaCompatible_v8M \
+    $(addprefix @,$(SYSCFG_OPT_FILES)) \
+    -DDeviceFamily_CC13X4 \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source" \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/kernel/nortos" \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/kernel/nortos/posix" \
@@ -34,10 +36,10 @@ CFLAGS = -I.. \
     "-I$(GCC_ARMCOMPILER)/arm-none-eabi/include/newlib-nano" \
     "-I$(GCC_ARMCOMPILER)/arm-none-eabi/include"
 
-LFLAGS = -march=armv8-m.main \
-    -Wl,-T,../gcc/cc13x4_cc26x4_nortos.lds \
+LFLAGS += -Wl,-T,../gcc/cc13x4_cc26x4_nortos.lds \
     "-Wl,-Map,$(NAME).map" \
     "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source" \
+    -mcpu=cortex-m33 \
     -eresetISR \
     "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/kernel/nortos" \
     ti_utils_build_linker.cmd.genlibs \
@@ -54,6 +56,7 @@ LFLAGS = -march=armv8-m.main \
     -lm \
     -lnosys \
     --specs=nano.specs
+
 all: $(NAME).hex
 
 .INTERMEDIATE: syscfg
@@ -67,7 +70,7 @@ syscfg: ../rfEchoTx.syscfg
 define C_RULE
 $(basename $(notdir $(1))).obj: $(1) $(SYSCFG_H_FILES)
 	@ echo Building $$@
-	@ $(CC) $(CFLAGS) $$< -c -o $$@
+	@ $(CC) $(CFLAGS) "$$<" -c -o $$@
 endef
 
 $(foreach c_file,$(SYSCFG_C_FILES),$(eval $(call C_RULE,$(c_file))))

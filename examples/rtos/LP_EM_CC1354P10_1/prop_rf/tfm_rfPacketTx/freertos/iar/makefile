@@ -11,12 +11,14 @@ SYSCFG_FILES := $(shell $(SYSCFG_CMD_STUB) --listGeneratedFiles --listReferenced
 
 SYSCFG_C_FILES = $(filter %.c,$(SYSCFG_FILES))
 SYSCFG_H_FILES = $(filter %.h,$(SYSCFG_FILES))
+SYSCFG_OPT_FILES = $(filter %.opt,$(SYSCFG_FILES))
 
 OBJECTS = rfPacketTx.obj freertos_main_freertos.obj $(patsubst %.c,%.obj,$(notdir $(SYSCFG_C_FILES)))
 NAME = tfm_rfPacketTx
 
-CFLAGS = -I../.. \
+CFLAGS += -I../.. \
     -I. \
+    $(addprefix -f,$(SYSCFG_OPT_FILES)) \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source/third_party/tfm/interface/include" \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/tfm_s/build/cc26x4/production_full/interface/include" \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source/third_party/mbedcrypto/include" \
@@ -39,7 +41,7 @@ CFLAGS = -I../.. \
     --fpu VFPv5_sp \
     --vla
 
-LFLAGS = "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/tfm_s" \
+LFLAGS += "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/tfm_s" \
     "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source" \
     --threaded_lib \
     "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/kernel" \
@@ -51,6 +53,7 @@ LFLAGS = "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/tfm_s" \
     --semihosting=iar_breakpoint \
     --cpu=Cortex-M33 \
     --fpu VFPv5_sp
+
 all: $(NAME).hex
 
 .INTERMEDIATE: syscfg
@@ -64,7 +67,7 @@ syscfg: ../../freertos/rfPacketTx.syscfg
 define C_RULE
 $(basename $(notdir $(1))).obj: $(1) $(SYSCFG_H_FILES)
 	@ echo Building $$@
-	@ $(CC) $(CFLAGS) $$< -o $$@
+	@ $(CC) $(CFLAGS) "$$<" -o $$@
 endef
 
 $(foreach c_file,$(SYSCFG_C_FILES),$(eval $(call C_RULE,$(c_file))))

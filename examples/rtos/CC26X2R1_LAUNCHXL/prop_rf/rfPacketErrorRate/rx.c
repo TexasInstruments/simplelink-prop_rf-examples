@@ -245,6 +245,16 @@ static void rx_resetVariables(void)
     throughputI = throughputQ = 0;
 }
 
+static void RF_runCmdSafe(RF_Handle h, RF_Op *pOp, RF_Priority ePri, RF_Callback pCb, RF_EventMask bmEvent)
+{
+    RF_EventMask terminationReason = RF_EventCmdAborted | RF_EventCmdPreempted;
+    // Re-run if command was aborted due to SW TCXO compensation
+    while(( terminationReason & RF_EventCmdAborted ) && ( terminationReason & RF_EventCmdPreempted ))
+    {
+        terminationReason = RF_runCmd(h, pOp, ePri, pCb, bmEvent);
+    }
+}
+
 /* Runs the receiving part of the test application and returns a result */
 TestResult rx_runRxTest(const ApplicationConfig* config)
 {
@@ -402,13 +412,13 @@ TestResult rx_runRxTest(const ApplicationConfig* config)
     {
         case RfSetup_Custom:
             /* Custom settings exported from SmartRf studio shall use the exported frequency */
-            RF_runCmd(rfHandle, (RF_Op*)&RF_cmdFs, RF_PriorityNormal, NULL, 0);
+            RF_runCmdSafe(rfHandle, (RF_Op*)&RF_cmdFs, RF_PriorityNormal, NULL, 0);
             break;
 #if (defined SUPPORT_FSK_50KBPS)
         case RfSetup_Fsk:
             RF_cmdFs_fsk_50kbps.frequency = config->frequencyTable[config->frequency].frequency;
             RF_cmdFs_fsk_50kbps.fractFreq = config->frequencyTable[config->frequency].fractFreq;
-            RF_runCmd(rfHandle, (RF_Op*)&RF_cmdFs_fsk_50kbps, RF_PriorityNormal, NULL, 0);
+            RF_runCmdSafe(rfHandle, (RF_Op*)&RF_cmdFs_fsk_50kbps, RF_PriorityNormal, NULL, 0);
             break;
 #endif
 #if (defined SUPPORT_PROP_2_4_GHZ)
@@ -416,27 +426,27 @@ TestResult rx_runRxTest(const ApplicationConfig* config)
         case RfSetup_2_4_Fsk_250:
             RF_cmdFs_2_4G_fsk_250kbps.frequency = config->frequencyTable[config->frequency].frequency;
             RF_cmdFs_2_4G_fsk_250kbps.fractFreq = config->frequencyTable[config->frequency].fractFreq;
-            RF_runCmd(rfHandle, (RF_Op*)&RF_cmdFs_2_4G_fsk_250kbps, RF_PriorityNormal, NULL, 0);
+            RF_runCmdSafe(rfHandle, (RF_Op*)&RF_cmdFs_2_4G_fsk_250kbps, RF_PriorityNormal, NULL, 0);
             break;
 #endif
         case RfSetup_2_4_Fsk_100:
             RF_cmdFs_2_4G_fsk_100kbps.frequency = config->frequencyTable[config->frequency].frequency;
             RF_cmdFs_2_4G_fsk_100kbps.fractFreq = config->frequencyTable[config->frequency].fractFreq;
-            RF_runCmd(rfHandle, (RF_Op*)&RF_cmdFs_2_4G_fsk_100kbps, RF_PriorityNormal, NULL, 0);
+            RF_runCmdSafe(rfHandle, (RF_Op*)&RF_cmdFs_2_4G_fsk_100kbps, RF_PriorityNormal, NULL, 0);
             break;
 #endif
 #if (defined SUPPORT_FSK_200KBPS)
         case RfSetup_Fsk_200kbps:
             RF_cmdFs_fsk_200kbps.frequency = config->frequencyTable[config->frequency].frequency;
             RF_cmdFs_fsk_200kbps.fractFreq = config->frequencyTable[config->frequency].fractFreq;
-            RF_runCmd(rfHandle, (RF_Op*)&RF_cmdFs_fsk_200kbps, RF_PriorityNormal, NULL, 0);
+            RF_runCmdSafe(rfHandle, (RF_Op*)&RF_cmdFs_fsk_200kbps, RF_PriorityNormal, NULL, 0);
             break;
 #endif
 #if  (defined SUPPORT_SLR)
         case RfSetup_Sl_lr:
             RF_cmdFs_sl_lr.frequency = config->frequencyTable[config->frequency].frequency;
             RF_cmdFs_sl_lr.fractFreq = config->frequencyTable[config->frequency].fractFreq;
-            RF_runCmd(rfHandle, (RF_Op*)&RF_cmdFs_sl_lr, RF_PriorityNormal, NULL, 0);
+            RF_runCmdSafe(rfHandle, (RF_Op*)&RF_cmdFs_sl_lr, RF_PriorityNormal, NULL, 0);
             break;
 #endif
 #if (defined SUPPORT_BLE)
@@ -444,7 +454,7 @@ TestResult rx_runRxTest(const ApplicationConfig* config)
     case RfSetup_Ble5:
         RF_ble_cmdFs.frequency = config->frequencyTable[config->frequency].frequency;
         RF_ble_cmdFs.fractFreq = config->frequencyTable[config->frequency].fractFreq;
-        RF_runCmd(rfHandle, (RF_Op*)&RF_ble_cmdFs, RF_PriorityNormal, NULL, 0);
+        RF_runCmdSafe(rfHandle, (RF_Op*)&RF_ble_cmdFs, RF_PriorityNormal, NULL, 0);
         break;
 #endif
     default:

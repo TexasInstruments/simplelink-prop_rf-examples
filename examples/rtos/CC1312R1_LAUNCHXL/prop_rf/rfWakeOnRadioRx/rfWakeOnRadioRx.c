@@ -163,7 +163,7 @@ void *mainThread(void *arg0)
     GPIO_write(CONFIG_GPIO_RLED, CONFIG_GPIO_LED_OFF);
 
     /* Route out LNA active pin to LED1 */
-    GPIO_setMux(CONFIG_GPIO_RLED, IOC_PORT_RFC_GPO0);
+    GPIO_setConfigAndMux(CONFIG_GPIO_RLED, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW, IOC_PORT_RFC_GPO0);
 
     /* Create queue and data entries */
     if (RFQueue_defineQueue(&dataQueue,

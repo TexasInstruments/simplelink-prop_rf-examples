@@ -143,10 +143,15 @@ void *mainThread(void *arg0)
     /* Set the frequency */
     RF_postCmd(rfHandle, (RF_Op*)&RF_cmdFs, RF_PriorityNormal, NULL, 0);
 
-    /* Enter RX mode and stay forever in RX */
-    RF_EventMask terminationReason = RF_runCmd(rfHandle, (RF_Op*)&RF_cmdPropRx,
+    RF_EventMask terminationReason = RF_EventCmdAborted | RF_EventCmdPreempted;
+    while(( terminationReason & RF_EventCmdAborted ) && ( terminationReason & RF_EventCmdPreempted ))
+    {
+        /* Enter RX mode and stay forever in RX */
+        // Re-run if command was aborted due to SW TCXO compensation
+        terminationReason = RF_runCmd(rfHandle, (RF_Op*)&RF_cmdPropRx,
                                                RF_PriorityNormal, &callback,
                                                RF_EventRxEntryDone);
+    }
 
     switch(terminationReason)
     {

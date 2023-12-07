@@ -78,15 +78,15 @@
 
     <files>
         <path reference="$PROJ_DIR$/Board.html">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/boards/CC26X2R1_LAUNCHXL/Board.html</path>
-        <path copyTo="$PROJ_DIR$/cc13x2_cc26x2_tirtos7.icf">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/tirtos7/iar/cc13x2_cc26x2_tirtos7.icf</path>
-        <path copyTo="$PROJ_DIR$/main_tirtos.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/tirtos7/main_tirtos.c</path>
-        <path copyTo="$PROJ_DIR$/overview.rov.json">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/overview.rov.json</path>
-        <path copyTo="$PROJ_DIR$/README.md">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/README.md</path>
-        <path copyTo="$PROJ_DIR$/rfSynchronizedPacket.h">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/rfSynchronizedPacket.h</path>
-        <path copyTo="$PROJ_DIR$/rfSynchronizedPacketTx.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/rfSynchronizedPacketTx.c</path>
-        <path copyTo="$PROJ_DIR$/rfSynchronizedPacketTx.syscfg">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/tirtos7/rfSynchronizedPacketTx.syscfg</path>
-        <path copyTo="$PROJ_DIR$/state-machine.png">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/state-machine.png</path>
-        <path copyTo="$PROJ_DIR$/StateMachine.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/StateMachine.c</path>
-        <path copyTo="$PROJ_DIR$/StateMachine.h">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/StateMachine.h</path>
+        <path copyTo="$PROJ_DIR$/cc13x2_cc26x2_tirtos7.icf">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/tirtos7/iar/cc13x2_cc26x2_tirtos7.icf</path>
+        <path copyTo="$PROJ_DIR$/main_tirtos.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/tirtos7/main_tirtos.c</path>
+        <path copyTo="$PROJ_DIR$/overview.rov.json">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/overview.rov.json</path>
+        <path copyTo="$PROJ_DIR$/README.md">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/README.md</path>
+        <path copyTo="$PROJ_DIR$/rfSynchronizedPacket.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/rfSynchronizedPacket.h</path>
+        <path copyTo="$PROJ_DIR$/rfSynchronizedPacketTx.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/rfSynchronizedPacketTx.c</path>
+        <path copyTo="$PROJ_DIR$/rfSynchronizedPacketTx.syscfg">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/tirtos7/rfSynchronizedPacketTx.syscfg</path>
+        <path copyTo="$PROJ_DIR$/state-machine.png">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/state-machine.png</path>
+        <path copyTo="$PROJ_DIR$/StateMachine.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/StateMachine.c</path>
+        <path copyTo="$PROJ_DIR$/StateMachine.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfSynchronizedPacketTx/StateMachine.h</path>
     </files>
 </iarProjectConnection>

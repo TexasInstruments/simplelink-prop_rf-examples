@@ -239,18 +239,20 @@ trigger for the TX command. Absolute start triggers are explained in the
 proprietary RF user's guide and the technical reference manual. It starts with
 an arbitrarily chosen time stamp:</p>
 
-<div class="codehilite"><pre><span></span><code>    <span class="cm">/* Use the current time as an anchor point for future time stamps.</span>
+<div class="codehilite"><div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="cm">/* Use the current time as an anchor point for future time stamps.</span>
 <span class="cm">     * The Nth transmission in the future will be exactly N * 500ms after</span>
 <span class="cm">     * this time stamp.  */</span>
-    <span class="n">RF_cmdPropTx</span><span class="p">.</span><span class="n">startTime</span> <span class="o">=</span> <span class="n">RF_getCurrentTime</span><span class="p">();</span>
+<span class="w">    </span><span class="n">RF_cmdPropTx</span><span class="p">.</span><span class="n">startTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RF_getCurrentTime</span><span class="p">();</span>
 </code></pre></div>
+</div>
 
 <p>And then adds a fixed interval for any further transmission:</p>
 
-<div class="codehilite"><pre><span></span><code>    <span class="cm">/* Set absolute TX time in the future to utilize &quot;deferred dispatching of commands with absolute timing&quot;.</span>
+<div class="codehilite"><div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="cm">/* Set absolute TX time in the future to utilize &quot;deferred dispatching of commands with absolute timing&quot;.</span>
 <span class="cm">     * This is explained in the proprietary RF user&#39;s guide. */</span>
-    <span class="n">RF_cmdPropTx</span><span class="p">.</span><span class="n">startTime</span> <span class="o">+=</span> <span class="n">RF_convertMsToRatTicks</span><span class="p">(</span><span class="n">BEACON_INTERVAL_MS</span><span class="p">);</span>
+<span class="w">    </span><span class="n">RF_cmdPropTx</span><span class="p">.</span><span class="n">startTime</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">RF_convertMsToRatTicks</span><span class="p">(</span><span class="n">BEACON_INTERVAL_MS</span><span class="p">);</span>
 </code></pre></div>
+</div>
 
 <p>In <code>SpontaneousBeacon</code> state, the next transmission start time is calculated
 based on the last value transmission start time:</p>

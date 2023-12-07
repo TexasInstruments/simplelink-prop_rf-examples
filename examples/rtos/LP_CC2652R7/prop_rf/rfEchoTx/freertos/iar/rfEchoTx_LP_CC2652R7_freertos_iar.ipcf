@@ -81,17 +81,17 @@
 
     <files>
         <path reference="$PROJ_DIR$/Board.html">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/boards/LP_CC2652R7/Board.html</path>
-        <path copyTo="$PROJ_DIR$/cc13x2x7_cc26x2x7_freertos.icf">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/freertos/iar/cc13x2x7_cc26x2x7_freertos.icf</path>
-        <path copyTo="$PROJ_DIR$/main_freertos.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/freertos/main_freertos.c</path>
-        <path copyTo="$PROJ_DIR$/overview.rov.json">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/overview.rov.json</path>
-        <path copyTo="$PROJ_DIR$/README.md">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/README.md</path>
-        <path copyTo="$PROJ_DIR$/rfEcho_ErrorTxRx.png">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/rfEcho_ErrorTxRx.png</path>
-        <path copyTo="$PROJ_DIR$/rfEcho_MissedFirstPacket.png">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/rfEcho_MissedFirstPacket.png</path>
-        <path copyTo="$PROJ_DIR$/rfEcho_MissingFirstCouplePackets.png">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/rfEcho_MissingFirstCouplePackets.png</path>
-        <path copyTo="$PROJ_DIR$/rfEcho_PerfectEcho.png">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/rfEcho_PerfectEcho.png</path>
-        <path copyTo="$PROJ_DIR$/rfEchoTx.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/rfEchoTx.c</path>
-        <path copyTo="$PROJ_DIR$/rfEchoTx.syscfg">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/freertos/rfEchoTx.syscfg</path>
-        <path copyTo="$PROJ_DIR$/RFQueue.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/RFQueue.c</path>
-        <path copyTo="$PROJ_DIR$/RFQueue.h">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/RFQueue.h</path>
+        <path copyTo="$PROJ_DIR$/cc13x2x7_cc26x2x7_freertos.icf">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/freertos/iar/cc13x2x7_cc26x2x7_freertos.icf</path>
+        <path copyTo="$PROJ_DIR$/main_freertos.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/freertos/main_freertos.c</path>
+        <path copyTo="$PROJ_DIR$/overview.rov.json">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/overview.rov.json</path>
+        <path copyTo="$PROJ_DIR$/README.md">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/README.md</path>
+        <path copyTo="$PROJ_DIR$/rfEcho_ErrorTxRx.png">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/rfEcho_ErrorTxRx.png</path>
+        <path copyTo="$PROJ_DIR$/rfEcho_MissedFirstPacket.png">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/rfEcho_MissedFirstPacket.png</path>
+        <path copyTo="$PROJ_DIR$/rfEcho_MissingFirstCouplePackets.png">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/rfEcho_MissingFirstCouplePackets.png</path>
+        <path copyTo="$PROJ_DIR$/rfEcho_PerfectEcho.png">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/rfEcho_PerfectEcho.png</path>
+        <path copyTo="$PROJ_DIR$/rfEchoTx.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/rfEchoTx.c</path>
+        <path copyTo="$PROJ_DIR$/rfEchoTx.syscfg">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/freertos/rfEchoTx.syscfg</path>
+        <path copyTo="$PROJ_DIR$/RFQueue.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/RFQueue.c</path>
+        <path copyTo="$PROJ_DIR$/RFQueue.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2652R7/prop_rf/rfEchoTx/RFQueue.h</path>
     </files>
 </iarProjectConnection>

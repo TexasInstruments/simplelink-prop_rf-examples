@@ -11,13 +11,16 @@ SYSCFG_FILES := $(shell $(SYSCFG_CMD_STUB) --listGeneratedFiles --listReferenced
 
 SYSCFG_C_FILES = $(filter %.c,$(SYSCFG_FILES))
 SYSCFG_H_FILES = $(filter %.h,$(SYSCFG_FILES))
+SYSCFG_OPT_FILES = $(filter %.opt,$(SYSCFG_FILES))
 
 OBJECTS = at_AtControl.obj at_AtParams.obj at_AtProcess.obj at_platform_tirtos_AtTerm.obj radio_radio_common.obj radio_builtin_radio.obj radio_builtin_PhySettings.obj radio_builtin_RFQueue.obj TestMode.obj rfDiagnostics.obj tirtos7_main_tirtos.obj $(patsubst %.c,%.obj,$(notdir $(SYSCFG_C_FILES)))
 NAME = rfDiagnostics
 
-CFLAGS = -I../.. \
+CFLAGS += -I../.. \
     -I. \
-    -DDeviceFamily_CC13X4 -Dxdc_target__isaCompatible_v8M \
+    $(addprefix @,$(SYSCFG_OPT_FILES)) \
+    -DSPI_MSG_LENGTH=1024 \
+    -DDeviceFamily_CC13X4 \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source" \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/kernel/tirtos7/packages" \
     "-I$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source/ti/posix/gcc" \
@@ -34,10 +37,10 @@ CFLAGS = -I../.. \
     "-I$(GCC_ARMCOMPILER)/arm-none-eabi/include/newlib-nano" \
     "-I$(GCC_ARMCOMPILER)/arm-none-eabi/include"
 
-LFLAGS = -march=armv8-m.main \
-    -Wl,-T,../../tirtos7/gcc/cc13x4_cc26x4_tirtos7.lds \
+LFLAGS += -Wl,-T,../../tirtos7/gcc/cc13x4_cc26x4_tirtos7.lds \
     "-Wl,-Map,$(NAME).map" \
     "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/source" \
+    -mcpu=cortex-m33 \
     "-L$(COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/kernel/tirtos7/packages" \
     ti_utils_build_linker.cmd.genlibs \
     -l:ti/devices/cc13x4_cc26x4/driverlib/bin/gcc/driverlib.lib \
@@ -53,6 +56,7 @@ LFLAGS = -march=armv8-m.main \
     -lm \
     -lnosys \
     --specs=nano.specs
+
 all: $(NAME).hex
 
 .INTERMEDIATE: syscfg
@@ -66,7 +70,7 @@ syscfg: ../../tirtos7/rfDiagnostics.syscfg
 define C_RULE
 $(basename $(notdir $(1))).obj: $(1) $(SYSCFG_H_FILES)
 	@ echo Building $$@
-	@ $(CC) $(CFLAGS) $$< -c -o $$@
+	@ $(CC) $(CFLAGS) "$$<" -c -o $$@
 endef
 
 $(foreach c_file,$(SYSCFG_C_FILES),$(eval $(call C_RULE,$(c_file))))

@@ -81,13 +81,13 @@
 
     <files>
         <path reference="$PROJ_DIR$/Board.html">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/boards/CC26X2R1_LAUNCHXL/Board.html</path>
-        <path copyTo="$PROJ_DIR$/cc13x2_cc26x2_freertos.icf">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfUARTBridge/freertos/iar/cc13x2_cc26x2_freertos.icf</path>
-        <path copyTo="$PROJ_DIR$/main_freertos.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfUARTBridge/freertos/main_freertos.c</path>
-        <path copyTo="$PROJ_DIR$/overview.rov.json">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfUARTBridge/overview.rov.json</path>
-        <path copyTo="$PROJ_DIR$/README.md">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfUARTBridge/README.md</path>
-        <path copyTo="$PROJ_DIR$/RFQueue.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfUARTBridge/RFQueue.c</path>
-        <path copyTo="$PROJ_DIR$/RFQueue.h">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfUARTBridge/RFQueue.h</path>
-        <path copyTo="$PROJ_DIR$/rfUARTBridge.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfUARTBridge/rfUARTBridge.c</path>
-        <path copyTo="$PROJ_DIR$/rfUARTBridge.syscfg">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfUARTBridge/freertos/rfUARTBridge.syscfg</path>
+        <path copyTo="$PROJ_DIR$/cc13x2_cc26x2_freertos.icf">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfUARTBridge/freertos/iar/cc13x2_cc26x2_freertos.icf</path>
+        <path copyTo="$PROJ_DIR$/main_freertos.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfUARTBridge/freertos/main_freertos.c</path>
+        <path copyTo="$PROJ_DIR$/overview.rov.json">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfUARTBridge/overview.rov.json</path>
+        <path copyTo="$PROJ_DIR$/README.md">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfUARTBridge/README.md</path>
+        <path copyTo="$PROJ_DIR$/RFQueue.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfUARTBridge/RFQueue.c</path>
+        <path copyTo="$PROJ_DIR$/RFQueue.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfUARTBridge/RFQueue.h</path>
+        <path copyTo="$PROJ_DIR$/rfUARTBridge.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfUARTBridge/rfUARTBridge.c</path>
+        <path copyTo="$PROJ_DIR$/rfUARTBridge.syscfg">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/CC26X2R1_LAUNCHXL/prop_rf/rfUARTBridge/freertos/rfUARTBridge.syscfg</path>
     </files>
 </iarProjectConnection>

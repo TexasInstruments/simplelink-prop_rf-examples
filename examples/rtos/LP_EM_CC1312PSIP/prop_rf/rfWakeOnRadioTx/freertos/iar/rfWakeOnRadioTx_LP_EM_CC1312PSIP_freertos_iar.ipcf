@@ -81,11 +81,11 @@
 
     <files>
         <path reference="$PROJ_DIR$/Board.html">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/boards/LP_EM_CC1312PSIP/Board.html</path>
-        <path copyTo="$PROJ_DIR$/cc13x2_cc26x2_freertos.icf">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioTx/freertos/iar/cc13x2_cc26x2_freertos.icf</path>
-        <path copyTo="$PROJ_DIR$/main_freertos.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioTx/freertos/main_freertos.c</path>
-        <path copyTo="$PROJ_DIR$/overview.rov.json">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioTx/overview.rov.json</path>
-        <path copyTo="$PROJ_DIR$/README.md">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioTx/README.md</path>
-        <path copyTo="$PROJ_DIR$/rfWakeOnRadioTx.c">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioTx/rfWakeOnRadioTx.c</path>
-        <path copyTo="$PROJ_DIR$/rfWakeOnRadioTx.syscfg">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioTx/freertos/rfWakeOnRadioTx.syscfg</path>
+        <path copyTo="$PROJ_DIR$/cc13x2_cc26x2_freertos.icf">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioTx/freertos/iar/cc13x2_cc26x2_freertos.icf</path>
+        <path copyTo="$PROJ_DIR$/main_freertos.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioTx/freertos/main_freertos.c</path>
+        <path copyTo="$PROJ_DIR$/overview.rov.json">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioTx/overview.rov.json</path>
+        <path copyTo="$PROJ_DIR$/README.md">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioTx/README.md</path>
+        <path copyTo="$PROJ_DIR$/rfWakeOnRadioTx.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioTx/rfWakeOnRadioTx.c</path>
+        <path copyTo="$PROJ_DIR$/rfWakeOnRadioTx.syscfg">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC1312PSIP/prop_rf/rfWakeOnRadioTx/freertos/rfWakeOnRadioTx.syscfg</path>
     </files>
 </iarProjectConnection>
