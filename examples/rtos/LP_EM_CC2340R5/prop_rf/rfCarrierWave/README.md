@@ -26,24 +26,22 @@ wave.
 To switch between carrier wave (1) and modulated signal (0) set the following
 in the code (CW is set as default):
 
-    txCmd.config.sendCw = 1; // CW
-    txCmd.config.sendCw = 0; // modulated signal
+    rclPacketTxCmdGenericTxTest.config.sendCw = 1; // CW
+    rclPacketTxCmdGenericTxTest.config.sendCw = 0; // modulated signal
 
 When the task is executed it:
 
-1. Initializes and opens RCL with proprietary radio setup. 
+1. Initializes and opens RCL with proprietary radio setup.
 2. Sets up the radio for generic transmit test.
 3. Explicitly configures CW (1) or Modulated (0). Whiten mode is set to default
-   whitening. FS is turned off. 
+   whitening. FS is turned off.
 4. Sets up runtime callback and triggers for RCL events.
 4. Submits command.
 5. Pends on command completion.
 
 Switching PHYs
 --------------
-Add the respective predefine symbol by navigating in CCS to Project Properties ->
-Build -> Arm Compiler -> Predefined Symbols. After nagivating to Predefined Symbols,
-use the appropriate symbol as described below to define the PHY used.
-	- By default, Generic BLE 1M PHY is used.
-	- To use 250KBPS MSK, define predefine symbol **USE_250KBPS_MSK**.
-	- To use 500KBPS MSK, define predefine symbol **USE_250KBPS_MSK_FEC**.
+The PHY used for TX operations can be configured in SysConfig by opening the
+rfPacketTx.syscfg file and navigating to the "Custom" RF Stack. The PHY used
+can be selected from the provided drop downs. The example only supports one phy
+at a time.

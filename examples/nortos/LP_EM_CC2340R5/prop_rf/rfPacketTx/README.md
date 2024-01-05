@@ -24,7 +24,7 @@ This examples consists of a single task and setting up RCL to transmit a packet.
 
 When the task is executed it:
 
-1. Initializes and opens RCL with proprietary radio setup. 
+1. Initializes and opens RCL with proprietary radio setup.
 2. Sets up the radio for generic transmit.
 3. Configures the command settings to turn off FS.
 4. Creates the TX packet.
@@ -35,17 +35,13 @@ When the task is executed it:
 
 Switching PHYs
 --------------
-Add the respective predefine symbol by navigating in CCS to Project Properties ->
-Build -> Arm Compiler -> Predefined Symbols. After nagivating to Predefined Symbols,
-use the appropriate symbol as described below to define the PHY used.
-	- By default, Generic BLE 1M PHY is used.
-	- To use 250KBPS MSK, define predefine symbol **USE_250KBPS_MSK**.
-	- To use 500KBPS MSK, define predefine symbol **USE_250KBPS_MSK_FEC**.
-	
-PHY Packet Length Configuration
---------------
-By default, the application compiles with variable packet length set up for each PHY. However, **variable
-packet length is not supported for the 500KBPS MSK PHY** in this application. 500KBPS MSK is always set up for fixed packet length.
-Variable packet length is set up for the PHY when the VARIABLE_LENGTH_SETUP symbol is defined.
-For fixed packet length set up,  navigate in CCS to Project Properties ->
-Build -> Arm Compiler -> Predefined Symbols and change the VARIABLE_LENGTH_SETUP symbol to **FIXED_LENGTH_SETUP**.
+The PHY used for TX operations can be configured in SysConfig by opening the
+rfPacketTx.syscfg file and navigating to the "Custom" RF Stack. The PHY used
+can be selected from the provided drop downs. The example only supports one phy
+at a time.
+
+In addition, several register fields must be exposed as defines so that
+the example can appropriately set the length field in the packet header. This
+can be accomplished by navigating in SysConfig to the Custom RF Stack --> Your
+Selected PHY --> Code Export Configuration --> Register Field Defines and setting
+it's value to "PBE_GENERIC_RAM_LENCFG_LENPOS,PBE_GENERIC_RAM_LENCFG_NUMLENBITS".

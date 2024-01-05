@@ -59,8 +59,38 @@ var uart2 = UART2.addInstance();
 uart2.$hardware = system.deviceData.board.components.XDS110UART;
 uart2.$name = "CONFIG_UART2_0";
 
-/* ======== Temperature ======== */
-var temperature = scripting.addModule("/ti/drivers/Temperature");
-
 /* ======== Kernel Configuration ======== */
 system.getScript("kernel_config_release.syscfg.js");
+
+/* ======== Radio Configuration ======== */
+const commonRf = system.getScript("/ti/prop_rf/prop_rf_common.js");
+const boardName = commonRf.getDeviceOrLaunchPadName(true);
+const phyFilePath = "/ti/prop_rf/rf_config/" + boardName + "_rf_defaults.js";
+
+// Get the supported proprietary phy for this board as defined by Prop RF
+const defaultPhy = system.getScript(phyFilePath).defaultBlePhyList[0];
+
+// Add an instance of the "Custom" RF Stack
+const customStack = scripting.addModule("/ti/devices/radioconfig/custom");
+
+// Add the default phy instance
+const phyInst = commonRf.addBlePhy(customStack, defaultPhy);
+phyInst.codeExportConfig.symGenMethod = "Legacy";
+phyInst.codeExportConfig.cmdList_ble = ["cmdGenericRx","cmdGenericTx"];
+phyInst.codeExportConfig.registerFieldDefines = "PBE_GENERIC_RAM_LENCFG_LENPOS,PBE_GENERIC_RAM_LENCFG_NUMLENBITS";
+
+/* ======== RF Design ======== */
+var rfDesign = scripting.addModule("ti/devices/radioconfig/rfdesign");
+const rfDesignSettings = system.getScript("/ti/common/lprf_rf_design_settings.js").rfDesignSettings;
+for(var setting in rfDesignSettings)
+{
+    rfDesign[setting] = rfDesignSettings[setting];
+}
+
+/* ======== Device ======== */
+var device = scripting.addModule("ti/devices/CCFG");
+const ccfgSettings = system.getScript("/ti/common/lprf_ccfg_settings.js").ccfgSettings;
+for(var setting in ccfgSettings)
+{
+    device[setting] = ccfgSettings[setting];
+}

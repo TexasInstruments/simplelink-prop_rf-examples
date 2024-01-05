@@ -35,59 +35,42 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <limits.h>
 
 /* TI Drivers */
 #include <ti/drivers/GPIO.h>
 #include <ti/drivers/rcl/RCL.h>
 #include <ti/drivers/rcl/RCL_Scheduler.h>
 #include <ti/drivers/rcl/commands/generic.h>
-#include "ti_drivers_config.h"
 
-#if defined(USE_250KBPS_MSK)
-#include <setup/rcl_settings_msk_250_kbps.h>
-#elif defined(USE_250KBPS_MSK_FEC)
-#include <setup/rcl_settings_msk_250_kbps_fec.h>
-#else
-#include <setup/rcl_settings_ble_generic.h>
-#endif
+/* SysConfig Generated */
+#include "ti_drivers_config.h"
+#include "ti_radio_config.h"
+
 
 /***** Defines *****/
 /* Packet TX Configuration */
 #define MAX_LENGTH              (30U) // Max packet length
 #define NUM_DATA_ENTRIES        (2U)  // Number of data entries
 #define NUM_PAD_BYTES           (3U)  // Number of pad bytes
+#define PACKET_INTERVAL     500000    // Set packet interval to 500000us or 500ms
 
-/* Header length */
-#if defined(FIXED_LENGTH_SETUP) // 500KBPS is always set up for fixed length packets
-#define HDR_LEN                 (0U)
-#else
-#if (defined(USE_250KBPS_MSK) || defined(USE_250KBPS_MSK_FEC)) // 250KBPS with variable length enabled
-#define HDR_LEN                 (1U)
-#else // 1 Mbps with variable length enabled
-#define HDR_LEN                 (2U)
-#endif
-#endif
-
-#define PACKET_INTERVAL     500000  /* Set packet interval to 500000us or 500ms */
+/* The index of the length in the TX packet and the length of the header */
+#define LEN_INDEX (RCL_REGISTER_FIELD_PBE_GENERIC_RAM_LENCFG_LENPOS/CHAR_BIT)
+#define HDR_LEN   (LEN_INDEX + (RCL_REGISTER_FIELD_PBE_GENERIC_RAM_LENCFG_NUMLENBITS/CHAR_BIT))
 
 /* Indicates if FS is off */
 #define FS_OFF                  (1U)  // 0: On, 1: Off
 
-#if (defined(USE_250KBPS_MSK) || defined(USE_250KBPS_MSK_FEC))
-#define FREQUENCY               (2433000000U)
-#else
 #define FREQUENCY               (2440000000U)
-#endif
-
-#define TX_POWER (5U)
 
 
 /***** Variable declarations *****/
 /* RCL Commands */
-RCL_CmdGenericTx   txCmd;               // TX command
+extern RCL_CmdGenericTx rclPacketTxCmdGenericTx;
 
 /* RCL Client used to open RCL */
-static RCL_Client  rclClient;
+static RCL_Client rclClient;
 
 /* TX packet buffer */
 uint32_t packet[NUM_DATA_ENTRIES][3 + ((MAX_LENGTH + 10)/ 4)];
@@ -113,33 +96,20 @@ void *mainThread(void *arg0)
     /* Initialize and open RCL */
     RCL_init();
 
-#if defined(USE_250KBPS_MSK)
-    RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_configMsk250Kbps);
-#elif defined(USE_250KBPS_MSK_FEC)
-    RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_configMsk250KbpsFec);
-#else
-    RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_configBle);
-#endif
-
-    /* Setup generic transmit command */
-    txCmd = RCL_CmdGenericTx_DefaultRuntime();
+    RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_config);
 
     /* Set RF frequency */
-    txCmd.rfFrequency = FREQUENCY;
-#if !(defined(USE_250KBPS_MSK) || defined(USE_250KBPS_MSK_FEC))
-    txCmd.common.phyFeatures = RCL_PHY_FEATURE_SUB_PHY_1_MBPS_BLE;
-#endif
+    rclPacketTxCmdGenericTx.rfFrequency = FREQUENCY;
 
     /* Start command as soon as possible */
-    txCmd.common.scheduling = RCL_Schedule_Now;
-    txCmd.common.status = RCL_CommandStatus_Idle;
+    rclPacketTxCmdGenericTx.common.scheduling = RCL_Schedule_Now;
+    rclPacketTxCmdGenericTx.common.status = RCL_CommandStatus_Idle;
 
-    txCmd.config.fsOff = FS_OFF; // Turn off FS
-	txCmd.txPower.dBm = TX_POWER;
+    rclPacketTxCmdGenericTx.config.fsOff = FS_OFF; // Turn off FS
 
     /* Callback triggers on last command done */
-    txCmd.common.runtime.callback = defaultCallback;
-    txCmd.common.runtime.rclCallbackMask.value = RCL_EventLastCmdDone.value;
+    rclPacketTxCmdGenericTx.common.runtime.callback = defaultCallback;
+    rclPacketTxCmdGenericTx.common.runtime.rclCallbackMask.value = RCL_EventLastCmdDone.value;
 
     /* Set RCL TX buffer packet to be packet buffer */
     RCL_Buffer_TxBuffer *txPacket = (RCL_Buffer_TxBuffer *)&packet;
@@ -152,29 +122,32 @@ void *mainThread(void *arg0)
         /* Create packet with random payload */
         uint8_t *txData;
         txData = RCL_TxBuffer_init(txPacket, NUM_PAD_BYTES, HDR_LEN, MAX_LENGTH);
-#if !(defined(FIXED_LENGTH_SETUP))
-#if (defined(USE_250KBPS_MSK) || defined(USE_250KBPS_MSK_FEC))
-        txData[0] = MAX_LENGTH;
-#else
-        txData[0] = 0;
-        txData[1] = MAX_LENGTH;
-#endif
-#endif
+
+        /* Zero out data in header before the length field */
+        for (int s = 0; s < LEN_INDEX; s++)
+        {
+            txData[s] = 0U;
+        }
+
+        /* Set the packet length */
+        txData[LEN_INDEX] = MAX_LENGTH;
+
+        /* Generate a random payload */
         for (int i = HDR_LEN; i < MAX_LENGTH; i++)
         {
             txData[i] = rand();
         }
 
         /* Set packet to transmit */
-        RCL_TxBuffer_put(&txCmd.txBuffers, txPacket);
+        RCL_TxBuffer_put(&rclPacketTxCmdGenericTx.txBuffers, txPacket);
 
-        txCmd.common.status = RCL_CommandStatus_Idle;
+        rclPacketTxCmdGenericTx.common.status = RCL_CommandStatus_Idle;
 
         /* Submit command */
-        RCL_Command_submit(rclHandle, &txCmd);
+        RCL_Command_submit(rclHandle, &rclPacketTxCmdGenericTx);
 
         /* Pend on command completion */
-        RCL_Command_pend(&txCmd);
+        RCL_Command_pend(&rclPacketTxCmdGenericTx);
 
         usleep(PACKET_INTERVAL);
     }
