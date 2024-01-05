@@ -58,7 +58,7 @@ In order to change frequency, modify the FREQUENCY define in rfPacketRx.c.</li>
 <p>When the task is executed it:</p>
 
 <ol>
-<li>Initializes and opens RCL with proprietary radio setup. </li>
+<li>Initializes and opens RCL with proprietary radio setup.</li>
 <li>Sets up the radio for generic receive.</li>
 <li>Configures the command settings to turn off FS, store received packets,
 maximum packet length, run forever until completion, and end after receiving
@@ -72,20 +72,16 @@ one packet.</li>
 
 <h2>Switching PHYs</h2>
 
-<p>Add the respective predefine symbol by navigating in CCS to Project Properties ->
-Build -> Arm Compiler -> Predefined Symbols. After nagivating to Predefined Symbols,
-use the appropriate symbol as described below to define the PHY used.
-    - By default, Generic BLE 1M PHY is used.
-    - To use 250KBPS MSK, define predefine symbol <strong>USE_250KBPS_MSK</strong>.
-    - To use 500KBPS MSK, define predefine symbol <strong>USE_250KBPS_MSK_FEC</strong>.</p>
+<p>The PHY used for TX operations can be configured in SysConfig by opening the
+rfPacketTx.syscfg file and navigating to the "Custom" RF Stack. The PHY used
+can be selected from the provided drop downs. The example only supports one phy
+at a time.</p>
 
-<h2>PHY Packet Length Configuration</h2>
-
-<p>By default, the application compiles with variable packet length set up for each PHY. However, <strong>variable
-packet length is not supported for the 500KBPS MSK PHY</strong> in this application. 500KBPS MSK is always set up for fixed packet length.
-Variable packet length is set up for the PHY when the VARIABLE_LENGTH_SETUP symbol is defined.
-For fixed packet length set up,  navigate in CCS to Project Properties ->
-Build -> Arm Compiler -> Predefined Symbols and change the VARIABLE_LENGTH_SETUP symbol to <strong>FIXED_LENGTH_SETUP</strong>.</p>
+<p>In addition, several register fields must be exposed as defines so that
+the example can appropriately set the length field in the packet header. This
+can be accomplished by navigating in SysConfig to the Custom RF Stack --> Your
+Selected PHY --> Code Export Configuration --> Register Field Defines and setting
+it's value to "PBE_GENERIC_RAM_LENCFG_LENPOS,PBE_GENERIC_RAM_LENCFG_NUMLENBITS".</p>
 
     </div>
     <footer id="tiFooter">

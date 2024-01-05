@@ -81,7 +81,7 @@ However, the packet format is identical to the default one in SmartRF Studio, so
 that any compatible hardware can be used as well.</p>
 
 <ol>
-<li><p>Use the UART and hook it to a VT100-compatible terminal emulator at 115200 Baud. 
+<li><p>Use the UART and hook it to a VT100-compatible terminal emulator at 115200 Baud.
 Use PuTTY or TeraTerm on Microsoft Windows. After a splash screen, you will see the
 main menu:</p>
 
@@ -129,11 +129,7 @@ in either <code>rx.c</code> or <code>tx.c</code>.</p>
 
 <h2>PHY Packet Length Configuration</h2>
 
-<p>By default, the application compiles with variable packet length set up for each PHY. However, <strong>variable
-packet length is not supported for the 500KBPS MSK PHY</strong> in this application. 500KBPS MSK is always set up for fixed packet length.
-Variable packet length is set up for the PHY when the VARIABLE_LENGTH_SETUP symbol is defined.
-For fixed packet length set up,  navigate in CCS to Project Properties ->
-Build -> Arm Compiler -> Predefined Symbols and change the VARIABLE_LENGTH_SETUP symbol to <strong>FIXED_LENGTH_SETUP</strong>.</p>
+<p>By default, the application compiles with variable packet length set up for each PHY.</p>
 
     </div>
     <footer id="tiFooter">

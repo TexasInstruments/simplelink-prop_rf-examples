@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                deviceFamily="ARM"
+                deviceId="Cortex M.CC2340R5"
+            />
+        </when>
+    </applicability>
+
+    <project
+        title="RF Echo TX (Packet Originator)"
+        name="rfEchoTx_LP_EM_CC2340R5_nortos_ticlang"
+        configurations="Debug"
+        toolChain="TICLANG"
+        cgtVersion="TICLANG_3.2.0.LTS"
+        connection="TIXDS110_Connection.xml"
+        device="Cortex M.CC2340R5"
+        ignoreDefaultDeviceSettings="true"
+        ignoreDefaultCCSSettings="true"
+        products="com.ti.SIMPLELINK_LOWPOWER_F3_SDK;sysconfig"
+        compilerBuildOptions="
+            -I${PROJECT_ROOT}
+            -I${PROJECT_ROOT}/${ConfigName}
+            -I${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/source
+            -I${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/kernel/nortos
+            -I${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/kernel/nortos/posix
+            -gdwarf-3
+            -mcpu=cortex-m0plus
+            -march=thumbv6m
+            -mfloat-abi=soft
+            -mthumb
+        "
+        linkerBuildOptions="
+            -L${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/source
+            -L${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/kernel/nortos
+            -L${PROJECT_BUILD_DIR}/syscfg
+            -lti_utils_build_linker.cmd.genlibs
+            -Wl,--rom_model
+            -Wl,--warn_sections
+            -L${CG_TOOL_ROOT}/lib
+            -llibc.a
+        "
+        enableSysConfigTool="true"
+        sysConfigBuildOptions="
+            --compiler ticlang
+        "
+        description="An echo example (packet originator) using the RF driver">
+
+        <property name="buildProfile" value="release"/>
+        <property name="isHybrid" value="true"/>
+        <file path="../rfEchoTx.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../README.md" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../rfEcho_PerfectEcho.png" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../rfEcho_MissedFirstPacket.png" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../rfEcho_MissingFirstCouplePackets.png" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../rfEcho_ErrorTxRx.png" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../rfEchoTx.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../main_nortos.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../ticlang/cc23x0r5_nortos.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+    </project>
+</projectSpec>

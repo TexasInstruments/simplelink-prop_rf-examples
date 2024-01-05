@@ -1,29 +1,28 @@
-COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR ?= $(abspath ../../../../../../..)
+SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR ?= $(abspath ../../../../../../..)
 
-include $(COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/imports.mak
+include $(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/imports.mak
 
 CC = "$(IAR_ARMCOMPILER)/bin/iccarm"
 LNK = "$(IAR_ARMCOMPILER)/bin/ilinkarm"
 
-SYSCFG_CMD_STUB = $(SYSCONFIG_TOOL) --compiler iar --product $(COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/.metadata/product.json
+SYSCFG_CMD_STUB = $(SYSCONFIG_TOOL) --compiler iar --product $(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/.metadata/product.json
 SYSCFG_FILES := $(shell $(SYSCFG_CMD_STUB) --listGeneratedFiles --listReferencedFiles --output . ../../freertos/rfPacketErrorRate.syscfg)
 
 SYSCFG_C_FILES = $(filter %.c,$(SYSCFG_FILES))
 SYSCFG_H_FILES = $(filter %.h,$(SYSCFG_FILES))
 SYSCFG_OPT_FILES = $(filter %.opt,$(SYSCFG_FILES))
 
-OBJECTS = config.obj menu.obj rfPacketErrorRate.obj rx.obj tx.obj setup_rcl_settings_ble_generic.obj setup_rcl_settings_msk_250_kbps.obj setup_rcl_settings_msk_250_kbps_fec.obj freertos_main_freertos.obj $(patsubst %.c,%.obj,$(notdir $(SYSCFG_C_FILES)))
+OBJECTS = config.obj menu.obj rfPacketErrorRate.obj rx.obj tx.obj freertos_main_freertos.obj $(patsubst %.c,%.obj,$(notdir $(SYSCFG_C_FILES)))
 NAME = rfPacketErrorRate
 
 CFLAGS += -I../.. \
     -I. \
     $(addprefix -f,$(SYSCFG_OPT_FILES)) \
-    -DVARIABLE_LENGTH_SETUP \
-    "-I$(COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source" \
-    "-I$(COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/kernel/freertos" \
-    "-I$(COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source/ti/posix/iar" \
-    "-I$(FREERTOS_INSTALL_DIR)/FreeRTOS/Source/include" \
-    "-I$(FREERTOS_INSTALL_DIR)/FreeRTOS/Source/portable/IAR/ARM_CM0" \
+    "-I$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source" \
+    "-I$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/kernel/freertos" \
+    "-I$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source/ti/posix/iar" \
+    "-I$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source/third_party/freertos/include" \
+    "-I$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source/third_party/freertos/portable/IAR/ARM_CM0" \
     --debug \
     --silent \
     -e \
@@ -33,8 +32,8 @@ CFLAGS += -I../.. \
     --cpu=Cortex-M0+ \
     --vla
 
-LFLAGS += "-L$(COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source" \
-    "-L$(COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/kernel" \
+LFLAGS += "-L$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source" \
+    "-L$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/kernel" \
     --threaded_lib \
     -fti_utils_build_linker.cmd.genlibs \
     --config ../../freertos/iar/cc23x0r5_freertos.icf \
@@ -78,18 +77,6 @@ rx.obj: ../../rx.c $(SYSCFG_H_FILES)
 	@ $(CC) $(CFLAGS) $< -o $@
 
 tx.obj: ../../tx.c $(SYSCFG_H_FILES)
-	@ echo Building $@
-	@ $(CC) $(CFLAGS) $< -o $@
-
-setup_rcl_settings_ble_generic.obj: ../../setup/rcl_settings_ble_generic.c $(SYSCFG_H_FILES)
-	@ echo Building $@
-	@ $(CC) $(CFLAGS) $< -o $@
-
-setup_rcl_settings_msk_250_kbps.obj: ../../setup/rcl_settings_msk_250_kbps.c $(SYSCFG_H_FILES)
-	@ echo Building $@
-	@ $(CC) $(CFLAGS) $< -o $@
-
-setup_rcl_settings_msk_250_kbps_fec.obj: ../../setup/rcl_settings_msk_250_kbps_fec.c $(SYSCFG_H_FILES)
 	@ echo Building $@
 	@ $(CC) $(CFLAGS) $< -o $@
 

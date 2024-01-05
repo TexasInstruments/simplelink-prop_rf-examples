@@ -15,17 +15,14 @@
 
     <includePath>
         <path>$PROJ_DIR$</path>
-        <path>$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/source</path>
-        <path>$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/kernel/nortos</path>
-        <path>$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/kernel/nortos/posix</path>
+        <path>$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/source</path>
+        <path>$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/kernel/nortos</path>
+        <path>$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/kernel/nortos/posix</path>
     </includePath>
-
-    <defines>
-        <define>VARIABLE_LENGTH_SETUP</define>
-    </defines>
 
     <extraOptions>
         <args>
+            <arg>-f$PROJ_DIR$/ti_utils_build_compiler.opt</arg>
             <arg>--debug</arg>
             <arg>--silent</arg>
             <arg>-e</arg>
@@ -42,8 +39,8 @@
 
     <linkerExtraOptions>
         <args>
-            <arg>-L$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/source</arg>
-            <arg>-L$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/kernel/nortos</arg>
+            <arg>-L$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/source</arg>
+            <arg>-L$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/kernel/nortos</arg>
             <arg>-f$PROJ_DIR$/ti_utils_build_linker.cmd.genlibs</arg>
             <arg>--silent</arg>
         </args>
@@ -52,7 +49,7 @@
     <customBuildTools>
         <customBuildTool atRoot="true" name="SysConfig"> <!-- Custom build tool for entire project-->
             <fileExtensions>.syscfg</fileExtensions>
-            <command>$SYSCONFIG_ROOT$/sysconfig_cli.bat -o $PROJ_DIR$ -s "$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/.metadata/product.json" --compiler iar $FILE_PATH$</command>
+            <command>$SYSCONFIG_ROOT$/sysconfig_cli.bat -o $PROJ_DIR$ -s "$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/.metadata/product.json" --compiler iar $FILE_PATH$</command>
             <output>
                 <path>SysConfig_Generated_Files.ipcf</path>
             </output>
@@ -76,18 +73,10 @@
 
 
     <files>
-        <path copyTo="$PROJ_DIR$/cc23x0r5_nortos.icf">$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketRx/iar/cc23x0r5_nortos.icf</path>
-        <path copyTo="$PROJ_DIR$/main_nortos.c">$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketRx/main_nortos.c</path>
-        <path copyTo="$PROJ_DIR$/README.md">$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketRx/README.md</path>
-        <path copyTo="$PROJ_DIR$/rfPacketRx.c">$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketRx/rfPacketRx.c</path>
-        <path copyTo="$PROJ_DIR$/rfPacketRx.syscfg">$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketRx/rfPacketRx.syscfg</path>
-        <group name="setup" build="true">
-            <path copyTo="$PROJ_DIR$/setup/rcl_settings_ble_generic.c">$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketRx/setup/rcl_settings_ble_generic.c</path>
-            <path copyTo="$PROJ_DIR$/setup/rcl_settings_ble_generic.h">$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketRx/setup/rcl_settings_ble_generic.h</path>
-            <path copyTo="$PROJ_DIR$/setup/rcl_settings_msk_250_kbps.c">$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketRx/setup/rcl_settings_msk_250_kbps.c</path>
-            <path copyTo="$PROJ_DIR$/setup/rcl_settings_msk_250_kbps.h">$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketRx/setup/rcl_settings_msk_250_kbps.h</path>
-            <path copyTo="$PROJ_DIR$/setup/rcl_settings_msk_250_kbps_fec.c">$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketRx/setup/rcl_settings_msk_250_kbps_fec.c</path>
-            <path copyTo="$PROJ_DIR$/setup/rcl_settings_msk_250_kbps_fec.h">$COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketRx/setup/rcl_settings_msk_250_kbps_fec.h</path>
-        </group>
+        <path copyTo="$PROJ_DIR$/cc23x0r5_nortos.icf">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketRx/iar/cc23x0r5_nortos.icf</path>
+        <path copyTo="$PROJ_DIR$/main_nortos.c">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketRx/main_nortos.c</path>
+        <path copyTo="$PROJ_DIR$/README.md">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketRx/README.md</path>
+        <path copyTo="$PROJ_DIR$/rfPacketRx.c">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketRx/rfPacketRx.c</path>
+        <path copyTo="$PROJ_DIR$/rfPacketRx.syscfg">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R5/prop_rf/rfPacketRx/rfPacketRx.syscfg</path>
     </files>
 </iarProjectConnection>

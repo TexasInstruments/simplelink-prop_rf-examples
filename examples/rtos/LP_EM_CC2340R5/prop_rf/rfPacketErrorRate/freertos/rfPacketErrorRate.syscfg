@@ -66,7 +66,6 @@ BUTTON_L.mode = "Input";                              // Change the GPIO to Inpu
 BUTTON_L.$name = "CONFIG_GPIO_BTN1";                  // Descriptive name for the BUTTON_L GPIO
 BUTTON_L.pull = "Pull Up";                            // Use Pull up resistor
 BUTTON_L.interruptTrigger = "Falling Edge";           // GPIO Interrupt Trigger
-BUTTON_L.callbackFunction = "NULL";                   // Callback function
 
 /* ======== Right Button ======== */
 var GPIO = scripting.addModule("/ti/drivers/GPIO");  // Add a GPIO module for use by buttons
@@ -81,11 +80,63 @@ BUTTON_R.mode = "Input";                            // Change the GPIO to Input 
 BUTTON_R.$name = "CONFIG_GPIO_BTN2";                // Descriptive name for the BUTTON_R GPIO
 BUTTON_R.pull = "Pull Up";                          // Use Pull up resistor
 BUTTON_R.interruptTrigger = "Falling Edge";         // GPIO Interrupt Trigger
-BUTTON_R.callbackFunction = "NULL";                 // Callback function
-
-/* ======== Temperature ======== */
-var temperature = scripting.addModule("/ti/drivers/Temperature");
 
 /* ======== Kernel Configuration ======== */
 system.getScript("kernel_config_release.syscfg.js");
+
+/* ======== Radio Configuration ======== */
+const commonRf = system.getScript("/ti/prop_rf/prop_rf_common.js");
+const boardName = commonRf.getDeviceOrLaunchPadName(true);
+const phyFilePath = "/ti/prop_rf/rf_config/" + boardName + "_rf_defaults.js";
+
+// Add an instance of the "Custom" RF Stack
+const customStack = scripting.addModule("/ti/devices/radioconfig/custom");
+
+// Get the supported BLE phys for this board as defined by Prop RF
+const supportedBlePhys = system.getScript(phyFilePath).defaultBlePhyList;
+
+// Get the supported proprietary phys for this board as defined by Prop RF
+const supportedPropPhys = system.getScript(phyFilePath).defaultPropPhyList;
+
+const phyInstances = [];
+
+/*
+ * Iterate over all the proprietary phys supported by this board adding them to
+ * the configuration
+ */
+for(let phy of supportedPropPhys)
+{
+    let phyInst = commonRf.addPropPhy(customStack, phy);
+    phyInst.codeExportConfig.symGenMethod = "Automatic";
+    phyInst.codeExportConfig.cmdList_prop = ["cmdGenericRx","cmdGenericTx"];
+    phyInstances.push(phyInst);
+}
+
+/*
+ * Iterate over all the BLE phys supported by this board adding them to
+ * the configuration
+ */
+for(let phy of supportedBlePhys)
+{
+    let phyInst = commonRf.addBlePhy(customStack, phy);
+    phyInst.codeExportConfig.symGenMethod = "Automatic";
+    phyInst.codeExportConfig.cmdList_ble = ["cmdGenericRx","cmdGenericTx"];
+    phyInstances.push(phyInst);
+}
+
+/* ======== RF Design ======== */
+var rfDesign = scripting.addModule("ti/devices/radioconfig/rfdesign");
+const rfDesignSettings = system.getScript("/ti/common/lprf_rf_design_settings.js").rfDesignSettings;
+for(var setting in rfDesignSettings)
+{
+    rfDesign[setting] = rfDesignSettings[setting];
+}
+
+/* ======== Device ======== */
+var device = scripting.addModule("ti/devices/CCFG");
+const ccfgSettings = system.getScript("/ti/common/lprf_ccfg_settings.js").ccfgSettings;
+for(var setting in ccfgSettings)
+{
+    device[setting] = ccfgSettings[setting];
+}
 

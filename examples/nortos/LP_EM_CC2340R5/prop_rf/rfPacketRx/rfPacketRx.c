@@ -39,15 +39,10 @@
 #include <ti/drivers/rcl/RCL.h>
 #include <ti/drivers/rcl/RCL_Scheduler.h>
 #include <ti/drivers/rcl/commands/generic.h>
-#include "ti_drivers_config.h"
 
-#if defined(USE_250KBPS_MSK)
-#include <setup/rcl_settings_msk_250_kbps.h>
-#elif defined(USE_250KBPS_MSK_FEC)
-#include <setup/rcl_settings_msk_250_kbps_fec.h>
-#else
-#include <setup/rcl_settings_ble_generic.h>
-#endif
+/* SysConfig Generated */
+#include "ti_drivers_config.h"
+#include "ti_radio_config.h"
 
 /***** Defines *****/
 /* Packet RX Configuration */
@@ -65,18 +60,14 @@
                                       // 1: Discard packets
 
 /* RF Frequency (Hz) to program */
-#if defined(USE_250KBPS_MSK) || defined(USE_250KBPS_MSK_FEC)
-#define FREQUENCY               (2433000000U)
-#else
 #define FREQUENCY               (2440000000U)
-#endif
 
 /* Number of packets to initialize for multi buffer */
 #define NUM_OF_PACKETS          (1U)
 
 /***** Variable Declarations *****/
 /* RCL Commands */
-RCL_CmdGenericRx    rxCmd;              // RX command
+extern RCL_CmdGenericRx    rclPacketRxCmdGenericRx;       // RX command
 RCL_StatsGeneric    stats;              // Statistic command
 
 /* RCL Client used to open RCL */
@@ -102,7 +93,7 @@ void defaultCallback(RCL_Command *cmd, LRF_Events lrfEvents, RCL_Events rclEvent
     {
         gPktRcvd += 1;
         GPIO_toggle(CONFIG_GPIO_RLED);
-        
+
         /* Clear multi buffer after receive finishes for next receive */
         RCL_MultiBuffer_clear(multiBuffer);
     }
@@ -114,51 +105,39 @@ void *mainThread(void *arg0)
     /* Initialize and open RCL */
     RCL_init();
 
-#if defined(USE_250KBPS_MSK)
-    RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_configMsk250Kbps);
-#elif defined(USE_250KBPS_MSK_FEC)
-    RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_configMsk250KbpsFec);
-#else
-    RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_configBle);
-#endif
-
-    /* Setup generic receive command */
-    rxCmd = RCL_CmdGenericRx_DefaultRuntime();
+    RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_config);
 
     /* Set RF frequency */
-    rxCmd.rfFrequency = FREQUENCY;
-#if !(defined(USE_250KBPS_MSK) || defined(USE_250KBPS_MSK_FEC))
-    rxCmd.common.phyFeatures = RCL_PHY_FEATURE_SUB_PHY_1_MBPS_BLE;
-#endif
+    rclPacketRxCmdGenericRx.rfFrequency = FREQUENCY;
 
     /* Start command as soon as possible */
-    rxCmd.common.scheduling = RCL_Schedule_Now;
-    rxCmd.common.status = RCL_CommandStatus_Idle;
+    rclPacketRxCmdGenericRx.common.scheduling = RCL_Schedule_Now;
+    rclPacketRxCmdGenericRx.common.status = RCL_CommandStatus_Idle;
 
-    rxCmd.config.fsOff = FS_OFF;                        // Turn off FS
-    rxCmd.config.discardRxPackets = DISCARD_RX_PACKET;  // Store received packet
+    rclPacketRxCmdGenericRx.config.fsOff = FS_OFF;                        // Turn off FS
+    rclPacketRxCmdGenericRx.config.discardRxPackets = DISCARD_RX_PACKET;  // Store received packet
 
     /* Callback triggers on last command done or packet received */
-    rxCmd.common.runtime.callback = defaultCallback;
-    rxCmd.common.runtime.rclCallbackMask.value = RCL_EventLastCmdDone.value |
+    rclPacketRxCmdGenericRx.common.runtime.callback = defaultCallback;
+    rclPacketRxCmdGenericRx.common.runtime.rclCallbackMask.value = RCL_EventLastCmdDone.value |
                                                  RCL_EventRxEntryAvail.value;
 
     /* Maximum packet length */
-    rxCmd.maxPktLen = MAX_LENGTH;
+    rclPacketRxCmdGenericRx.maxPktLen = MAX_LENGTH;
 
     /* Set command to run forever until completion */
-    rxCmd.common.timing.relGracefulStopTime = 0;
+    rclPacketRxCmdGenericRx.common.timing.relGracefulStopTime = 0;
 
     /*  Go back to sync search after receiving */
-    rxCmd.config.repeated = 1;
+    rclPacketRxCmdGenericRx.config.repeated = 1;
 
     /* Setup generic status command */
     stats = RCL_StatsGeneric_DefaultRuntime();
 
     /* Set RX command statistics structure */
-    rxCmd.stats = &stats;
-    rxCmd.stats->config.activeUpdate = 1;
-    
+    rclPacketRxCmdGenericRx.stats = &stats;
+    rclPacketRxCmdGenericRx.stats->config.activeUpdate = 1;
+
     GPIO_setConfig(CONFIG_GPIO_RLED, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW);
     GPIO_write(CONFIG_GPIO_RLED, CONFIG_GPIO_LED_OFF);
 
@@ -167,14 +146,14 @@ void *mainThread(void *arg0)
     {
         multiBuffer = (RCL_MultiBuffer *) buffer[i];
         RCL_MultiBuffer_init(multiBuffer, BUFF_STRUCT_LENGTH);
-        RCL_MultiBuffer_put(&rxCmd.rxBuffers, multiBuffer);
+        RCL_MultiBuffer_put(&rclPacketRxCmdGenericRx.rxBuffers, multiBuffer);
     }
 
     /* Submit command */
-    RCL_Command_submit(rclHandle, &rxCmd);
+    RCL_Command_submit(rclHandle, &rclPacketRxCmdGenericRx);
 
     /* Pend on command completion */
-    RCL_Command_pend(&rxCmd);
+    RCL_Command_pend(&rclPacketRxCmdGenericRx);
 
     return NULL;
 }

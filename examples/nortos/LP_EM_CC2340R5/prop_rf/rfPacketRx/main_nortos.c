@@ -41,18 +41,6 @@
 
 #include <ti/drivers/Board.h>
 
-#include <ti/devices/DeviceFamily.h>
-#include DeviceFamily_constructPath(driverlib/dbell_regs.h)
-
-#include DeviceFamily_constructPath(inc/hw_types.h)
-#include DeviceFamily_constructPath(inc/hw_memmap.h)
-#include DeviceFamily_constructPath(inc/hw_ioc.h)
-#include DeviceFamily_constructPath(inc/hw_ckmd.h)
-
-#include <ti/drivers/Power.h>
-#include <ti/drivers/power/PowerCC23X0.h>
-#include <ti/drivers/Temperature.h>
-
 extern void *mainThread(void *arg0);
 
 /*
@@ -60,20 +48,7 @@ extern void *mainThread(void *arg0);
  */
 int main(void)
 {
-	uint32_t hftrackctl =  HWREG( CKMD_BASE + CKMD_O_HFTRACKCTL );
-	
-    /* ==== /ti/drivers/Power initialization ==== */
-    Power_init();
-    Power_setConstraint(PowerLPF3_DISALLOW_IDLE);
-    Power_setConstraint(PowerLPF3_DISALLOW_STANDBY);
-	
-    Temperature_init();
-
-    /* High performance clock buffer enable */
-    HWREG( CKMD_BASE + CKMD_O_HFXTCTL ) |= ( CKMD_HFXTCTL_HPBUFEN | CKMD_HFXTCTL_EN );
-
-    /* Enable tracking loop */
-    HWREG( CKMD_BASE + CKMD_O_HFTRACKCTL ) = hftrackctl | CKMD_HFTRACKCTL_EN;
+    Board_init();
 
     /* Start NoRTOS */
     NoRTOS_start();

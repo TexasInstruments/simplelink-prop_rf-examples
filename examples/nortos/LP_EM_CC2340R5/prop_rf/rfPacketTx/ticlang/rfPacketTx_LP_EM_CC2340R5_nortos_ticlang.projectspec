@@ -14,7 +14,7 @@
         name="rfPacketTx_LP_EM_CC2340R5_nortos_ticlang"
         configurations="Debug"
         toolChain="TICLANG"
-        cgtVersion="TICLANG_2.1.3.LTS"
+        cgtVersion="TICLANG_3.2.0.LTS"
         connection="TIXDS110_Connection.xml"
         device="Cortex M.CC2340R5"
         ignoreDefaultDeviceSettings="true"
@@ -23,7 +23,6 @@
         compilerBuildOptions="
             -I${PROJECT_ROOT}
             -I${PROJECT_ROOT}/${ConfigName}
-            -DVARIABLE_LENGTH_SETUP
             -I${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/source
             -I${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/kernel/nortos
             -I${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/kernel/nortos/posix
@@ -35,7 +34,6 @@
         "
         linkerBuildOptions="
             -L${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/source
-            -L${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}source/ti/devices/cc23x0r5/rf_patches/lib/ticlang/lrf_cc23x0r5.a
             -L${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/kernel/nortos
             -L${PROJECT_BUILD_DIR}/syscfg
             -lti_utils_build_linker.cmd.genlibs
@@ -46,7 +44,6 @@
         "
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --product ${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/.metadata/product.json
             --compiler ticlang
         "
         description="A transmitter example on how to use the RF driver">
@@ -56,18 +53,6 @@
         <file path="../rfPacketTx.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../README.md" openOnCreation="false" excludeFromBuild="false" action="copy">
-        </file>
-        <file path="../setup/rcl_settings_ble_generic.c" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="setup">
-        </file>
-        <file path="../setup/rcl_settings_ble_generic.h" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="setup">
-        </file>
-        <file path="../setup/rcl_settings_msk_250_kbps.c" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="setup">
-        </file>
-        <file path="../setup/rcl_settings_msk_250_kbps.h" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="setup">
-        </file>
-        <file path="../setup/rcl_settings_msk_250_kbps_fec.c" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="setup">
-        </file>
-        <file path="../setup/rcl_settings_msk_250_kbps_fec.h" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="setup">
         </file>
         <file path="../rfPacketTx.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>

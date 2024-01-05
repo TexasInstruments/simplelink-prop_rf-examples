@@ -42,16 +42,13 @@
 #include <ti/drivers/rcl/RCL_Scheduler.h>
 #include <ti/drivers/rcl/commands/generic.h>
 
-#include <setup/rcl_settings_msk_250_kbps.h>
-#include <setup/rcl_settings_msk_250_kbps_fec.h>
-#include <setup/rcl_settings_ble_generic.h>
-
 
 /* TI-RTOS Header files */
 #include <ti/drivers/GPIO.h>
 
 /* Board Header files */
 #include "ti_drivers_config.h"
+#include "ti_radio_config.h"
 
 /* Application specific Header files */
 #include "menu.h"
@@ -64,11 +61,7 @@
 #define NUM_PAD_BYTES           (3U)  // Number of pad bytes
 
 /* RF Frequency (Hz) to program */
-#if defined(USE_250KBPS_MSK) || defined(USE_250KBPS_MSK_FEC)
-#define FREQUENCY               (2433000000U)
-#else
 #define FREQUENCY               (2440000000U)
-#endif
 
 /* Indicates if FS is off */
 #define FS_OFF                  (1U)  // 0: On, 1: Off
@@ -78,7 +71,10 @@
 
 /***** Variable declarations *****/
 /* RCL Commands */
-RCL_CmdGenericTx   txCmd;               // TX command
+RCL_CmdGenericTx   *rclPacketTxCmdGenericTx;               // TX command
+extern RCL_CmdGenericTx rclPacketTxCmdGenericTx_msk_250_kbps_0;
+extern RCL_CmdGenericTx rclPacketTxCmdGenericTx_ble_gen_2;
+extern RCL_CmdGenericTx rclPacketTxCmdGenericTx_msk_250_kbps_fec_1;
 
 /* RCL Client used to open RCL */
 static RCL_Client  txRclClient;
@@ -186,39 +182,36 @@ TestResult tx_runTxTest(const ApplicationConfig* config)
     /* Initialize RCL */
     RCL_init();
 
-    /* Setup generic transmit command */
-    txCmd = RCL_CmdGenericTx_DefaultRuntime();
-
     /* Open RCL */
     if(config->rfSetup == RCL_Generic_BLE_1M)
     {
-        rclHandle = RCL_open(&txRclClient, &LRF_configBle);
-        txCmd.common.phyFeatures = RCL_PHY_FEATURE_SUB_PHY_1_MBPS_BLE;
+        rclPacketTxCmdGenericTx = &rclPacketTxCmdGenericTx_ble_gen_2;
+        rclHandle = RCL_open(&txRclClient, &LRF_config_ble_gen_2);
     }
     else if(config->rfSetup == RCL_Generic_250K_MSK)
     {
-        rclHandle = RCL_open(&txRclClient, &LRF_configMsk250Kbps);
+        rclPacketTxCmdGenericTx = &rclPacketTxCmdGenericTx_msk_250_kbps_0;
+        rclHandle = RCL_open(&txRclClient, &LRF_config_msk_250_kbps_0);
     }
     else
     {
-        rclHandle = RCL_open(&txRclClient, &LRF_configMsk250KbpsFec);
+        rclPacketTxCmdGenericTx = &rclPacketTxCmdGenericTx_msk_250_kbps_fec_1;
+        rclHandle = RCL_open(&txRclClient, &LRF_config_msk_250_kbps_fec_1);
     }
 
-
-
     /* Set RF frequency */
-    txCmd.rfFrequency = config->frequencyTable[config->frequency].frequency * FREQUENCY_MHZ_TO_HZ;
+    rclPacketTxCmdGenericTx->rfFrequency = config->frequencyTable[config->frequency].frequency * FREQUENCY_MHZ_TO_HZ;
 
     /* Start command as soon as possible */
-    txCmd.common.scheduling = RCL_Schedule_Now;
-    txCmd.common.status = RCL_CommandStatus_Idle;
+    rclPacketTxCmdGenericTx->common.scheduling = RCL_Schedule_Now;
+    rclPacketTxCmdGenericTx->common.status = RCL_CommandStatus_Idle;
 
-    txCmd.config.fsOff = FS_OFF; // Turn off FS
+    rclPacketTxCmdGenericTx->config.fsOff = FS_OFF; // Turn off FS
 
     /* Callback triggers on last command done */
-    txCmd.common.runtime.callback = txCallback;
-    txCmd.common.runtime.rclCallbackMask.value = RCL_EventLastCmdDone.value;
-    txCmd.txPower = LRF_TxPower_Use_Max;
+    rclPacketTxCmdGenericTx->common.runtime.callback = txCallback;
+    rclPacketTxCmdGenericTx->common.runtime.rclCallbackMask.value = RCL_EventLastCmdDone.value;
+    rclPacketTxCmdGenericTx->txPower = LRF_TxPower_Use_Max;
 
     /* Set RCL TX buffer packet to be packet buffer */
     RCL_Buffer_TxBuffer *txPacket = (RCL_Buffer_TxBuffer *)&packet;
@@ -237,13 +230,13 @@ TestResult tx_runTxTest(const ApplicationConfig* config)
         /* If user pressed a button */
         if (menu_isButtonPressed())
         {
-            if (RCL_CommandStatus_Idle != txCmd.common.status)
+            if (RCL_CommandStatus_Idle != rclPacketTxCmdGenericTx->common.status)
             {
                 /* Stop command as soon as possible if active*/
                 RCL_Command_stop(rclHandle, RCL_StopType_Hard);
 
                 /* Pend on command completion */
-                RCL_Command_pend(&txCmd);
+                RCL_Command_pend(rclPacketTxCmdGenericTx);
             }
 
             /* Close RCL */
@@ -290,15 +283,15 @@ TestResult tx_runTxTest(const ApplicationConfig* config)
             }
 
             /* Set packet to transmit */
-            RCL_TxBuffer_put(&txCmd.txBuffers, txPacket);
+            RCL_TxBuffer_put(&(rclPacketTxCmdGenericTx->txBuffers), txPacket);
 
-            txCmd.common.status = RCL_CommandStatus_Idle;
+            rclPacketTxCmdGenericTx->common.status = RCL_CommandStatus_Idle;
 
             /* Submit command */
-            RCL_Command_submit(rclHandle, &txCmd);
+            RCL_Command_submit(rclHandle, rclPacketTxCmdGenericTx);
 
             /* Pend on command completion */
-            RCL_Command_pend(&txCmd);
+            RCL_Command_pend(rclPacketTxCmdGenericTx);
 
             usleep(10000);
         }

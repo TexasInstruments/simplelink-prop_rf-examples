@@ -38,15 +38,12 @@
 #endif
 /* Board Header files */
 #include "ti_drivers_config.h"
+#include "ti_radio_config.h"
 
 /* TI Drivers */
 #include <ti/drivers/rcl/RCL.h>
 #include <ti/drivers/rcl/RCL_Scheduler.h>
 #include <ti/drivers/rcl/commands/generic.h>
-#include <setup/rcl_settings_msk_250_kbps.h>
-#include <setup/rcl_settings_msk_250_kbps_fec.h>
-#include <setup/rcl_settings_ble_generic.h>
-
 
 /* Application specific Header files */
 #include "menu.h"
@@ -79,8 +76,11 @@
 
 /***** Variable Declarations *****/
 /* RCL Commands */
-RCL_CmdGenericRx    rxCmd;              // RX command
+RCL_CmdGenericRx    *rclPacketRxCmdGenericRx;              // RX command
 RCL_StatsGeneric    stats;              // Statistic command
+extern RCL_CmdGenericRx rclPacketRxCmdGenericRx_msk_250_kbps_0;
+extern RCL_CmdGenericRx rclPacketRxCmdGenericRx_ble_gen_2;
+extern RCL_CmdGenericRx rclPacketRxCmdGenericRx_msk_250_kbps_fec_1;
 
 /* RCL Client used to open RCL */
 static RCL_Client  rxRclClient;
@@ -143,13 +143,13 @@ void rxCallback(RCL_Command *cmd, LRF_Events lrfEvents, RCL_Events rclEvents)
 
          if(bFirstPacket)
         {
-            startTime = rxCmd.stats->lastTimestamp;
+            startTime = rclPacketRxCmdGenericRx->stats->lastTimestamp;
             /* Lock out this read after the first packet */
             bFirstPacket = false;
         }
         else
         {
-            endTime = rxCmd.stats->lastTimestamp;
+            endTime = rclPacketRxCmdGenericRx->stats->lastTimestamp;
             /* Calculate the delta between two consecutive packets */
             deltaTimePacket   = endTime - startTime;
             deltaTimePacketUs = deltaTimePacket/(RCL_SCHEDULER_SYSTIM_US(1));
@@ -197,7 +197,7 @@ void rxCallback(RCL_Command *cmd, LRF_Events lrfEvents, RCL_Events rclEvents)
         }
 
         /* Read out received packet */
-        RCL_Buffer_DataEntry *rxPkt = RCL_MultiBuffer_RxEntry_get(&(rxCmd.rxBuffers), NULL);
+        RCL_Buffer_DataEntry *rxPkt = RCL_MultiBuffer_RxEntry_get(&(rclPacketRxCmdGenericRx->rxBuffers), NULL);
 
         nBits += (rxPkt->length << 3);
 
@@ -230,78 +230,77 @@ TestResult rx_runRxTest(const ApplicationConfig* config)
     /* Initialize RCL */
     RCL_init();
 
-    /* Setup generic receive command */
-    rxCmd = RCL_CmdGenericRx_DefaultRuntime();
-
     /* Open RCL */
     if(config->rfSetup == RCL_Generic_BLE_1M)
     {
-        rclHandle = RCL_open(&rxRclClient, &LRF_configBle);
-        rxCmd.common.phyFeatures = RCL_PHY_FEATURE_SUB_PHY_1_MBPS_BLE;
+        rclPacketRxCmdGenericRx = &rclPacketRxCmdGenericRx_ble_gen_2;
+        rclHandle = RCL_open(&rxRclClient, &LRF_config_ble_gen_2);
     }
     else if(config->rfSetup == RCL_Generic_250K_MSK)
     {
-        rclHandle = RCL_open(&rxRclClient, &LRF_configMsk250Kbps);
+        rclPacketRxCmdGenericRx = &rclPacketRxCmdGenericRx_msk_250_kbps_0;
+        rclHandle = RCL_open(&rxRclClient, &LRF_config_msk_250_kbps_0);
     }
     else
     {
-        rclHandle = RCL_open(&rxRclClient, &LRF_configMsk250KbpsFec);
+        rclPacketRxCmdGenericRx = &rclPacketRxCmdGenericRx_msk_250_kbps_fec_1;
+        rclHandle = RCL_open(&rxRclClient, &LRF_config_msk_250_kbps_fec_1);
     }
 
 
     /* Set RF frequency */
-    rxCmd.rfFrequency = config->frequencyTable[config->frequency].frequency * FREQUENCY_MHZ_TO_HZ;
+    rclPacketRxCmdGenericRx->rfFrequency = config->frequencyTable[config->frequency].frequency * FREQUENCY_MHZ_TO_HZ;
 
     /* Start command as soon as possible */
-    rxCmd.common.scheduling = RCL_Schedule_Now;
-    rxCmd.common.status = RCL_CommandStatus_Idle;
+    rclPacketRxCmdGenericRx->common.scheduling = RCL_Schedule_Now;
+    rclPacketRxCmdGenericRx->common.status = RCL_CommandStatus_Idle;
 
-    rxCmd.config.fsOff = FS_OFF;                        // Turn off FS
-    rxCmd.config.discardRxPackets = DISCARD_RX_PACKET;  // Store received packet
+    rclPacketRxCmdGenericRx->config.fsOff = FS_OFF;                        // Turn off FS
+    rclPacketRxCmdGenericRx->config.discardRxPackets = DISCARD_RX_PACKET;  // Store received packet
 
     /* Callback triggers on last command done or packet received */
-    rxCmd.common.runtime.callback = rxCallback;
-    rxCmd.common.runtime.rclCallbackMask.value = RCL_EventLastCmdDone.value |
+    rclPacketRxCmdGenericRx->common.runtime.callback = rxCallback;
+    rclPacketRxCmdGenericRx->common.runtime.rclCallbackMask.value = RCL_EventLastCmdDone.value |
                                                  RCL_EventRxEntryAvail.value;
 
     /* Maximum packet length */
-    rxCmd.maxPktLen = config->payloadLength;
+    rclPacketRxCmdGenericRx->maxPktLen = config->payloadLength;
 
     /* Set command to run until end of defined graceful timeout duration */
-    rxCmd.common.timing.relGracefulStopTime = RX_DURATION;
+    rclPacketRxCmdGenericRx->common.timing.relGracefulStopTime = RX_DURATION;
 
     /* End after receiving one packet */
-    rxCmd.config.repeated = 0U;
+    rclPacketRxCmdGenericRx->config.repeated = 0U;
 
     /* Setup generic status command */
     stats = RCL_StatsGeneric_DefaultRuntime();
 
     /* Set RX command statistics structure */
-    rxCmd.stats = &stats;
+    rclPacketRxCmdGenericRx->stats = &stats;
 
     /* Initialize multi-buffer to allow RCL to store RX packet */
     for(int i = 0; i < 1U; i++)
     {
         multiBuffer = (RCL_MultiBuffer *) buffer[i];
         RCL_MultiBuffer_init(multiBuffer, BUFF_STRUCT_LENGTH);
-        RCL_MultiBuffer_put(&rxCmd.rxBuffers, multiBuffer);
+        RCL_MultiBuffer_put(&(rclPacketRxCmdGenericRx->rxBuffers), multiBuffer);
     }
 
     while(1)
     {
         /* Submit command */
-        RCL_Command_submit(rclHandle, &rxCmd);
+        RCL_Command_submit(rclHandle, rclPacketRxCmdGenericRx);
 
         /* Pend on command completion */
-        RCL_Command_pend(&rxCmd);
+        RCL_Command_pend(rclPacketRxCmdGenericRx);
 
         rxMetrics.packetsExpected = config->packetCount;
         if(packetReceived || bPacketsLost)
         {
             rxMetrics.packetsReceived = nRxPkts;
             rxMetrics.packetsMissed   = config->packetCount - nRxPkts;
-            rxMetrics.rssi            = rxCmd.stats->lastRssi;
-            rxMetrics.crcOK           = rxCmd.stats->nRxOk;
+            rxMetrics.rssi            = rclPacketRxCmdGenericRx->stats->lastRssi;
+            rxMetrics.crcOK           = rclPacketRxCmdGenericRx->stats->nRxOk;
             rxMetrics.throughput = throughputI;
             menu_updateRxScreen(&rxMetrics);
         }
@@ -315,9 +314,9 @@ TestResult rx_runRxTest(const ApplicationConfig* config)
             if((config->packetCount >= nRxPkts))
             {
                 rxMetrics.packetsReceived = nRxPkts;
-                rxMetrics.packetsMissed   = rxCmd.stats->nRxNok;
-                rxMetrics.rssi            = rxCmd.stats->lastRssi;
-                rxMetrics.crcOK           = rxCmd.stats->nRxOk;
+                rxMetrics.packetsMissed   = rclPacketRxCmdGenericRx->stats->nRxNok;
+                rxMetrics.rssi            = rclPacketRxCmdGenericRx->stats->lastRssi;
+                rxMetrics.crcOK           = rclPacketRxCmdGenericRx->stats->nRxOk;
                 rxMetrics.throughput      = throughputI;
                 menu_updateRxScreen(&rxMetrics);
 
@@ -335,7 +334,7 @@ TestResult rx_runRxTest(const ApplicationConfig* config)
         }
 
         // Set RCL status to Idle to indicate next submit
-        rxCmd.common.status = RCL_CommandStatus_Idle;
+        rclPacketRxCmdGenericRx->common.status = RCL_CommandStatus_Idle;
     }
 
 }

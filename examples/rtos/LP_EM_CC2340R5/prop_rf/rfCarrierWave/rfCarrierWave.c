@@ -42,25 +42,17 @@
 #include <ti/drivers/rcl/RCL_Scheduler.h>
 #include <ti/drivers/rcl/commands/generic.h>
 
-#if defined(USE_250KBPS_MSK)
-#include <setup/rcl_settings_msk_250_kbps.h>
-#elif defined(USE_250KBPS_MSK_FEC)
-#include <setup/rcl_settings_msk_250_kbps_fec.h>
-#else
-#include <setup/rcl_settings_ble_generic.h>
-#endif
+/* SysConfig Generated */
+#include "ti_drivers_config.h"
+#include "ti_radio_config.h"
 
 /***** Defines *****/
 /* RF Frequency (Hz) to program */
-#if defined(USE_250KBPS_MSK) || defined(USE_250KBPS_MSK_FEC)
-#define FREQUENCY               (2433000000U)
-#else
 #define FREQUENCY               (2440000000U)
-#endif
 
 /***** Variable Declarations *****/
 /* RCL Commands */
-RCL_CmdGenericTxTest   txCmd;           // TX Test command
+extern RCL_CmdGenericTxTest   rclPacketTxCmdGenericTxTest; // TX Test command
 
 /* RCL Client used to open RCL */
 static RCL_Client  rclClient;
@@ -83,41 +75,29 @@ void *mainThread(void *arg0)
 {
     /* Initialize and open RCL */
     RCL_init();
-#if defined(USE_250KBPS_MSK)
-    RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_configMsk250Kbps);
-#elif defined(USE_250KBPS_MSK_FEC)
-    RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_configMsk250KbpsFec);
-#else
-    RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_configBle);
-#endif
-
-    /* Setup generic transmit test command */
-    txCmd = RCL_CmdGenericTxTest_DefaultRuntime();
+    RCL_Handle rclHandle = RCL_open(&rclClient, &LRF_config);
 
     /* Set RF frequency */
-    txCmd.rfFrequency = FREQUENCY;
-#if !(defined(USE_250KBPS_MSK) || defined(USE_250KBPS_MSK_FEC))
-    txCmd.common.phyFeatures = RCL_PHY_FEATURE_SUB_PHY_1_MBPS_BLE;
-#endif
+    rclPacketTxCmdGenericTxTest.rfFrequency = FREQUENCY;
 
     /* Start command as soon as possible */
-    txCmd.common.scheduling = RCL_Schedule_Now;
-    txCmd.common.status = RCL_CommandStatus_Idle;
+    rclPacketTxCmdGenericTxTest.common.scheduling = RCL_Schedule_Now;
+    rclPacketTxCmdGenericTxTest.common.status = RCL_CommandStatus_Idle;
 
-    txCmd.config.sendCw = 1U;       // Send CW
-    txCmd.config.whitenMode = 1U;   // Default whitening
-    txCmd.config.txWord = 0U;       // Repeated word to transmit
-    txCmd.config.fsOff = 1;         // Turn off FS
+    rclPacketTxCmdGenericTxTest.config.sendCw = 1U;       // Send CW
+    rclPacketTxCmdGenericTxTest.config.whitenMode = 1U;   // Default whitening
+    rclPacketTxCmdGenericTxTest.config.txWord = 0U;       // Repeated word to transmit
+    rclPacketTxCmdGenericTxTest.config.fsOff = 1;         // Turn off FS
 
     /* Callback triggers on last command done */
-    txCmd.common.runtime.callback = defaultCallback;
-    txCmd.common.runtime.rclCallbackMask.value = RCL_EventLastCmdDone.value;
+    rclPacketTxCmdGenericTxTest.common.runtime.callback = defaultCallback;
+    rclPacketTxCmdGenericTxTest.common.runtime.rclCallbackMask.value = RCL_EventLastCmdDone.value;
 
     /* Submit command */
-    RCL_Command_submit(rclHandle, &txCmd);
+    RCL_Command_submit(rclHandle, &rclPacketTxCmdGenericTxTest);
 
     /* Pend on command completion */
-    RCL_Command_pend(&txCmd);
+    RCL_Command_pend(&rclPacketTxCmdGenericTxTest);
 
     return NULL;
 }
