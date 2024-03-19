@@ -211,7 +211,7 @@ void SetupState_function()
      * active and receiving data.
      * Available signals are listed in the proprietary RF user's guide.
      */
-    GPIO_setMux(CONFIG_GPIO_RLED, IOC_PORT_RFC_GPO0);
+    GPIO_setConfigAndMux(CONFIG_GPIO_RLED, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW, IOC_PORT_RFC_GPO0);
 
     StateMachine_setNextState(&stateMachine, WaitingForSyncState);
 

@@ -69,31 +69,21 @@ The frequency and other RF settings can be modified using SmartRF Studio.</p>
 <ol>
 <li>The default frequency is:
 <ul>
-<li>433.92 MHz for the CC1350-LAUNCHXL-433 and the CC1352P-4-LAUNCHXL</li>
-<li>2440 MHz on the CC2640R2-LAUNCHXL and the CC26X2R1-LAUNCHXL</li>
-<li>868.0 MHz for other launchpads
-In order to change frequency, modify the ti_radio_config.c file. This can be
+<li>433.92 MHz for the CC1352P-4-LAUNCHXL</li>
+<li>2440 MHz on the CC26X2R1-LAUNCHXL</li>
+<li>868.0 MHz for other launchpads <br />
+NOTE: In order to change frequency, modify the ti_radio_config.c file. This can be
 done using the code export feature in Smart RF Studio, or directly in the file</li>
 </ul></li>
 <li>On the CC1352P1 the high PA is enabled (high output power) for all
 Sub-1 GHz modes by default.</li>
 <li>On the CC1352P-2 and CC1352P-4 the high PA operation for Sub-1 GHz modes is not supported</li>
-<li>The CC2640R2 is setup to run all proprietary physical modes at a center
-frequency of 2440 MHz, at a data rate of 250 Kbps</li>
 </ol>
 
 <h2>Example Usage</h2>
 
 <p>Run the example. On another board, run the Packet RX example.
 CONFIG_PIN_GLED is toggled when data is transmitted.</p>
-
-<p>When running the secure non-secure configuration (tfm_rfPacketTx), follow the steps below.</p>
-
-<ol>
-<li>Load the secure image <code>tfm_s.axf</code> located in <code>&lt;SDK_INSTALL_DIR&gt;/tfm_s/build/cc26x4/production_full/Release/outputs/CC26X4/</code></li>
-<li>Load the non-secure image by adding symbols for tfm_rfPacketTx.out</li>
-<li>Run the example</li>
-</ol>
 
 <h2>Application Design Details</h2>
 
@@ -123,7 +113,7 @@ this requirement holds for CC13x2P boards when using the default PA</li>
       with 100,000+ analog ICs and embedded processors, along with software, tools
       and the industry's largest sales/support staff.</p>
       <p>
-        <a href="http://www.ti.com/corp/docs/legal/copyright.shtml">&copy; Copyright 1995-2023</a>, Texas Instruments Incorporated. All rights reserved. <br>
+        <a href="http://www.ti.com/corp/docs/legal/copyright.shtml">&copy; Copyright 1995-2024</a>, Texas Instruments Incorporated. All rights reserved. <br>
         <a href="http://www.ti.com/corp/docs/legal/trademark/trademrk.htm">Trademarks</a> | <a href="http://www.ti.com/corp/docs/legal/privacy.shtml">Privacy policy</a> | <a href="http://www.ti.com/corp/docs/legal/termsofuse.shtml">Terms of use</a> | <a href="http://www.ti.com/lsds/ti/legal/termsofsale.page">Terms of sale</a>
       </p>
     </footer>

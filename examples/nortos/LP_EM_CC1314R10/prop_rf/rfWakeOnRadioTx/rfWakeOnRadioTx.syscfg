@@ -154,7 +154,6 @@ BUTTON_L.mode = "Input";                            // Change the GPIO to Input 
 BUTTON_L.$name = "CONFIG_GPIO_BTN1";                // Descriptive name for the BUTTON_L GPIO
 BUTTON_L.pull = "Pull Up";                            // Use Pull up resistor
 BUTTON_L.interruptTrigger = "Falling Edge";           // GPIO Interrupt Trigger
-BUTTON_L.callbackFunction = "NULL";                   // Callback function
 
 /* ======== Radio Configuration ======== */
 const commonRf = system.getScript("/ti/prop_rf/prop_rf_common.js");
