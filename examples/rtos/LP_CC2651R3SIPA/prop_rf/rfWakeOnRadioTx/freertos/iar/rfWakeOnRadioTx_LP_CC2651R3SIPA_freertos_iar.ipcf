@@ -15,19 +15,16 @@
 
     <includePath>
         <path>$PROJ_DIR$</path>
-        <path>$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source</path>
-        <path>$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/kernel/freertos</path>
-        <path>$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/posix/iar</path>
-        <path>$FREERTOS_INSTALL_DIR$/FreeRTOS/Source/include</path>
-        <path>$FREERTOS_INSTALL_DIR$/FreeRTOS/Source/portable/IAR/ARM_CM4F</path>
+        <path>$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source</path>
+        <path>$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/kernel/freertos</path>
+        <path>$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/posix/iar</path>
+        <path>$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/third_party/freertos/include</path>
+        <path>$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/third_party/freertos/portable/IAR/ARM_CM4F</path>
     </includePath>
-
-    <defines>
-        <define>DeviceFamily_CC26X1</define>
-    </defines>
 
     <extraOptions>
         <args>
+            <arg>-f$PROJ_DIR$/ti_utils_build_compiler.opt</arg>
             <arg>--debug</arg>
             <arg>--silent</arg>
             <arg>-e</arg>
@@ -44,11 +41,10 @@
 
     <linkerExtraOptions>
         <args>
-            <arg>-L$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source</arg>
+            <arg>-L$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source</arg>
             <arg>--threaded_lib</arg>
-            <arg>-L$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/kernel</arg>
+            <arg>-L$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/kernel</arg>
             <arg>-f$PROJ_DIR$/ti_utils_build_linker.cmd.genlibs</arg>
-            <arg>$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/devices/cc13x1_cc26x1/driverlib/bin/iar/driverlib.lib</arg>
             <arg>--silent</arg>
         </args>
     </linkerExtraOptions>
@@ -56,7 +52,7 @@
     <customBuildTools>
         <customBuildTool atRoot="true" name="SysConfig"> <!-- Custom build tool for entire project-->
             <fileExtensions>.syscfg</fileExtensions>
-            <command>$SYSCONFIG_ROOT$/sysconfig_cli.bat -o $PROJ_DIR$ -s "$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/.metadata/product.json" --compiler iar $FILE_PATH$</command>
+            <command>$SYSCONFIG_ROOT$/sysconfig_cli.bat -o $PROJ_DIR$ -s "$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/.metadata/product.json" --compiler iar $FILE_PATH$</command>
             <output>
                 <path>SysConfig_Generated_Files.ipcf</path>
             </output>
@@ -80,7 +76,7 @@
 
 
     <files>
-        <path reference="$PROJ_DIR$/Board.html">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/boards/LP_CC2651R3SIPA/Board.html</path>
+        <path reference="$PROJ_DIR$/Board.html">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/boards/LP_CC2651R3SIPA/Board.html</path>
         <path copyTo="$PROJ_DIR$/cc13x1_cc26x1_freertos.icf">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2651R3SIPA/prop_rf/rfWakeOnRadioTx/freertos/iar/cc13x1_cc26x1_freertos.icf</path>
         <path copyTo="$PROJ_DIR$/main_freertos.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2651R3SIPA/prop_rf/rfWakeOnRadioTx/freertos/main_freertos.c</path>
         <path copyTo="$PROJ_DIR$/overview.rov.json">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/rtos/LP_CC2651R3SIPA/prop_rf/rfWakeOnRadioTx/overview.rov.json</path>

@@ -14,7 +14,7 @@
         name="rfOADClientIntFlashUApp_LP_CC1311P3_tirtos7_ticlang"
         configurations="Debug"
         toolChain="TICLANG"
-        cgtVersion="TICLANG_2.1.2.LTS"
+        cgtVersion="TICLANG_3.2.0.LTS"
         connection="TIXDS110_Connection.xml"
         device="Cortex M.CC1311P3"
         ignoreDefaultDeviceSettings="true"
@@ -31,7 +31,6 @@
             -Oz
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/ti/common/cc26xx/flash_interface
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source
-            -DDeviceFamily_CC13X1
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/kernel/tirtos7/packages
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/ti/posix/ticlang
             -gdwarf-3
@@ -49,7 +48,6 @@
             -L${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/kernel/tirtos7/packages
             -L${PROJECT_BUILD_DIR}/syscfg
             -lti_utils_build_linker.cmd.genlibs
-            -lti/devices/cc13x1_cc26x1/driverlib/bin/ticlang/driverlib.lib
             -Wl,--rom_model
             -Wl,--warn_sections
             -L${CG_TOOL_ROOT}/lib
@@ -58,7 +56,6 @@
         postBuildStep="
             ${CG_TOOL_ROOT}/bin/tiarmobjcopy -O ihex  ${BuildArtifactFileName} ${BuildArtifactFileBaseName}.hex
         "
-        enableSysConfigTool="true"
         sysConfigBuildOptions="
             --compiler ticlang
         "

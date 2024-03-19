@@ -14,6 +14,7 @@
         name="rfUARTBridge_LP_EM_CC1354P10_6_nortos_gcc"
         configurations="Debug"
         toolChain="GNU"
+        cgtVersion="GNU_9.2.1"
         connection="TIXDS110_Connection.xml"
         device="Cortex M.CC1354P10"
         ignoreDefaultDeviceSettings="true"
@@ -22,7 +23,6 @@
         compilerBuildOptions="
             -I${PROJECT_ROOT}
             -I${PROJECT_ROOT}/${ConfigName}
-            -DDeviceFamily_CC13X4
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/kernel/nortos
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/kernel/nortos/posix
@@ -47,14 +47,12 @@
             -L${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/kernel/nortos
             -L${PROJECT_BUILD_DIR}/syscfg
             -lti_utils_build_linker.cmd.genlibs
-            -l:ti/devices/cc13x4_cc26x4/driverlib/bin/gcc/driverlib.lib
             -mthumb
             -mfloat-abi=hard
             -mfpu=fpv5-sp-d16
             -nostartfiles
             -static
             -Wl,--gc-sections
-            -L${CG_TOOL_ROOT}/arm-none-eabi/lib/thumb/v8-m/hard
             -lgcc
             -lc
             -lm
@@ -63,7 +61,6 @@
         "
         enableHexTool="true"
         hexBuildOptions="-O ihex --remove-section .vtable --remove-section .dmaSpi0RxControlTableEntry --remove-section .dmaSpi0TxControlTableEntry --remove-section .dmaSpi1RxControlTableEntry --remove-section .dmaSpi1TxControlTableEntry --remove-section .dmaSpi0RxAltControlTableEntry --remove-section .dmaSpi0TxAltControlTableEntry --remove-section .dmaSpi1RxAltControlTableEntry --remove-section .dmaSpi1TxAltControlTableEntry"
-        enableSysConfigTool="true"
         sysConfigBuildOptions="
             --compiler gcc
         "

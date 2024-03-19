@@ -33,27 +33,19 @@ Board.html in the directory &lt;SDK_INSTALL_DIR&gt;/source/ti/boards/&lt;BOARD&g
 Board Specific Settings
 -----------------------
 1. The default frequency is:
-    - 433.92 MHz for the CC1350-LAUNCHXL-433 and the CC1352P-4-LAUNCHXL
-    - 2440 MHz on the CC2640R2-LAUNCHXL and the CC26X2R1-LAUNCHXL
-    - 868.0 MHz for other launchpads
-In order to change frequency, modify the ti_radio_config.c file. This can be
+    - 433.92 MHz for the CC1352P-4-LAUNCHXL
+    - 2440 MHz on the CC26X2R1-LAUNCHXL
+    - 868.0 MHz for other launchpads  
+NOTE: In order to change frequency, modify the ti_radio_config.c file. This can be
 done using the code export feature in Smart RF Studio, or directly in the file
 2. On the CC1352P1 the high PA is enabled (high output power) for all
 Sub-1 GHz modes by default.
 3. On the CC1352P-2 and CC1352P-4 the high PA operation for Sub-1 GHz modes is not supported
-4. The CC2640R2 is setup to run all proprietary physical modes at a center
-frequency of 2440 MHz, at a data rate of 250 Kbps
 
 Example Usage
 -------------
 Run the example. On another board, run the Packet RX example.
 CONFIG_PIN_GLED is toggled when data is transmitted.
-
-When running the secure non-secure configuration (tfm_rfPacketTx), follow the steps below.
-
-1. Load the secure image `tfm_s.axf` located in `<SDK_INSTALL_DIR>/tfm_s/build/cc26x4/production_full/Release/outputs/CC26X4/`
-2. Load the non-secure image by adding symbols for tfm_rfPacketTx.out
-3. Run the example
 
 Application Design Details
 --------------------------

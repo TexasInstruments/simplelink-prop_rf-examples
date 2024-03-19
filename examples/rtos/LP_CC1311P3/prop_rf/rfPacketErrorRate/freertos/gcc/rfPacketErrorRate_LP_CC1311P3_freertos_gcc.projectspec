@@ -25,11 +25,10 @@
             -I${PROJECT_ROOT}/${ConfigName}
             -DBOARD_DISPLAY_USE_LCD=1
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source
-            -DDeviceFamily_CC13X1
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/kernel/freertos
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/ti/posix/gcc
-            -I${FREERTOS_INSTALL_DIR}/FreeRTOS/Source/include
-            -I${FREERTOS_INSTALL_DIR}/FreeRTOS/Source/portable/GCC/ARM_CM4F
+            -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/third_party/freertos/include
+            -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/third_party/freertos/portable/GCC/ARM_CM4F
             -mcpu=cortex-m4
             -march=armv7e-m
             -mthumb
@@ -48,7 +47,6 @@
             -L${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source
             -L${PROJECT_BUILD_DIR}/syscfg
             -lti_utils_build_linker.cmd.genlibs
-            -l:ti/devices/cc13x1_cc26x1/driverlib/bin/gcc/driverlib.lib
             -march=armv7e-m
             -mthumb
             -nostartfiles
@@ -63,7 +61,6 @@
         "
         enableHexTool="true"
         hexBuildOptions="-O ihex --remove-section .vtable --remove-section .dmaSpi0RxControlTableEntry --remove-section .dmaSpi0TxControlTableEntry --remove-section .dmaSpi1RxControlTableEntry --remove-section .dmaSpi1TxControlTableEntry --remove-section .dmaSpi0RxAltControlTableEntry --remove-section .dmaSpi0TxAltControlTableEntry --remove-section .dmaSpi1RxAltControlTableEntry --remove-section .dmaSpi1TxAltControlTableEntry --gap-fill 0xff"
-        enableSysConfigTool="true"
         sysConfigBuildOptions="
             --compiler gcc
         "

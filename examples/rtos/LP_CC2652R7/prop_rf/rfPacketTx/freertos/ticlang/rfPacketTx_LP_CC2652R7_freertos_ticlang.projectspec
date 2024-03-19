@@ -14,7 +14,7 @@
         name="rfPacketTx_LP_CC2652R7_freertos_ticlang"
         configurations="Debug"
         toolChain="TICLANG"
-        cgtVersion="TICLANG_2.1.2.LTS"
+        cgtVersion="TICLANG_3.2.0.LTS"
         connection="TIXDS110_Connection.xml"
         device="Cortex M.CC2652R7"
         ignoreDefaultDeviceSettings="true"
@@ -23,12 +23,11 @@
         compilerBuildOptions="
             -I${PROJECT_ROOT}
             -I${PROJECT_ROOT}/${ConfigName}
-            -DDeviceFamily_CC26X2X7
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/kernel/freertos
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/ti/posix/ticlang
-            -I${FREERTOS_INSTALL_DIR}/FreeRTOS/Source/include
-            -I${FREERTOS_INSTALL_DIR}/FreeRTOS/Source/portable/GCC/ARM_CM4F
+            -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/third_party/freertos/include
+            -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/third_party/freertos/portable/GCC/ARM_CM4F
             -gdwarf-3
             -mcpu=cortex-m4
             -march=armv7e-m
@@ -40,7 +39,6 @@
             -L${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source
             -L${PROJECT_BUILD_DIR}/syscfg
             -lti_utils_build_linker.cmd.genlibs
-            -lti/devices/cc13x2x7_cc26x2x7/driverlib/bin/ticlang/driverlib.lib
             -Wl,--rom_model
             -Wl,--warn_sections
             -L${CG_TOOL_ROOT}/lib
@@ -49,7 +47,6 @@
         postBuildStep="
             ${CG_TOOL_ROOT}/bin/tiarmobjcopy -O ihex  ${BuildArtifactFileName} ${BuildArtifactFileBaseName}.hex
         "
-        enableSysConfigTool="true"
         sysConfigBuildOptions="
             --compiler ticlang
         "

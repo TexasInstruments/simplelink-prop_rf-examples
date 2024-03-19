@@ -15,18 +15,18 @@
 
     <includePath>
         <path>$PROJ_DIR$</path>
-        <path>$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source</path>
-        <path>$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/kernel/nortos</path>
-        <path>$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/kernel/nortos/posix</path>
+        <path>$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source</path>
+        <path>$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/kernel/nortos</path>
+        <path>$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/kernel/nortos/posix</path>
     </includePath>
 
     <defines>
         <define>BOARD_DISPLAY_USE_LCD=1</define>
-        <define>DeviceFamily_CC26X2</define>
     </defines>
 
     <extraOptions>
         <args>
+            <arg>-f$PROJ_DIR$/ti_utils_build_compiler.opt</arg>
             <arg>--debug</arg>
             <arg>--silent</arg>
             <arg>-e</arg>
@@ -43,10 +43,9 @@
 
     <linkerExtraOptions>
         <args>
-            <arg>-L$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source</arg>
-            <arg>-L$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/kernel/nortos</arg>
+            <arg>-L$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source</arg>
+            <arg>-L$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/kernel/nortos</arg>
             <arg>-f$PROJ_DIR$/ti_utils_build_linker.cmd.genlibs</arg>
-            <arg>$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/devices/cc13x2_cc26x2/driverlib/bin/iar/driverlib.lib</arg>
             <arg>--silent</arg>
         </args>
     </linkerExtraOptions>
@@ -54,7 +53,7 @@
     <customBuildTools>
         <customBuildTool atRoot="true" name="SysConfig"> <!-- Custom build tool for entire project-->
             <fileExtensions>.syscfg</fileExtensions>
-            <command>$SYSCONFIG_ROOT$/sysconfig_cli.bat -o $PROJ_DIR$ -s "$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/.metadata/product.json" --compiler iar $FILE_PATH$</command>
+            <command>$SYSCONFIG_ROOT$/sysconfig_cli.bat -o $PROJ_DIR$ -s "$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/.metadata/product.json" --compiler iar $FILE_PATH$</command>
             <output>
                 <path>SysConfig_Generated_Files.ipcf</path>
             </output>
@@ -78,7 +77,7 @@
 
 
     <files>
-        <path reference="$PROJ_DIR$/Board.html">$COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/boards/CC26X2R1_LAUNCHXL/Board.html</path>
+        <path reference="$PROJ_DIR$/Board.html">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/source/ti/boards/CC26X2R1_LAUNCHXL/Board.html</path>
         <path copyTo="$PROJ_DIR$/cc13x2_cc26x2_nortos.icf">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC26X2R1_LAUNCHXL/prop_rf/rfPacketErrorRate/iar/cc13x2_cc26x2_nortos.icf</path>
         <path copyTo="$PROJ_DIR$/config.c">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC26X2R1_LAUNCHXL/prop_rf/rfPacketErrorRate/config.c</path>
         <path copyTo="$PROJ_DIR$/config.h">$SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR$/examples/nortos/CC26X2R1_LAUNCHXL/prop_rf/rfPacketErrorRate/config.h</path>

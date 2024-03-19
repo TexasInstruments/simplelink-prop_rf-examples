@@ -34,7 +34,7 @@
 /*
  *  rfDualModeRx.syscfg
  */
- 
+
 /* ======== RF ======== */
 var RF = scripting.addModule("/ti/drivers/RF");
 
@@ -155,7 +155,7 @@ for(var setting in ccfgSettings)
  * do not support boost mode. For both to operate at runtime for this project,
  * the TX power of Sub-1GHz phys must be < 14dBm and CCFG_FORCE_VDDR = 0.
  */
-if((boardName === "CC1352R1_LAUNCHXL") || (boardName === "CC1352P_2_LAUNCHXL") || (boardName === "LP_CC1354R10_RGZ"))
+if((boardName === "CC1352R1_LAUNCHXL") || (boardName === "CC1352P_2_LAUNCHXL"))
 {
     for(let phy of phyInstances)
     {

@@ -85,7 +85,6 @@ if (system.deviceData.board && system.deviceData.board.components.BUTTON0) {
 BUTTON_L.$name = "CONFIG_GPIO_BTN1";                // Descriptive name for the BUTTON_L GPIO
 BUTTON_L.pull = "Pull Up";                            // Use Pull up resistor
 BUTTON_L.interruptTrigger = "Falling Edge";           // GPIO Interrupt Trigger
-BUTTON_L.callbackFunction = "NULL";                   // Callback function
 
 if (system.deviceData.deviceId === "CC2674R10RGZ"){
     /* ======== GPIO ======== */

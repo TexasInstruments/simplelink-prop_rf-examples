@@ -14,7 +14,7 @@
         name="rfListenBeforeTalk_CC1352P_4_LAUNCHXL_nortos_ticlang"
         configurations="Debug"
         toolChain="TICLANG"
-        cgtVersion="TICLANG_2.1.2.LTS"
+        cgtVersion="TICLANG_3.2.0.LTS"
         connection="TIXDS110_Connection.xml"
         device="Cortex M.CC1352P1F3"
         ignoreDefaultDeviceSettings="true"
@@ -23,7 +23,6 @@
         compilerBuildOptions="
             -I${PROJECT_ROOT}
             -I${PROJECT_ROOT}/${ConfigName}
-            -DDeviceFamily_CC13X2
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/kernel/nortos
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/kernel/nortos/posix
@@ -39,7 +38,6 @@
             -L${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/kernel/nortos
             -L${PROJECT_BUILD_DIR}/syscfg
             -lti_utils_build_linker.cmd.genlibs
-            -lti/devices/cc13x2_cc26x2/driverlib/bin/ticlang/driverlib.lib
             -Wl,--rom_model
             -Wl,--warn_sections
             -L${CG_TOOL_ROOT}/lib
@@ -48,7 +46,6 @@
         postBuildStep="
             ${CG_TOOL_ROOT}/bin/tiarmobjcopy -O ihex  ${BuildArtifactFileName} ${BuildArtifactFileBaseName}.hex
         "
-        enableSysConfigTool="true"
         sysConfigBuildOptions="
             --compiler ticlang
         "

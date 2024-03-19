@@ -48,17 +48,17 @@ if (system.deviceData.board && system.deviceData.board.components.RF) {
 const commonRf = system.getScript("/ti/prop_rf/prop_rf_common.js");
 const boardName = commonRf.getDeviceOrLaunchPadName(true);
 const phyFilePath = "/ti/prop_rf/rf_config/" + boardName + "_rf_defaults.js";
- 
+
 // Get the supported proprietary phy for this board as defined by Prop RF
 const defaultPhy = system.getScript(phyFilePath).defaultPropPhyList[0];
- 
+
 // Add an instance of the "Custom" RF Stack
 const customStack = scripting.addModule("/ti/devices/radioconfig/custom");
- 
+
 // Add the default phy instance
 const phyInst = commonRf.addPropPhy(customStack, defaultPhy, true);
 phyInst.$name = "RF_Custom_Setting";
- 
+
 // Disable multi-protocol patch
 phyInst.codeExportConfig.useMulti = false;
 
@@ -154,8 +154,6 @@ BUTTON_L.mode = "Input";                            // Change the GPIO to Input 
 BUTTON_L.$name = "CONFIG_GPIO_BTN1";                // Descriptive name for the BUTTON_L GPIO
 BUTTON_L.pull = "Pull Up";                            // Use Pull up resistor
 BUTTON_L.interruptTrigger = "Falling Edge";           // GPIO Interrupt Trigger
-BUTTON_L.callbackFunction = "NULL";                   // Callback function
-
 
 /* ======== Right Button ======== */
 var GPIO = scripting.addModule("/ti/drivers/GPIO");  // Add a GPIO module for use by buttons
@@ -170,8 +168,6 @@ BUTTON_R.mode = "Input";                            // Change the GPIO to Input 
 BUTTON_R.$name = "CONFIG_GPIO_BTN2";                // Descriptive name for the BUTTON_R GPIO
 BUTTON_R.pull = "Pull Up";                            // Use Pull up resistor
 BUTTON_R.interruptTrigger = "Falling Edge";           // GPIO Interrupt Trigger
-BUTTON_R.callbackFunction = "NULL";                   // Callback function
-
 
 /* ======== UART Display ======== */
 var Display = scripting.addModule("/ti/display/Display");
@@ -219,9 +215,7 @@ device.enableCodeGeneration = false;
 
 // Since Force VDDR is not set in the BIM, using max power for these devices will not work.
 // Instead, set forceVddr to false and set txPower to a lower value.
-if(boardName === "CC1352R1_LAUNCHXL" || boardName === "CC1352P_2_LAUNCHXL" ||
-    boardName === "LP_CC1354R10_RGZ" || boardName === "LP_EM_CC1354P10_1" ||
-    boardName === "LP_EM_CC1354P10_6")
+if(boardName === "CC1352R1_LAUNCHXL" || boardName === "CC1352P_2_LAUNCHXL")
 {
 	device.forceVddr = false;
     phyInst.txPower = "12.5";

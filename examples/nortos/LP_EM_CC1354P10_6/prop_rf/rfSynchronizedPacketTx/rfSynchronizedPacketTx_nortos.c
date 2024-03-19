@@ -185,7 +185,7 @@ void SetupState_function()
     /* Route the PA signal to an LED to indicate ongoing transmissions.
      * Available signals are listed in the proprietary RF user's guide.
      */
-     GPIO_setMux(CONFIG_GPIO_RLED, IOC_PORT_RFC_GPO1);
+     GPIO_setConfigAndMux(CONFIG_GPIO_RLED, GPIO_CFG_OUT_STD | GPIO_CFG_OUT_LOW, IOC_PORT_RFC_GPO1);
 
     StateMachine_setNextState(&stateMachine, PeriodicBeaconState);
 }

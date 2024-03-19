@@ -14,6 +14,7 @@
         name="tfm_rfPacketTx_LP_EM_CC1314R10_freertos_gcc"
         configurations="Debug"
         toolChain="GNU"
+        cgtVersion="GNU_9.2.1"
         connection="TIXDS110_Connection.xml"
         device="Cortex M.CC1314R10"
         ignoreDefaultDeviceSettings="true"
@@ -23,17 +24,19 @@
             -I${PROJECT_ROOT}
             -I${PROJECT_ROOT}/${ConfigName}
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/third_party/tfm/interface/include
-            -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/tfm_s/build/cc26x4/production_full/interface/include
-            -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/third_party/mbedcrypto/include
-            -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/third_party/mbedcrypto/ti
+            -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/third_party/tfm/config
+            -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/third_party/tfm/secure_fw/include
+            -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/tfm_s/build/cc26x4/production_full/Release/export/tfm/inc
+            -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/third_party/mbedtls/include
+            -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/third_party/mbedtls/ti
+            -DMBEDTLS_PSA_CRYPTO_CONFIG_FILE=&quot;&lt;configs/config-psa-crypto-cc13x4.h&gt;&quot;
             -DMBEDTLS_CONFIG_FILE=&quot;&lt;configs/config-tidrivers.h&gt;&quot;
             -DTFM_ENABLED=1
-            -DDeviceFamily_CC13X4
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/kernel/freertos
             -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/ti/posix/gcc
-            -I${FREERTOS_INSTALL_DIR}/FreeRTOS/Source/include
-            -I${FREERTOS_INSTALL_DIR}/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure
+            -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/third_party/freertos/include
+            -I${COM_TI_SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR}/source/third_party/freertos/portable/GCC/ARM_CM33_NTZ/non_secure
             -mcpu=cortex-m33
             -mthumb
             -std=c99
@@ -54,14 +57,12 @@
             -mcpu=cortex-m33
             -L${PROJECT_BUILD_DIR}/syscfg
             -lti_utils_build_linker.cmd.genlibs
-            -l:ti/devices/cc13x4_cc26x4/driverlib/bin/gcc/driverlib.lib
             -mthumb
             -mfloat-abi=hard
             -mfpu=fpv5-sp-d16
             -nostartfiles
             -static
             -Wl,--gc-sections
-            -L${CG_TOOL_ROOT}/arm-none-eabi/lib/thumb/v8-m/hard
             -lgcc
             -lc
             -lm
@@ -70,7 +71,6 @@
         "
         enableHexTool="true"
         hexBuildOptions="-O ihex --remove-section .vtable --remove-section .dmaSpi0RxControlTableEntry --remove-section .dmaSpi0TxControlTableEntry --remove-section .dmaSpi1RxControlTableEntry --remove-section .dmaSpi1TxControlTableEntry --remove-section .dmaSpi0RxAltControlTableEntry --remove-section .dmaSpi0TxAltControlTableEntry --remove-section .dmaSpi1RxAltControlTableEntry --remove-section .dmaSpi1TxAltControlTableEntry"
-        enableSysConfigTool="true"
         sysConfigBuildOptions="
             --compiler gcc
         "
