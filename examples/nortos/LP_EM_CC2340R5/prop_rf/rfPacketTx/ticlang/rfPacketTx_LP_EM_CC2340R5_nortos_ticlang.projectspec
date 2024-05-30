@@ -42,7 +42,6 @@
             -L${CG_TOOL_ROOT}/lib
             -llibc.a
         "
-        enableSysConfigTool="true"
         sysConfigBuildOptions="
             --compiler ticlang
         "
@@ -58,7 +57,7 @@
         </file>
         <file path="../main_nortos.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="../ticlang/cc23x0r5_nortos.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../ticlang/lpf3_nortos.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
     </project>
 </projectSpec>

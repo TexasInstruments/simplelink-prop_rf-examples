@@ -36,7 +36,7 @@
 
     <linkerFile>
         <override>true</override>
-        <path>$PROJ_DIR$/cc23x0r5_freertos.icf</path>
+        <path>$PROJ_DIR$/lpf3_freertos.icf</path>
     </linkerFile>
 
     <linkerExtraOptions>
@@ -76,7 +76,7 @@
 
 
     <files>
-        <path copyTo="$PROJ_DIR$/cc23x0r5_freertos.icf">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfCarrierWave/freertos/iar/cc23x0r5_freertos.icf</path>
+        <path copyTo="$PROJ_DIR$/lpf3_freertos.icf">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfCarrierWave/freertos/iar/lpf3_freertos.icf</path>
         <path copyTo="$PROJ_DIR$/main_freertos.c">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfCarrierWave/freertos/main_freertos.c</path>
         <path copyTo="$PROJ_DIR$/overview.rov.json">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfCarrierWave/overview.rov.json</path>
         <path copyTo="$PROJ_DIR$/README.md">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfCarrierWave/README.md</path>
