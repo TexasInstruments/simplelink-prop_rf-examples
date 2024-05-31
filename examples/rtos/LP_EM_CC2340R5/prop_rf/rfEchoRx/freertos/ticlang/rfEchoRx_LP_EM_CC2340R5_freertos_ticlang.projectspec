@@ -43,7 +43,6 @@
             -L${CG_TOOL_ROOT}/lib
             -llibc.a
         "
-        enableSysConfigTool="true"
         sysConfigBuildOptions="
             --compiler ticlang
         "
@@ -64,7 +63,7 @@
         </file>
         <file path="../../overview.rov.json" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="../../freertos/ticlang/cc23x0r5_freertos.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../../freertos/ticlang/lpf3_freertos.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
     </project>
 </projectSpec>

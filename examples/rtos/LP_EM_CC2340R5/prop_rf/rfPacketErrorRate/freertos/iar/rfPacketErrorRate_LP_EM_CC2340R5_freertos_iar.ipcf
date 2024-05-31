@@ -36,7 +36,7 @@
 
     <linkerFile>
         <override>true</override>
-        <path>$PROJ_DIR$/cc23x0r5_freertos.icf</path>
+        <path>$PROJ_DIR$/lpf3_freertos.icf</path>
     </linkerFile>
 
     <linkerExtraOptions>
@@ -76,9 +76,9 @@
 
 
     <files>
-        <path copyTo="$PROJ_DIR$/cc23x0r5_freertos.icf">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfPacketErrorRate/freertos/iar/cc23x0r5_freertos.icf</path>
         <path copyTo="$PROJ_DIR$/config.c">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfPacketErrorRate/config.c</path>
         <path copyTo="$PROJ_DIR$/config.h">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfPacketErrorRate/config.h</path>
+        <path copyTo="$PROJ_DIR$/lpf3_freertos.icf">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfPacketErrorRate/freertos/iar/lpf3_freertos.icf</path>
         <path copyTo="$PROJ_DIR$/main_freertos.c">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfPacketErrorRate/freertos/main_freertos.c</path>
         <path copyTo="$PROJ_DIR$/menu.c">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfPacketErrorRate/menu.c</path>
         <path copyTo="$PROJ_DIR$/menu.h">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfPacketErrorRate/menu.h</path>
