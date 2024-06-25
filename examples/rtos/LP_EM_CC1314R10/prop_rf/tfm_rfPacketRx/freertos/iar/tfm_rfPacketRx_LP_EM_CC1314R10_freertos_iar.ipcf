@@ -29,9 +29,9 @@
     </includePath>
 
     <defines>
-        <define>MBEDTLS_PSA_CRYPTO_CONFIG_FILE="<configs/config-psa-crypto-cc13x4.h>"</define>
-        <define>MBEDTLS_CONFIG_FILE="<configs/config-tidrivers.h>"</define>
         <define>TFM_ENABLED=1</define>
+        <define>MBEDTLS_CONFIG_FILE=&lt;configs/config-tidrivers.h&gt;</define>
+        <define>MBEDTLS_PSA_CRYPTO_CONFIG_FILE=&lt;configs/config-psa-crypto-cc13x4.h&gt;</define>
     </defines>
 
     <extraOptions>
