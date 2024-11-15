@@ -1,27 +1,37 @@
-# SimpleLink Proprietary RF (Prop RF) Examples
+# SimpleLink™ Low Power F2 and F3 Proprietary RF (PropRF) Examples
 
-This repository contains the prop_rf examples for TI devices supported by the
-SimpleLink Low Power F2 and F3 SDKs.  To learn which devices are supported by
-each SDK, refer to the [SDK Device Association section](#sdk-association).
+This repository contains PropRF examples for TI devices supported by the
+SimpleLink Low Power SDKs (LPF2 and LPF3). To learn which devices are supported
+by each SDK, refer to the [SDK Device Association section](#sdk-association).
+
+This repository redistributes examples from TI's [SimpleLink LPF3
+SDK](https://www.ti.com/tool/download/SIMPLELINK-LOWPOWER-F3-SDK) and
+[SimpleLink LPF2
+SDK](https://www.ti.com/tool/download/SIMPLELINK-LOWPOWER-F2-SDK). These SDKs
+are part of the [SimpleLink Low Power
+ecosystem](https://www.ti.com/tool/SIMPLELINK-LOWPOWER-SDK).
+
+More details, including supported devices, IDEs, and toolchains are provided in
+the respective SDK release notes.
 
 ## Repository Layout
 
-The **examples/** directory contains the same prop_rf examples provided in those
+The **examples/** directory contains the same examples provided in those
 SDKs, in the same directory structure.
 
-The SimpleLink Low Power F2 and F3 SDKs are provided as [Git
+The LPF2 and LPF3 SDKs are provided as [Git
 submodules](https://www.git-scm.com/docs/gitsubmodules) in their respective
-subdirectories.  If you're only interested in devices supported by the F3 SDK,
-you will only need to initialize and update the F3 SDK submodule.
+subdirectories.  If you're only interested in devices supported by the LPF3 SDK,
+you will only need to initialize and update the LPF3 SDK submodule.
 
 As a quick reference, you can initialize and update a single Git submodule in
 one step like this:
 
 ```bash
-# To initialize and update the F2 SDK
+# To initialize and update the LPF2 SDK
 .../simplelink-prop_rf-examples$ git submodule update --init cc13xx_cc26xx_sdk
 
-# To initialize and update the F3 SDK
+# To initialize and update the LPF3 SDK
 .../simplelink-prop_rf-examples$ git submodule update --init simplelink-lowpower-f3-sdk
 ```
 
@@ -32,9 +42,9 @@ details.
 Once initialized and updated, you can refer to each SDK's README.md and Release
 Notes for details on how to download its dependencies, and build its libraries.
 
-* [SimpleLink Low Power F2 SDK
+* [SimpleLink LPF2 SDK
   README](https://github.com/TexasInstruments/cc13xx_cc26xx_sdk/blob/main/README.md)
-* [SimpleLink Low Power F3 SDK
+* [SimpleLink LPF3 SDK
   README](https://github.com/TexasInstruments/simplelink-lowpower-f3-sdk/blob/main/README.md)
 
 > Note, the links above are to online copies of the latest SDK READMEs.  They
@@ -63,7 +73,7 @@ versions for each SDK if needed.
 
 ## Build Examples
 
-After building the SDK libraries, you can build the prop_rf examples.  The
+After building the SDK libraries, you can build the PropRF examples.  The
 examples support a few ways to build:
 
 * [Command line makefile](#build-examples-from-command-line)
@@ -74,13 +84,13 @@ examples support a few ways to build:
 
 Remember, before building the examples, you must build the SDK libraries!
 
-To build a prop_rf example from the command line using [GNU
+To build an example from the command line using [GNU
 make](https://www.gnu.org/software/make/manual/make.html), change into the
 appropriate example's directory (e.g.
 **{rtos}/{board}/prop_rf/{example}/{rtos}/{toolchain}**), then run `make`.
 
 ```bash
-.../simplelink-prop_rf-examples$ cd examples/rtos/CC1352R1_LAUNCHXL/prop_rf/rfCarrierWave/freertos/ticlang/
+.../simplelink-prop_rf-examples$ cd examples/rtos/LP_CC2651R3SIPA/prop_rf/rfPacketTx/freertos/ticlang/
 .../ticlang$ make
 ```
 
@@ -106,15 +116,6 @@ Products" list:
 
 ![CCS Add Products Dialog](images/add_products.png)
 
-If using FreeRTOS, its location must also be configured in CCS:
-
-1. Preferences->Code Composer Studio->Build->Environment
-2. Select Add...
-3. Add the variable name `FREERTOS_INSTALL_DIR`
-4. Assign it to the absolute path of your installation of FreeRTOS
-
-![CCS FREERTOS_INSTALL_DIR Variable Assignment](images/FreeRTOS.png)
-
 Now you can import an example!
 
 1. Project->Import CCS Project...
@@ -131,29 +132,15 @@ Remember, before building the examples, you must build the SDK libraries!
 
 Follow the instructions in your respective SDK's Quick Start Guide:
 
-* [SimpleLink Low Power F2 SDK Quick Start Guide](https://dev.ti.com/tirex/explore/node?node=A__AC7UNBWx3i6iMAUzzhqKwA__com.ti.SIMPLELINK_CC13XX_CC26XX_SDK__BSEc4rl__LATEST)
-* [SimpleLink Low Power F3 SDK Quick Start Guide](https://dev.ti.com/tirex/explore/node?node=A__AC7UNBWx3i6iMAUzzhqKwA__com.ti.SIMPLELINK_LOWPOWER_F3_SDK__58mgN04__LATEST)
-
-## Troubleshooting
-
-When building on *nix platform (Linux/Mac) the library build may fail with an
-error similar to:
-
-```bash
-error: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: Unsupported triple for mach-o cpu type: thumbv6m-ti-none-eabi
-```
-
-To fix, make sure the arm version of ranlib is in the path before the OS version
-of ranlib located in /usr/bin. Simply set the location of the gcc ARM ranlib
-ahead in the shell's path.  Example:
-
-```bash
-$ export `PATH`=/Users/username/ti/gcc_arm_none_eabi_9_2_1/arm-none-eabi/bin:$PATH
-```
+* [SimpleLink LPF2 SDK Quick Start Guide](https://dev.ti.com/tirex/explore/node?node=A__AC7UNBWx3i6iMAUzzhqKwA__com.ti.SIMPLELINK_CC13XX_CC26XX_SDK__BSEc4rl__LATEST)
+* [SimpleLink LPF3 SDK Quick Start Guide](https://dev.ti.com/tirex/explore/node?node=A__AC7UNBWx3i6iMAUzzhqKwA__com.ti.SIMPLELINK_LOWPOWER_F3_SDK__58mgN04__LATEST)
 
 ## SDK Association
 
-Click the links below to find the devices supported by each SDK.
+Click the links below for a list of boards in each SDK that PropRF examples
+are provided for. Note that TI does not provide boards for every device, so in
+some cases you may need to SysConfig-migrate an example from a similar board to
+your specific device.
 
-* [SimpleLink Low Power F2 SDK devices](images/simplelink_cc13xx_cc26xx_sdk.md)
-* [SimpleLink Low Power F3 SDK devices](images/simplelink_lowpower_f3_sdk.md)
+* [SimpleLink LPF2 boards](images/simplelink_cc13xx_cc26xx_sdk.md)
+* [SimpleLink LPF3 boards](images/simplelink_lowpower_f3_sdk.md)
