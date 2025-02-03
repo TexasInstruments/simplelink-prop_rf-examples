@@ -6,7 +6,9 @@ CC = "$(GCC_ARMCOMPILER)/bin/arm-none-eabi-gcc"
 LNK = "$(GCC_ARMCOMPILER)/bin/arm-none-eabi-gcc"
 HEX = "$(GCC_ARMCOMPILER)/bin/arm-none-eabi-objcopy"
 
+SYSCONFIG_GUI_TOOL = $(dir $(SYSCONFIG_TOOL))sysconfig_gui$(suffix $(SYSCONFIG_TOOL))
 SYSCFG_CMD_STUB = $(SYSCONFIG_TOOL) --compiler gcc --product $(SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/.metadata/product.json
+SYSCFG_GUI_CMD_STUB = $(SYSCONFIG_GUI_TOOL) --compiler gcc --product $(SIMPLELINK_CC13XX_CC26XX_SDK_INSTALL_DIR)/.metadata/product.json
 SYSCFG_FILES := $(shell $(SYSCFG_CMD_STUB) --listGeneratedFiles --listReferencedFiles --output . ../../freertos/rfPacketTx.syscfg)
 
 SYSCFG_C_FILES = $(filter %.c,$(SYSCFG_FILES))
@@ -61,7 +63,6 @@ LFLAGS += -Wl,-T,../../freertos/gcc/cc13x4_cc26x4_freertos_ns.lds \
     -lgcc \
     -lc \
     -lm \
-    -lnosys \
     --specs=nano.specs
 
 all: $(NAME).hex
@@ -73,6 +74,18 @@ $(SYSCFG_FILES): syscfg
 syscfg: ../../freertos/rfPacketTx.syscfg
 	@ echo Generating configuration files...
 	@ $(SYSCFG_CMD_STUB) --output $(@D) $<
+
+
+# Helpful hint that the user needs to use a standalone SysConfig installation
+$(SYSCONFIG_GUI_TOOL):
+	$(error $(dir $(SYSCONFIG_TOOL)) does not contain the GUI framework \
+        necessary to launch the SysConfig GUI.  Please set SYSCONFIG_TOOL \
+        (in your SDK's imports.mak) to a standalone SysConfig installation \
+        rather than one inside CCS)
+
+syscfg-gui: ../../freertos/rfPacketTx.syscfg $(SYSCONFIG_GUI_TOOL)
+	@ echo Opening SysConfig GUI
+	@ $(SYSCFG_GUI_CMD_STUB) $<
 
 define C_RULE
 $(basename $(notdir $(1))).obj: $(1) $(SYSCFG_H_FILES)

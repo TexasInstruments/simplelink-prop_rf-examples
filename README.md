@@ -130,10 +130,10 @@ Now you can import an example!
 
 Remember, before building the examples, you must build the SDK libraries!
 
-Follow the instructions in your respective SDK's Quick Start Guide:
+Follow the instructions in your respective SDK:
 
-* [SimpleLink LPF2 SDK Quick Start Guide](https://dev.ti.com/tirex/explore/node?node=A__AC7UNBWx3i6iMAUzzhqKwA__com.ti.SIMPLELINK_CC13XX_CC26XX_SDK__BSEc4rl__LATEST)
-* [SimpleLink LPF3 SDK Quick Start Guide](https://dev.ti.com/tirex/explore/node?node=A__AC7UNBWx3i6iMAUzzhqKwA__com.ti.SIMPLELINK_LOWPOWER_F3_SDK__58mgN04__LATEST)
+* [SimpleLink LPF2 PropRF Examples Users Guide](https://dev.ti.com/tirex/explore/node?node=A__AKCeocMrM0I9bD1wOkaUEA__com.ti.SIMPLELINK_CC13XX_CC26XX_SDK__BSEc4rl__LATEST)
+* [SimpleLink LPF3 PropRF Examples Users Guide](https://dev.ti.com/tirex/explore/node?node=A__AOUB3LojbBJAI8qoWfWZjw__com.ti.SIMPLELINK_LOWPOWER_F3_SDK__58mgN04__LATEST)
 
 ## SDK Association
 

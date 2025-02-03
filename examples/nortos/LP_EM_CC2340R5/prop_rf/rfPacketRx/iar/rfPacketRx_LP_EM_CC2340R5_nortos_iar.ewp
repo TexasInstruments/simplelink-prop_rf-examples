@@ -635,6 +635,33 @@
             <name>BUILDACTION</name>
             <archiveVersion>1</archiveVersion>
             <data>
+        <buildActions>
+                <buildAction>
+                    <cmdline>$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/tools/common/crc_tool/crc_tool patch-image --elf $TARGET_DIR$/$TARGET_BNAME$.out --symbol-prefix ti_utils_build_GenMap_sym_CRC --output $TARGET_DIR$/$TARGET_BNAME$.out</cmdline>
+                    <workingDirectory>$PROJ_DIR$/$CONFIG_NAME$</workingDirectory>
+                    <buildSequence>postLink</buildSequence>
+                        <outputs>
+                            <file>
+                                <name>dummy_dep_1</name>
+                            </file>
+                        </outputs>
+                </buildAction>
+                <buildAction>
+                    <cmdline>$TOOLKIT_DIR$/bin/ielftool --ihex $TARGET_DIR$/$TARGET_BNAME$.out $TARGET_DIR$/$TARGET_BNAME$.hex</cmdline>
+                    <workingDirectory>$PROJ_DIR$/$CONFIG_NAME$</workingDirectory>
+                    <buildSequence>postLink</buildSequence>
+                        <outputs>
+                            <file>
+                                <name>dummy_dep_2</name>
+                            </file>
+                        </outputs>
+                        <dependencies>
+                            <file>
+                                <name>dummy_dep_1</name>
+                            </file>
+                        </dependencies>
+                </buildAction>
+        </buildActions>
             </data>
         </settings>
         <settings>

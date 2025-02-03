@@ -14,7 +14,7 @@
         name="rfCarrierWave_CC1352R1_LAUNCHXL_nortos_ticlang"
         configurations="Debug"
         toolChain="TICLANG"
-        cgtVersion="TICLANG_3.2.0.LTS"
+        cgtVersion="3.2.2"
         connection="TIXDS110_Connection.xml"
         device="Cortex M.CC1352R1F3"
         ignoreDefaultDeviceSettings="true"

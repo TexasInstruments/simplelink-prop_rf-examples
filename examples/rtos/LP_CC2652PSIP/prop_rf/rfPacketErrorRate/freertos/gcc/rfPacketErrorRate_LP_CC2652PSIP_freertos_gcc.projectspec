@@ -59,7 +59,6 @@
             -lgcc
             -lc
             -lm
-            -lnosys
             --specs=nano.specs
         "
         enableHexTool="true"

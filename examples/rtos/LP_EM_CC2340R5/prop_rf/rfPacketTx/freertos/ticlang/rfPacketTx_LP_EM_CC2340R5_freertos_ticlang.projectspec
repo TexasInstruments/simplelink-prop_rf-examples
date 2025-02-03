@@ -14,7 +14,7 @@
         name="rfPacketTx_LP_EM_CC2340R5_freertos_ticlang"
         configurations="Debug"
         toolChain="TICLANG"
-        cgtVersion="TICLANG_3.2.0.LTS"
+        cgtVersion="3.2.2"
         connection="TIXDS110_Connection.xml"
         device="Cortex M.CC2340R5"
         ignoreDefaultDeviceSettings="true"
@@ -42,6 +42,10 @@
             -Wl,--warn_sections
             -L${CG_TOOL_ROOT}/lib
             -llibc.a
+        "
+        postBuildStep="
+            ${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/tools/common/crc_tool/crc_tool patch-image --elf ${BuildDirectory}/${BuildArtifactFileBaseName}.out --symbol-prefix ti_utils_build_GenMap_sym_CRC --output ${BuildDirectory}/${BuildArtifactFileBaseName}.out;
+            ${CG_TOOL_ROOT}/bin/tiarmobjcopy -O ihex ${BuildDirectory}/${BuildArtifactFileBaseName}.out ${BuildDirectory}/${BuildArtifactFileBaseName}.hex
         "
         sysConfigBuildOptions="
             --compiler ticlang

@@ -39,7 +39,7 @@
 /* This file defines data types and variables for the application configuration */
 
 /* PER version */
-#define PER_VERSION "Ver 5.30.00"
+#define PER_VERSION "Ver 7.30.00"
 
 #if !((defined CONFIG_CC26X2R1_LAUNCHXL) || (defined CONFIG_CC2652R1FRGZ) || \
       (defined CONFIG_LP_CC2652RSIP)     || (defined CONFIG_CC2652R1FSIP) || \
