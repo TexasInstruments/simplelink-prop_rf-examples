@@ -50,7 +50,6 @@ if (system.deviceData.board && system.deviceData.board.components.XDS110UART) {
 Display_UART.$name = "CONFIG_DISPLAY";
 Display_UART.uart.$name = "CONFIG_DISPLAY_UART";                    // Descriptive name for Display_UART
 Display_UART.uart.txPinInstance.$name = "CONFIG_PIN_UART_TX";  // Descriptive name for UART TX PIN
-Display_UART.uart.rxPinInstance.$name = "CONFIG_PIN_UART_RX";  // Descriptive name for UART RX PIN
 
 
 /* ======== Left Button ======== */

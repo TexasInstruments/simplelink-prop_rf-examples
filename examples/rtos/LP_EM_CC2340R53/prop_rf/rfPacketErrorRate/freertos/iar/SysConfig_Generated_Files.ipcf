@@ -10,6 +10,7 @@
         <path>$PROJ_DIR$/ti_drivers_config.h</path>
         <path>$PROJ_DIR$/ti_freertos_config.c</path>
         <path>$PROJ_DIR$/ti_freertos_portable_config.c</path>
+        <path>$PROJ_DIR$/ti_freertos_portable_config_asm.s</path>
         <path>$PROJ_DIR$/ti_utils_build_compiler.opt</path>
         <path>$PROJ_DIR$/ti_utils_build_linker.cmd.genlibs</path>
     </files>

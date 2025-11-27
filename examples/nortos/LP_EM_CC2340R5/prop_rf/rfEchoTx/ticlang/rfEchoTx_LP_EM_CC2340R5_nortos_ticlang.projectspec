@@ -14,7 +14,7 @@
         name="rfEchoTx_LP_EM_CC2340R5_nortos_ticlang"
         configurations="Debug"
         toolChain="TICLANG"
-        cgtVersion="3.2.2"
+        cgtVersion="TICLANG_4.0.2.LTS"
         connection="TIXDS110_Connection.xml"
         device="Cortex M.CC2340R5"
         ignoreDefaultDeviceSettings="true"

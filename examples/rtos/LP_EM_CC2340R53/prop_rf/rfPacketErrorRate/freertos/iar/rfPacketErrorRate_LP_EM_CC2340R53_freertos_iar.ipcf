@@ -11,6 +11,7 @@
 
     <asmIncludePath>
         <path>$PROJ_DIR$</path>
+        <path>$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/source/third_party/freertos/include</path>
     </asmIncludePath>
 
     <includePath>
