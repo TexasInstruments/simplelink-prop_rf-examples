@@ -1,4 +1,4 @@
-# rfpacketerrorrate
+# rfPacketErrorRate
 
 ---
 

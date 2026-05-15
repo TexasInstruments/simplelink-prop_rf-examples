@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2021, Texas Instruments Incorporated
+ * Copyright (c) 2020-2026, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -138,4 +138,3 @@ for(var setting in ccfgSettings)
 {
     device[setting] = ccfgSettings[setting];
 }
-

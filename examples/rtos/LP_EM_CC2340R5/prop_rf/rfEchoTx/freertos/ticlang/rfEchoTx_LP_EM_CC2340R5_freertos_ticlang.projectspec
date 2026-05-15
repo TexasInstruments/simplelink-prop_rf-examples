@@ -14,7 +14,6 @@
         name="rfEchoTx_LP_EM_CC2340R5_freertos_ticlang"
         configurations="Debug"
         toolChain="TICLANG"
-        cgtVersion="TICLANG_4.0.2.LTS"
         connection="TIXDS110_Connection.xml"
         device="Cortex M.CC2340R5"
         ignoreDefaultDeviceSettings="true"
@@ -23,16 +22,17 @@
         compilerBuildOptions="
             -I${PROJECT_ROOT}
             -I${PROJECT_ROOT}/${ConfigName}
+            -Oz
             -I${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/source
             -I${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/kernel/freertos
             -I${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/source/ti/posix/ticlang
             -I${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/source/third_party/freertos/include
             -I${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/source/third_party/freertos/portable/GCC/ARM_CM0
-            -gdwarf-3
             -mcpu=cortex-m0plus
             -march=thumbv6m
             -mfloat-abi=soft
             -mthumb
+            -Wall
         "
         linkerBuildOptions="
             -L${COM_TI_SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR}/source
@@ -51,27 +51,29 @@
             --compiler ticlang
         "
         description="An echo example (packet originator) using the RF driver">
-
+        <property name="buildProfile" value="release"/>
         <property name="isHybrid" value="true"/>
-        <file path="../../rfEchoTx.c" openOnCreation="false" excludeFromBuild="false" action="copy">
-        </file>
         <file path="../../README.md" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="../../rfEcho_PerfectEcho.png" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../../README.html" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="../../rfEcho_MissedFirstPacket.png" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../../rfEchoTx.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="../../rfEcho_MissingFirstCouplePackets.png" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../../images/rfEcho_ErrorTxRx.png" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="images">
         </file>
-        <file path="../../rfEcho_ErrorTxRx.png" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../../images/rfEcho_MissedFirstPacket.png" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="images">
+        </file>
+        <file path="../../images/rfEcho_MissingFirstCouplePackets.png" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="images">
+        </file>
+        <file path="../../images/rfEcho_PerfectEcho.png" openOnCreation="false" excludeFromBuild="false" action="copy" targetDirectory="images">
+        </file>
+        <file path="../../overview.rov.json" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../../freertos/rfEchoTx.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../../freertos/main_freertos.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="../../overview.rov.json" openOnCreation="false" excludeFromBuild="false" action="copy">
-        </file>
-        <file path="../../freertos/ticlang/lpf3_freertos.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../../freertos/ticlang/cc23x0r5.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
     </project>
 </projectSpec>

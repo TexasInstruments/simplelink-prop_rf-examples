@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2018, Texas Instruments Incorporated
+ * Copyright (c) 2016-2026, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,9 +58,9 @@ typedef struct _rx_metrics_{
                                // configured packet count after Rx Timeout
     uint32_t  nRxTimeouts;     // Number of timeout events
     uint16_t  nPktsPerTimeout; // Each timeout is a certain number of packet intervals long
-    int8_t   rssi;             // Last reported RSSI (last packet sync)
-    uint16_t crcOK;            // CRC status of the received packet
-    uint32_t throughput;       // Integer throughput calculated
+    int8_t    rssi;            // Last reported RSSI (last packet sync)
+    uint16_t  crcOK;           // CRC status of the received packet
+    uint32_t  throughput;      // Integer throughput calculated
 }rx_metrics;
 
 /* Tx Operation Metrics */
