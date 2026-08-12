@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2026, Texas Instruments Incorporated
+ * Copyright (c) 2016-2019, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -41,7 +41,7 @@
 #include "ti_radio_config.h"
 
 /* TI Drivers */
-#include <ti/drivers/RCL.h>
+#include <ti/drivers/rcl/RCL.h>
 #include <ti/drivers/rcl/RCL_Scheduler.h>
 #include <ti/drivers/rcl/commands/generic.h>
 
@@ -95,9 +95,9 @@ volatile uint32_t gPktRcvd = 0;         // Packet received
 static uint8_t packetReceived = false;
 
 
-static volatile bool     bFirstPacket = true;
+static volatile bool     bFirstPacket = true, bSecondPacket = true;
 static volatile bool     bPacketsLost = false;
-static volatile uint16_t nRxPkts = 0;
+static volatile uint16_t nRxPkts = 0, nMissPkts = 0, nExpPkts = 0;
 
 static rx_metrics rxMetrics = {
     .packetsReceived = 0,
@@ -338,3 +338,4 @@ TestResult rx_runRxTest(const ApplicationConfig* config)
     }
 
 }
+

@@ -73,5 +73,5 @@ Selected PHY --> Code Export Configuration --> Register Field Defines and settin
 it's value to "PBE_GENERIC_RAM_LENCFG_LENPOS,PBE_GENERIC_RAM_LENCFG_NUMLENBITS".
 
 
-[figure 1]:images/rfEcho_PerfectEcho.png "Perfect Echo"
-[figure 2]:images/rfEcho_ErrorTxRx.png "Echo Error"
+[figure 1]:rfEcho_PerfectEcho.png "Perfect Echo"
+[figure 2]:rfEcho_ErrorTxRx.png "Echo Error"

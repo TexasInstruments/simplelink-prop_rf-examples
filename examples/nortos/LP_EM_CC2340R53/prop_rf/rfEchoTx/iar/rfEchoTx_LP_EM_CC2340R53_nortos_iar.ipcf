@@ -23,6 +23,7 @@
     <extraOptions>
         <args>
             <arg>-f$PROJ_DIR$/ti_utils_build_compiler.opt</arg>
+            <arg>--debug</arg>
             <arg>--silent</arg>
             <arg>-e</arg>
             <arg>--aeabi</arg>
@@ -33,7 +34,7 @@
 
     <linkerFile>
         <override>true</override>
-        <path>$PROJ_DIR$/cc23x0r5.icf</path>
+        <path>$PROJ_DIR$/lpf3_nortos.icf</path>
     </linkerFile>
 
     <linkerExtraOptions>
@@ -72,17 +73,14 @@
 
 
     <files>
-        <path copyTo="$PROJ_DIR$/cc23x0r5.icf">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R53/prop_rf/rfEchoTx/iar/cc23x0r5.icf</path>
+        <path copyTo="$PROJ_DIR$/lpf3_nortos.icf">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R53/prop_rf/rfEchoTx/iar/lpf3_nortos.icf</path>
         <path copyTo="$PROJ_DIR$/main_nortos.c">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R53/prop_rf/rfEchoTx/main_nortos.c</path>
-        <path copyTo="$PROJ_DIR$/README.html">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R53/prop_rf/rfEchoTx/README.html</path>
         <path copyTo="$PROJ_DIR$/README.md">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R53/prop_rf/rfEchoTx/README.md</path>
+        <path copyTo="$PROJ_DIR$/rfEcho_ErrorTxRx.png">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R53/prop_rf/rfEchoTx/rfEcho_ErrorTxRx.png</path>
+        <path copyTo="$PROJ_DIR$/rfEcho_MissedFirstPacket.png">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R53/prop_rf/rfEchoTx/rfEcho_MissedFirstPacket.png</path>
+        <path copyTo="$PROJ_DIR$/rfEcho_MissingFirstCouplePackets.png">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R53/prop_rf/rfEchoTx/rfEcho_MissingFirstCouplePackets.png</path>
+        <path copyTo="$PROJ_DIR$/rfEcho_PerfectEcho.png">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R53/prop_rf/rfEchoTx/rfEcho_PerfectEcho.png</path>
         <path copyTo="$PROJ_DIR$/rfEchoTx.c">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R53/prop_rf/rfEchoTx/rfEchoTx.c</path>
         <path copyTo="$PROJ_DIR$/rfEchoTx.syscfg">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R53/prop_rf/rfEchoTx/rfEchoTx.syscfg</path>
-        <group name="images" build="true">
-            <path copyTo="$PROJ_DIR$/images/rfEcho_ErrorTxRx.png">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R53/prop_rf/rfEchoTx/images/rfEcho_ErrorTxRx.png</path>
-            <path copyTo="$PROJ_DIR$/images/rfEcho_MissedFirstPacket.png">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R53/prop_rf/rfEchoTx/images/rfEcho_MissedFirstPacket.png</path>
-            <path copyTo="$PROJ_DIR$/images/rfEcho_MissingFirstCouplePackets.png">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R53/prop_rf/rfEchoTx/images/rfEcho_MissingFirstCouplePackets.png</path>
-            <path copyTo="$PROJ_DIR$/images/rfEcho_PerfectEcho.png">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/nortos/LP_EM_CC2340R53/prop_rf/rfEchoTx/images/rfEcho_PerfectEcho.png</path>
-        </group>
     </files>
 </iarProjectConnection>

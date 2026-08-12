@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2026, Texas Instruments Incorporated
+ * Copyright (c) 2016-2019, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@
 
 /* TI Drivers */
 #include <ti/drivers/GPIO.h>
-#include <ti/drivers/RCL.h>
+#include <ti/drivers/rcl/RCL.h>
 #include <ti/drivers/rcl/RCL_Scheduler.h>
 #include <ti/drivers/rcl/commands/generic.h>
 

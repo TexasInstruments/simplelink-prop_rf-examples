@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2026, Texas Instruments Incorporated
+ * Copyright (c) 2016-2019, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -93,7 +93,7 @@ typedef struct
 } ApplicationConfig;
 
 extern FrequencyTableEntry*  config_frequencyTable_Lut[]; // Lookup table for freq table
-extern volatile uint32_t config_dataRateTable_Lut[];      // Lookup table for data rates (volatile for debug symbols)
+extern uint32_t config_dataRateTable_Lut[];               // Lookup table for data rates
 extern const char* const config_testmodeLabels[];         // Lookup table for operation mode labels
 extern const uint32_t config_packetCountTable[];          // Lookup table for different packet count options
 extern const uint32_t config_payloadLengthTable[];        // Lookup table for different payload length options

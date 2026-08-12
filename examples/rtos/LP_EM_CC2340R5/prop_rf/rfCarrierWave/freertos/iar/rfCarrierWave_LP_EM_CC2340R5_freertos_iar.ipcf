@@ -26,6 +26,7 @@
     <extraOptions>
         <args>
             <arg>-f$PROJ_DIR$/ti_utils_build_compiler.opt</arg>
+            <arg>--debug</arg>
             <arg>--silent</arg>
             <arg>-e</arg>
             <arg>--aeabi</arg>
@@ -36,14 +37,14 @@
 
     <linkerFile>
         <override>true</override>
-        <path>$PROJ_DIR$/cc23x0r5.icf</path>
+        <path>$PROJ_DIR$/lpf3_freertos.icf</path>
     </linkerFile>
 
     <linkerExtraOptions>
         <args>
             <arg>-L$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/source</arg>
-            <arg>--threaded_lib</arg>
             <arg>-L$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/kernel</arg>
+            <arg>--threaded_lib</arg>
             <arg>-f$PROJ_DIR$/ti_utils_build_linker.cmd.genlibs</arg>
             <arg>--silent</arg>
         </args>
@@ -76,10 +77,9 @@
 
 
     <files>
-        <path copyTo="$PROJ_DIR$/cc23x0r5.icf">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfCarrierWave/freertos/iar/cc23x0r5.icf</path>
+        <path copyTo="$PROJ_DIR$/lpf3_freertos.icf">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfCarrierWave/freertos/iar/lpf3_freertos.icf</path>
         <path copyTo="$PROJ_DIR$/main_freertos.c">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfCarrierWave/freertos/main_freertos.c</path>
         <path copyTo="$PROJ_DIR$/overview.rov.json">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfCarrierWave/overview.rov.json</path>
-        <path copyTo="$PROJ_DIR$/README.html">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfCarrierWave/README.html</path>
         <path copyTo="$PROJ_DIR$/README.md">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfCarrierWave/README.md</path>
         <path copyTo="$PROJ_DIR$/rfCarrierWave.c">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfCarrierWave/rfCarrierWave.c</path>
         <path copyTo="$PROJ_DIR$/rfCarrierWave.syscfg">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R5/prop_rf/rfCarrierWave/freertos/rfCarrierWave.syscfg</path>

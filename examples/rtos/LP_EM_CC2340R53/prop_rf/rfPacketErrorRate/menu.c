@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2026, Texas Instruments Incorporated
+ * Copyright (c) 2016-2018, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -177,7 +177,7 @@ void menu_runTask()
     if (retc == -1) {
         while (1);
     }
-
+    
     vt100_clear(uartDisplay);
 
     while(true)

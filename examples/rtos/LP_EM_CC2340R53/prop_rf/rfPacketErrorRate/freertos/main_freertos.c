@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2023, Texas Instruments Incorporated
+ * Copyright (c) 2013-2022, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@
 #include <stdint.h>
 
 #ifdef __ICCARM__
-#include <DLib_Threads.h>
+    #include <DLib_Threads.h>
 #endif
 
 /* POSIX Header files */
@@ -67,7 +67,6 @@ int main(void)
 #ifdef __ICCARM__
     __iar_Initlocks();
 #endif
-
     Board_init();
 
     /* Initialize the attributes structure with default values */
@@ -93,13 +92,4 @@ int main(void)
     vTaskStartScheduler();
 
     return (0);
-}
-
-
-void vApplicationMallocFailedHook()
-{
-}
-
-void vApplicationStackOverflowHook(TaskHandle_t pxTask, char *pcTaskName)
-{
 }
