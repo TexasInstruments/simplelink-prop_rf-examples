@@ -3,8 +3,8 @@
  Target Device: cc23xx
 
  ******************************************************************************
- 
- Copyright (c) 2023-2025, Texas Instruments Incorporated
+
+ Copyright (c) 2023-2026, Texas Instruments Incorporated
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,8 +35,8 @@
  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
  ******************************************************************************
- 
- 
+
+
  *****************************************************************************/
 
 /***** Includes *****/
@@ -48,7 +48,7 @@
 
 /* TI Drivers */
 #include <ti/drivers/GPIO.h>
-#include <ti/drivers/rcl/RCL.h>
+#include <ti/drivers/RCL.h>
 #include <ti/drivers/rcl/RCL_Scheduler.h>
 #include <ti/drivers/rcl/commands/generic.h>
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2018, Texas Instruments Incorporated
+ * Copyright (c) 2016-2026, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -112,7 +112,8 @@ FrequencyTableEntry*  config_frequencyTable_Lut[] =
     config_frequencyTable_2_4     // RCL_Generic_250_MSK_FEC
 };
 
-uint32_t config_dataRateTable_Lut[] =
+/* volatile: Preserve debug symbols for test automation */
+volatile uint32_t config_dataRateTable_Lut[] =
 {
     1000000,  // RCL_Generic_BLE_1M
     250000,   // RCL_Generic_250K_MSK

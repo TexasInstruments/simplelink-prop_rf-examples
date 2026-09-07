@@ -5,6 +5,7 @@ include $(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/imports.mak
 ASM = "$(IAR_ARMCOMPILER)/bin/iasmarm"
 CC = "$(IAR_ARMCOMPILER)/bin/iccarm"
 LNK = "$(IAR_ARMCOMPILER)/bin/ilinkarm"
+HEX = "$(IAR_ARMCOMPILER)/bin/ielftool"
 
 SYSCONFIG_GUI_TOOL = $(dir $(SYSCONFIG_TOOL))sysconfig_gui$(suffix $(SYSCONFIG_TOOL))
 SYSCFG_CMD_STUB = $(SYSCONFIG_TOOL) --compiler iar --product $(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/.metadata/product.json
@@ -36,15 +37,17 @@ AFLAGS += -I../.. \
     "-I$(IAR_ARMCOMPILER)/inc/c" \
     --cpu Cortex-M0+
 
+DFLAGS += --debug
+
 CFLAGS += -I../.. \
     -I. \
     $(addprefix -f,$(SYSCFG_OPT_FILES)) \
+    -Oh \
     "-I$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source" \
     "-I$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/kernel/freertos" \
     "-I$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source/ti/posix/iar" \
     "-I$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source/third_party/freertos/include" \
     "-I$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source/third_party/freertos/portable/IAR/ARM_CM0" \
-    --debug \
     --silent \
     -e \
     --aeabi \
@@ -53,14 +56,20 @@ CFLAGS += -I../.. \
     --cpu=Cortex-M0+ \
     --vla
 
+
+ifneq ($(CONFIG),RELEASE)
+# Add debug flags by default (excluded only when CONFIG=RELEASE)
+CFLAGS += $(DFLAGS)
+endif
+
 LFLAGS += "-L$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source" \
-    "-L$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/kernel" \
     --threaded_lib \
+    "-L$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/kernel" \
     -fti_utils_build_linker.cmd.genlibs \
-    --config ../../freertos/iar/lpf3_freertos.icf \
+    --config ../../freertos/iar/cc23x0r5.icf \
     --map "$(NAME).map" \
     --silent \
-    --semihosting=iar_breakpoint \
+    "$(if $(filter RELEASE,$(CONFIG)),,--semihosting=iar_breakpoint)" \
     --cpu=Cortex-M0+
 
 all: postbuild
@@ -93,7 +102,7 @@ syscfg-gui: ../../freertos/rfPacketErrorRate.syscfg $(SYSCONFIG_GUI_TOOL)
 define ASM_RULE
 $(basename $(notdir $(1))).obj: $(1)
 	@ echo Building $$@
-	$(V) $(ASM) $(AFLAGS) "$$<" -o $$@
+	$(V) $(ASM) $(AFLAGS) $$< -o $$@
 endef
 
 $(foreach asm_file,$(SYSCFG_ASM_FILES),$(eval $(call ASM_RULE,$(asm_file))))
@@ -101,7 +110,7 @@ $(foreach asm_file,$(SYSCFG_ASM_FILES),$(eval $(call ASM_RULE,$(asm_file))))
 define C_RULE
 $(basename $(notdir $(1))).obj: $(1) $(SYSCFG_H_FILES)
 	@ echo Building $$@
-	$(V) $(CC) $(CFLAGS) "$$<" -o $$@
+	$(V) $(CC) $(CFLAGS) $$< -o $$@
 endef
 
 $(foreach c_file,$(SYSCFG_C_FILES),$(eval $(call C_RULE,$(c_file))))
@@ -133,10 +142,13 @@ freertos_main_freertos.obj: ../../freertos/main_freertos.c $(SYSCFG_H_FILES)
 $(NAME).out: $(OBJECTS)
 	@ echo linking $@
 	$(V) $(LNK)  $(OBJECTS)  $(LFLAGS) -o $(NAME).out
+	@ echo building $@
+	$(V) $(HEX) --checksum "__ccfg_boot_cfg_crc32_end+1:4,crc32:1mi,0xFFFFFFFF;__ccfg_boot_cfg_crc32_begin-__ccfg_boot_cfg_crc32_end" --checksum "__ccfg_crc32_end+1:4,crc32:1mi,0xFFFFFFFF;__ccfg_crc32_begin-__ccfg_crc32_end"  --checksum "__ccfg_user_record_crc32_end+1:4,crc32:1mi,0xFFFFFFFF;__ccfg_user_record_crc32_begin-__ccfg_user_record_crc32_end" --checksum "__ccfg_debug_cfg_crc32_end+1:4,crc32:1mi,0xFFFFFFFF;__ccfg_debug_cfg_crc32_begin-__ccfg_debug_cfg_crc32_end" $@ $@
 
 clean:
 	@ echo Cleaning...
 	$(V) $(RM) $(OBJECTS) > $(DEVNULL) 2>&1
 	$(V) $(RM) $(NAME).out > $(DEVNULL) 2>&1
 	$(V) $(RM) $(NAME).map > $(DEVNULL) 2>&1
+	$(V) $(RM) $(NAME).out > $(DEVNULL) 2>&1
 	$(V) $(RM) $(call SLASH_FIXUP,$(SYSCFG_FILES)) > $(DEVNULL) 2>&1

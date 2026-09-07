@@ -253,7 +253,7 @@
                 <option>
                     <name>CCAllowList</name>
                     <version>1</version>
-                    <state>00000000</state>
+                    <state>11111110</state>
                 </option>
                 <option>
                     <name>CCDebugInfo</name>
@@ -333,7 +333,7 @@
                 </option>
                 <option>
                     <name>CCOptLevel</name>
-                    <state>1</state>
+                    <state>3</state>
                 </option>
                 <option>
                     <name>CCOptStrategy</name>
@@ -342,7 +342,7 @@
                 </option>
                 <option>
                     <name>CCOptLevelSlave</name>
-                    <state>1</state>
+                    <state>3</state>
                 </option>
                 <option>
                     <name>CompilerMisraRules98</name>
@@ -658,6 +658,21 @@
                         <dependencies>
                             <file>
                                 <name>dummy_dep_1</name>
+                            </file>
+                        </dependencies>
+                </buildAction>
+                <buildAction>
+                    <cmdline>ielftool --checksum "__ccfg_boot_cfg_crc32_end+1:4,crc32:1mi,0xFFFFFFFF;__ccfg_boot_cfg_crc32_begin-__ccfg_boot_cfg_crc32_end" --checksum "__ccfg_crc32_end+1:4,crc32:1mi,0xFFFFFFFF;__ccfg_crc32_begin-__ccfg_crc32_end"  --checksum "__ccfg_user_record_crc32_end+1:4,crc32:1mi,0xFFFFFFFF;__ccfg_user_record_crc32_begin-__ccfg_user_record_crc32_end" --checksum "__ccfg_debug_cfg_crc32_end+1:4,crc32:1mi,0xFFFFFFFF;__ccfg_debug_cfg_crc32_begin-__ccfg_debug_cfg_crc32_end" $TARGET_BPATH$.out $TARGET_BPATH$.out</cmdline>
+                    <workingDirectory>$PROJ_DIR$/$CONFIG_NAME$</workingDirectory>
+                    <buildSequence>postLink</buildSequence>
+                        <outputs>
+                            <file>
+                                <name>dummy_dep_3</name>
+                            </file>
+                        </outputs>
+                        <dependencies>
+                            <file>
+                                <name>dummy_dep_2</name>
                             </file>
                         </dependencies>
                 </buildAction>

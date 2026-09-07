@@ -1,0 +1,112 @@
+SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR ?= $(abspath ../../../../../..)
+
+include $(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/imports.mak
+
+CC = "$(TICLANG_ARMCOMPILER)/bin/tiarmclang"
+LNK = "$(TICLANG_ARMCOMPILER)/bin/tiarmclang"
+
+SYSCONFIG_GUI_TOOL = $(dir $(SYSCONFIG_TOOL))sysconfig_gui$(suffix $(SYSCONFIG_TOOL))
+SYSCFG_CMD_STUB = $(SYSCONFIG_TOOL) --compiler ticlang --product $(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/.metadata/product.json
+SYSCFG_GUI_CMD_STUB = $(SYSCONFIG_GUI_TOOL) --compiler ticlang --product $(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/.metadata/product.json
+SYSCFG_FILES := $(shell $(SYSCFG_CMD_STUB) --listGeneratedFiles --listReferencedFiles --output . ../rfContinuousRxRssi.syscfg)
+
+SYSCFG_C_FILES = $(filter %.c,$(SYSCFG_FILES))
+SYSCFG_H_FILES = $(filter %.h,$(SYSCFG_FILES))
+SYSCFG_OPT_FILES = $(filter %.opt,$(SYSCFG_FILES))
+
+# Enable verbose output by setting VERBOSE=1
+V := @
+ifeq ($(VERBOSE), 1)
+  V :=
+endif
+
+OBJECTS = rfContinuousRxRssi.obj nortos_main_nortos.obj $(patsubst %.c,%.obj,$(notdir $(SYSCFG_C_FILES)))
+
+NAME = rfContinuousRxRssi
+
+
+DFLAGS += -gdwarf-3
+
+CFLAGS += -I.. \
+    -I. \
+    $(addprefix @,$(SYSCFG_OPT_FILES)) \
+    -Oz \
+    "-I$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source" \
+    "-I$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/kernel/nortos" \
+    "-I$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/kernel/nortos/posix" \
+    -mcpu=cortex-m0plus \
+    -march=thumbv6m \
+    -mfloat-abi=soft \
+    -mthumb \
+    -Wall
+
+
+ifneq ($(CONFIG),RELEASE)
+# Add debug flags by default (excluded only when CONFIG=RELEASE)
+CFLAGS += $(DFLAGS)
+endif
+
+LFLAGS += "-L$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/source" \
+    "-L$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/kernel/nortos" \
+    ti_utils_build_linker.cmd.genlibs \
+    ../ticlang/cc23x0r5.cmd \
+    "-Wl,-m,$(NAME).map" \
+    -Wl,--rom_model \
+    -Wl,--warn_sections \
+    "-L$(TICLANG_ARMCOMPILER)/lib" \
+    -llibc.a
+
+all: postbuild
+
+.PHONY: postbuild
+postbuild: $(NAME).out
+	$(SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR)/tools/common/crc_tool/crc_tool patch-image --elf ./$(NAME).out --symbol-prefix ti_utils_build_GenMap_sym_CRC --output ./$(NAME).out
+	$(TICLANG_ARMCOMPILER)/bin/tiarmobjcopy -O ihex ./$(NAME).out ./$(NAME).hex
+
+.INTERMEDIATE: syscfg
+$(SYSCFG_FILES): syscfg
+	@ echo generation complete
+
+syscfg: ../rfContinuousRxRssi.syscfg
+	@ echo Generating configuration files...
+	$(V) $(SYSCFG_CMD_STUB) --output $(@D) $<
+
+
+# Helpful hint that the user needs to use a standalone SysConfig installation
+$(SYSCONFIG_GUI_TOOL):
+	$(error $(dir $(SYSCONFIG_TOOL)) does not contain the GUI framework \
+        necessary to launch the SysConfig GUI.  Please set SYSCONFIG_TOOL \
+        (in your SDK's imports.mak) to a standalone SysConfig installation \
+        rather than one inside CCS)
+
+syscfg-gui: ../rfContinuousRxRssi.syscfg $(SYSCONFIG_GUI_TOOL)
+	@ echo Opening SysConfig GUI
+	$(V) $(SYSCFG_GUI_CMD_STUB) $<
+
+
+define C_RULE
+$(basename $(notdir $(1))).obj: $(1) $(SYSCFG_H_FILES)
+	@ echo Building $$@
+	$(V) $(CC) $(CFLAGS) -c $$< -o $$@
+endef
+
+$(foreach c_file,$(SYSCFG_C_FILES),$(eval $(call C_RULE,$(c_file))))
+
+rfContinuousRxRssi.obj: ../rfContinuousRxRssi.c $(SYSCFG_H_FILES)
+	@ echo Building $@
+	$(V) $(CC) $(CFLAGS) -c $< -o $@
+
+nortos_main_nortos.obj: ../nortos/main_nortos.c $(SYSCFG_H_FILES)
+	@ echo Building $@
+	$(V) $(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME).out: $(OBJECTS)
+	@ echo linking $@
+	$(V) $(LNK) -Wl,-u,_c_int00 $(OBJECTS)  $(LFLAGS) -o $(NAME).out
+
+clean:
+	@ echo Cleaning...
+	$(V) $(RM) $(OBJECTS) > $(DEVNULL) 2>&1
+	$(V) $(RM) $(NAME).out > $(DEVNULL) 2>&1
+	$(V) $(RM) $(NAME).map > $(DEVNULL) 2>&1
+	$(V) $(RM) $(call SLASH_FIXUP,$(SYSCFG_FILES)) > $(DEVNULL) 2>&1

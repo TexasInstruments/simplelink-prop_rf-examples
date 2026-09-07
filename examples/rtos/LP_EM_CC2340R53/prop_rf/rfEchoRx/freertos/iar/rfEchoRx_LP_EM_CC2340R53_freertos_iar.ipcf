@@ -26,7 +26,6 @@
     <extraOptions>
         <args>
             <arg>-f$PROJ_DIR$/ti_utils_build_compiler.opt</arg>
-            <arg>--debug</arg>
             <arg>--silent</arg>
             <arg>-e</arg>
             <arg>--aeabi</arg>
@@ -37,14 +36,14 @@
 
     <linkerFile>
         <override>true</override>
-        <path>$PROJ_DIR$/lpf3_freertos.icf</path>
+        <path>$PROJ_DIR$/cc23x0r5.icf</path>
     </linkerFile>
 
     <linkerExtraOptions>
         <args>
             <arg>-L$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/source</arg>
-            <arg>-L$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/kernel</arg>
             <arg>--threaded_lib</arg>
+            <arg>-L$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/kernel</arg>
             <arg>-f$PROJ_DIR$/ti_utils_build_linker.cmd.genlibs</arg>
             <arg>--silent</arg>
         </args>
@@ -77,13 +76,16 @@
 
 
     <files>
-        <path copyTo="$PROJ_DIR$/lpf3_freertos.icf">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R53/prop_rf/rfEchoRx/freertos/iar/lpf3_freertos.icf</path>
+        <path copyTo="$PROJ_DIR$/cc23x0r5.icf">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R53/prop_rf/rfEchoRx/freertos/iar/cc23x0r5.icf</path>
         <path copyTo="$PROJ_DIR$/main_freertos.c">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R53/prop_rf/rfEchoRx/freertos/main_freertos.c</path>
         <path copyTo="$PROJ_DIR$/overview.rov.json">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R53/prop_rf/rfEchoRx/overview.rov.json</path>
+        <path copyTo="$PROJ_DIR$/README.html">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R53/prop_rf/rfEchoRx/README.html</path>
         <path copyTo="$PROJ_DIR$/README.md">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R53/prop_rf/rfEchoRx/README.md</path>
-        <path copyTo="$PROJ_DIR$/rfEcho_ErrorTxRx.png">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R53/prop_rf/rfEchoRx/rfEcho_ErrorTxRx.png</path>
-        <path copyTo="$PROJ_DIR$/rfEcho_PerfectEcho.png">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R53/prop_rf/rfEchoRx/rfEcho_PerfectEcho.png</path>
         <path copyTo="$PROJ_DIR$/rfEchoRx.c">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R53/prop_rf/rfEchoRx/rfEchoRx.c</path>
         <path copyTo="$PROJ_DIR$/rfEchoRx.syscfg">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R53/prop_rf/rfEchoRx/freertos/rfEchoRx.syscfg</path>
+        <group name="images" build="true">
+            <path copyTo="$PROJ_DIR$/images/rfEcho_ErrorTxRx.png">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R53/prop_rf/rfEchoRx/images/rfEcho_ErrorTxRx.png</path>
+            <path copyTo="$PROJ_DIR$/images/rfEcho_PerfectEcho.png">$SIMPLELINK_LOWPOWER_F3_SDK_INSTALL_DIR$/examples/rtos/LP_EM_CC2340R53/prop_rf/rfEchoRx/images/rfEcho_PerfectEcho.png</path>
+        </group>
     </files>
 </iarProjectConnection>
